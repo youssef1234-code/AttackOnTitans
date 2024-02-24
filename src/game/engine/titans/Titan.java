@@ -28,7 +28,7 @@ abstract public class Titan implements Comparable {
 	public int compareTo(Titan o) {
 		return this.distanceFromBase - o.distanceFromBase;
 	}
-	s
+	
 	
 	
 
