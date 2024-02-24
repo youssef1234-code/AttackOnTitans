@@ -1,33 +1,34 @@
 package game.engine.titans;
 
 
-abstract public class Titan implements Comparable{
+abstract public class Titan implements Comparable {
 	
-	private int baseHealth;
+	private final int baseHealth;
 	private int currentHealth;
 	private int baseDamage;
 	private int heightInMeters;
-	private int distanceFrombase;
+	private int distanceFromBase;
 	private int speed;
-	private int resourceValue;
+	private int resourcesValue;
 	private int dangerLevel;
 	
-	public Titan(int baseHealth, int currentHealth, int baseDamage, int heightInMeters, int distanceFrombase, int speed,
-			int resourceValue, int dangerLevel) {
+	public Titan(int baseHealth, int baseDamage, int heightInMeters, int distanceFromBase, int
+			speed, int resourcesValue, int dangerLevel) {
 		
-		this.baseHealth = baseHealth;
-		this.currentHealth = currentHealth;
-		this.baseDamage = baseDamage;
-		this.heightInMeters = heightInMeters;
-		this.distanceFrombase = distanceFrombase;
-		this.speed = speed;
-		this.resourceValue = resourceValue;
-		this.dangerLevel = dangerLevel;
+		this.baseHealth       = baseHealth;
+		this.currentHealth    = baseHealth;
+		this.baseDamage       = baseDamage;
+		this.heightInMeters   = heightInMeters;
+		this.distanceFromBase = distanceFromBase;
+		this.speed            = speed;
+		this.resourcesValue   = resourcesValue;
+		this.dangerLevel      = dangerLevel;
 	}
 	
 	public int compareTo(Titan o) {
-		return this.distanceFrombase - o.distanceFrombase;
+		return this.distanceFromBase - o.distanceFromBase;
 	}
+	s
 	
 	
 
