@@ -16,6 +16,8 @@ public class Lane implements Comparable<Lane> {
 	public Lane(Wall laneWall){
 		this.lanewall = laneWall;
 		this.dangerLevel = 0;
+		this.titans = new PriorityQueue<Titan>();
+		this.weapons = new ArrayList<Weapon>();
 	}
 	
 	@Override
@@ -43,5 +45,5 @@ public class Lane implements Comparable<Lane> {
 		return this.weapons;
 	}
 	
-	
+
 }
