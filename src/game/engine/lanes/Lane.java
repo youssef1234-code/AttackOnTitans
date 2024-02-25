@@ -2,19 +2,19 @@ package game.engine.lanes;
 
 import java.util.PriorityQueue;
 import java.util.ArrayList;
-import game.engine.titans.Titan;
+import game.engine.titans.*;
 import game.engine.weapons.Weapon;
 import game.engine.base.Wall;
 
 public class Lane implements Comparable<Lane> {
 	
-	private final Wall lanewall;
+	private final Wall laneWall;
 	private int dangerLevel; 
 	private final PriorityQueue<Titan> titans;
 	private final ArrayList<Weapon> weapons ;
 	
 	public Lane(Wall laneWall){
-		this.lanewall = laneWall;
+		this.laneWall = laneWall;
 		this.dangerLevel = 0;
 		this.titans = new PriorityQueue<Titan>();
 		this.weapons = new ArrayList<Weapon>();
@@ -34,7 +34,7 @@ public class Lane implements Comparable<Lane> {
 	}
 
 	public Wall getLanewall() {
-		return this.lanewall;
+		return this.laneWall;
 	}
 	
 	public PriorityQueue<Titan> getTitans() {
