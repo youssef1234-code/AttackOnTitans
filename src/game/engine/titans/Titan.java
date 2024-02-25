@@ -3,7 +3,7 @@ package game.engine.titans;
 
  public abstract class Titan implements Comparable<Titan>,game.engine.interfaces.Attackee,game.engine.interfaces.Attacker,game.engine.interfaces.Mobil {
 	
-	private final int baseHealth ;
+	private final int baseHealth;
 	private final int heightInMeters;
 	private final int dangerLevel;
 	private int currentHealth;
@@ -73,6 +73,7 @@ package game.engine.titans;
 	public int getDangerLevel() {
 		return this.dangerLevel;
 	}
+	
 	
 	
 }
