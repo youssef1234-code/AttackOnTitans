@@ -1,7 +1,7 @@
 package game.engine.weapons;
 
 public class WeaponRegistry {
-	private int code;
+	private final int code;
 	private int price;
 	private int damage;
 	private String name;
