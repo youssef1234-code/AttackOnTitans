@@ -151,14 +151,14 @@ public class DataLoader {
   public static void main(String[] args) throws IOException {
     System.out.println("WEAPONS DATA: ");
     HashMap < Integer, WeaponRegistry > t = readWeaponRegistry();
-    for (int i = 1; i < 5; i++) {
+    for (int i = 1; i < t.size()+1; i++) {
       WeaponRegistry wp = t.get(i);
       System.out.println("Code: " + wp.getCode() + " Price: " + wp.getPrice() + " Damage: " + wp.getDamage() + " Name: " + wp.getName() + " Min Range: " + wp.getMinRange() + " Max Range: " + wp.getMaxRange());
     }
     System.out.println("");
     System.out.println("TITANS DATA: ");
     HashMap < Integer, TitanRegistry > t1 = readTitanRegistry();
-    for (int j = 1; j < 5; j++) {
+    for (int j = 1; j < t1.size()+1; j++) {
       TitanRegistry tr = t1.get(j);
       System.out.println("code: " + tr.getCode() + " baseHealth: " + tr.getBaseHealth() + " Base Damage: " + tr.getBaseDamage() + " heightInMeters: " + tr.getHeightInMeters() + " speed: " + tr.getSpeed() +
         " resourcesValue: " + tr.getResourcesValue() + " dangerLevel: " + tr.getDangerLevel());
