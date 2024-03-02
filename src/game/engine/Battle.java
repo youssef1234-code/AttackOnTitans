@@ -48,12 +48,11 @@ public class Battle {
 	private void initializeLanes(int numOfLanes){
 
 		Wall wall = new Wall(WALL_BASE_HEALTH);
-
+		//Should be numOfLanes*2 , WHY ??? IDK.
 		for(int i = 0; i < numOfLanes; i++){
 			Lane lane = new Lane(wall);
-			lanes.add(lane);
-			originalLanes.add(lane);
-
+			this.lanes.add(lane);
+			this.originalLanes.add(lane);
 		}
 	}
 
