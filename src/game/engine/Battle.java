@@ -12,7 +12,13 @@ import java.util.PriorityQueue;
 
 public class Battle {
 	
-	private final int [][] PHASES_APPROACHING_TITANS;
+	
+
+	private static final int [][] PHASES_APPROACHING_TITANS = {
+			{ 1, 1, 1, 2, 1, 3, 4 },
+			{ 2, 2, 2, 1, 3, 3, 4 },
+			{ 4, 4, 4, 4, 4, 4, 4 } 
+	};
 	private final int WALL_BASE_HEALTH = 10000;
 	private int numberOfTurns;
 	private int resourcesGathered;
@@ -20,8 +26,8 @@ public class Battle {
 	private int numberOfTitansPerTurn;
 	private int score;
 	private int titanSpawnDistance;
-	private WeaponFactory weaponFactory;
-	private final HashMap<Integer,TitanRegistry> titanArchives = DataLoader.readTitanRegistry();
+	private final WeaponFactory weaponFactory;
+	private final HashMap<Integer,TitanRegistry> titansArchives = DataLoader.readTitanRegistry();
 	private final ArrayList<Titan> approachingTitans;
 	private final PriorityQueue<Lane> lanes;
 	private final ArrayList<Lane> originalLanes;
@@ -36,7 +42,6 @@ public class Battle {
 		this.originalLanes = new ArrayList<Lane>();
 		this.approachingTitans = new ArrayList<Titan>();
 		this.lanes = new PriorityQueue<Lane>();
-		this.PHASES_APPROACHING_TITANS = new int[][] {} ;
 
 	}
 
@@ -99,9 +104,34 @@ public class Battle {
 	public void setTitanSpawnDistance(int titanSpawnDistance) {
 		this.titanSpawnDistance = titanSpawnDistance;
 	}
+	
+	public HashMap<Integer, TitanRegistry> getTitansArchives() {
+		return titansArchives;
+	}
+	
+	public ArrayList<Lane> getOriginalLanes() {
+		return originalLanes;
+	}
+	
+	public ArrayList<Titan> getApproachingTitans() {
+		return approachingTitans;
+	}
+	
+	public int[][] getPHASES_APPROACHING_TITANS() {
+		return PHASES_APPROACHING_TITANS;
+	}
 
-	
-	
+	public int getWALL_BASE_HEALTH() {
+		return WALL_BASE_HEALTH;
+	}
+
+	public WeaponFactory getWeaponFactory() {
+		return weaponFactory;
+	}
+
+	public PriorityQueue<Lane> getLanes() {
+		return lanes;
+	}
 
 }
 

@@ -33,7 +33,7 @@ public class Lane implements Comparable<Lane> {
 		this.dangerLevel = dangerLevel;
 	}
 
-	public Wall getLanewall() {
+	public Wall getLaneWall() {
 		return this.laneWall;
 	}
 	

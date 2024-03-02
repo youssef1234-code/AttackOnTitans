@@ -2,7 +2,7 @@ package game.engine.weapons;
 
 public abstract class Weapon implements game.engine.interfaces.Attacker{
 	
-	private int baseDamage;
+	private final int baseDamage;
 
 	
 	public Weapon(int baseDamage) {

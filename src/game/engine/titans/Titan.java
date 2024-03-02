@@ -5,12 +5,13 @@ package game.engine.titans;
 	
 	private final int baseHealth;
 	private final int heightInMeters;
+	private final int baseDamage;
 	private final int dangerLevel;
+	private final int resourcesValue;
 	private int currentHealth;
-	private int baseDamage;
 	private int distanceFromBase;
 	private int speed;
-	private int resourcesValue;
+	
 	
 	public Titan(int baseHealth, int baseDamage, int heightInMeters, int distanceFromBase, int
 			speed, int resourcesValue, int dangerLevel) {
@@ -39,7 +40,10 @@ package game.engine.titans;
 	}
 	
 	public void setCurrentHealth(int health) {
-		this.currentHealth = health;
+		if(health <0) 
+			this.currentHealth = 0;
+		else 
+			this.currentHealth = health;
 	}
 	
 	public int getDamage() {
