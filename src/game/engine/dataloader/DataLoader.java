@@ -147,8 +147,8 @@ public class DataLoader {
     }
     return allWeaponRegistryData;
   }
-
-  public static void main(String[] args) throws IOException {
+  /*
+  public static void main(String[] args) throws Exception {
     System.out.println("WEAPONS DATA: ");
     HashMap < Integer, WeaponRegistry > t = readWeaponRegistry();
     for (int i = 1; i < t.size()+1; i++) {
@@ -162,6 +162,8 @@ public class DataLoader {
       TitanRegistry tr = t1.get(j);
       System.out.println("code: " + tr.getCode() + " baseHealth: " + tr.getBaseHealth() + " Base Damage: " + tr.getBaseDamage() + " heightInMeters: " + tr.getHeightInMeters() + " speed: " + tr.getSpeed() +
         " resourcesValue: " + tr.getResourcesValue() + " dangerLevel: " + tr.getDangerLevel());
-    }
+    
+  
   }
+  }*/
 }

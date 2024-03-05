@@ -42,13 +42,13 @@ public class Battle {
 		this.originalLanes = new ArrayList<Lane>();
 		this.approachingTitans = new ArrayList<Titan>();
 		this.lanes = new PriorityQueue<Lane>();
+		initializeLanes(initialNumOfLanes);
 
 	}
 
 	private void initializeLanes(int numOfLanes){
 
 		Wall wall = new Wall(WALL_BASE_HEALTH);
-		//Should be numOfLanes*2 , WHY ??? IDK.
 		for(int i = 0; i < numOfLanes; i++){
 			Lane lane = new Lane(wall);
 			this.lanes.add(lane);
