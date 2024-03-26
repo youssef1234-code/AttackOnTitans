@@ -19,6 +19,7 @@ public class DataLoader {
     BufferedReader titanBufferedReader = new BufferedReader(titanFileReader);
     ArrayList < String > titanList = new ArrayList < String > ();
     String line;
+      
     //Reading lines from CSV using BufferedReader and adding them to a 
     while ((line = titanBufferedReader.readLine()) != null && !line.isEmpty()) {
       titanList.add(line);

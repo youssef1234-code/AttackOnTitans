@@ -27,6 +27,11 @@ package game.engine.titans;
 	}
 	
 	
+	public int getBaseHealth() {
+		return baseHealth;
+	}
+
+
 	public int compareTo(Titan o) {
 		return this.getDistance() - o.getDistance();
 	}
@@ -59,6 +64,10 @@ package game.engine.titans;
 	}
 	
 	public void setDistance(int distance) {
+		if(distance < 0 ) {
+			this.distanceFromBase = 0;
+			return;
+		} 
 		this.distanceFromBase = distance;
 	}
 	

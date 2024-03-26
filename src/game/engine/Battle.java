@@ -19,7 +19,7 @@ public class Battle {
 			{ 2, 2, 2, 1, 3, 3, 4 },
 			{ 4, 4, 4, 4, 4, 4, 4 } 
 	};
-	private final int WALL_BASE_HEALTH = 10000;
+	private static final int WALL_BASE_HEALTH = 10000;
 	private int numberOfTurns;
 	private int resourcesGathered;
 	private BattlePhase battlePhase;
@@ -43,6 +43,7 @@ public class Battle {
 		this.approachingTitans = new ArrayList<Titan>();
 		this.lanes = new PriorityQueue<Lane>();
 		initializeLanes(initialNumOfLanes);
+		this.battlePhase = battlePhase.EARLY;
 
 	}
 
