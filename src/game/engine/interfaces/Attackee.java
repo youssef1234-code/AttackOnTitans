@@ -8,4 +8,16 @@ public interface Attackee {
 	
 	public int getResourcesValue();
 	
+	public default boolean isDefeated() {
+		if(this.getCurrentHealth()<=0)
+			return true;
+		return false;
+	}
+	public default int takeDamage(int damage) {
+		if(damage>=0)
+			this.setCurrentHealth(this.getCurrentHealth()-damage);
+		if(this.isDefeated())
+			return this.getResourcesValue();
+		return 0;
+	}
 } 

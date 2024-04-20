@@ -1,7 +1,6 @@
 package game.engine.titans;
-
-
-public class ArmoredTitan extends Titan{
+import  game.engine.interfaces.*;
+public class ArmoredTitan extends Titan implements Attackee{
 	
 	public static final int TITAN_CODE = 3;
 	
@@ -9,5 +8,13 @@ public class ArmoredTitan extends Titan{
 		super( baseHealth, baseDamage,heightInMeters,distanceFromBase , speed,resourcesValue,dangerLevel);
 	}
 		
-
+	@Override
+	public  int takeDamage(int damage) {
+		if(damage>=0)
+			this.setCurrentHealth((int)(this.getCurrentHealth()-0.25*damage));
+		if(this.isDefeated())
+			return this.getResourcesValue();
+		return 0;
+	}
+	
 }

@@ -3,4 +3,11 @@ package game.engine.interfaces;
 
 public interface Attacker {
 	public int getDamage();
+
+	public default int attack(Attackee target) {
+		 target.takeDamage(this.getDamage());
+		 if(target.isDefeated())
+			 return target.getResourcesValue();
+		 return 0;
+	}
 }

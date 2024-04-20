@@ -26,7 +26,6 @@ package game.engine.titans;
 		this.dangerLevel      = dangerLevel;
 	}
 	
-	
 	public int getBaseHealth() {
 		return baseHealth;
 	}

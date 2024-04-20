@@ -1,6 +1,6 @@
 package game.engine.titans;
-
-public class ColossalTitan extends Titan{
+import game.engine.interfaces.*;
+public class ColossalTitan extends Titan implements Mobil{
 	
 	public static final int TITAN_CODE = 4;
 	
@@ -8,5 +8,11 @@ public class ColossalTitan extends Titan{
 		super( baseHealth, baseDamage,heightInMeters,distanceFromBase , speed,resourcesValue,dangerLevel);
 	}
 	
+	@Override
+	public boolean move() {
+		this.setSpeed(this.getSpeed()+1);
+		this.setDistance(this.getDistance() - this.getSpeed());
+		return this.hasReachedTarget();
+	}
 
 }

@@ -56,8 +56,15 @@ public class WeaponRegistry {
 	}
 	
 	
-	
-	
+	public Weapon buildWeapon() {
+		switch(this.code) {
+			case(1): return new PiercingCannon(this.damage); 
+			case(2): return new SniperCannon(this.damage);
+			case(3): return new VolleySpreadCannon(this.damage,this.minRange,this.maxRange);
+			case(4): return new WallTrap(this.damage);
+		}
+		return null;
+	}	
 	
 
 }
