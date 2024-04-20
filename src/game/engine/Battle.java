@@ -232,6 +232,7 @@ public class Battle {
     }
 
     private void finalizeTurns() {
+		numberOfTurns++; // C
         if(numberOfTurns<15) {
             this.battlePhase = BattlePhase.EARLY;
             return;
@@ -242,9 +243,10 @@ public class Battle {
         }
         if(numberOfTurns>=30) {
             this.battlePhase = BattlePhase.GRUMBLING;
-            if(numberOfTurns%5 == 0)
+            if(numberOfTurns%5 == 0 && numberOfTurns != 30) //C
                 numberOfTitansPerTurn*=2;
         }
+		
 
     }
     
@@ -257,7 +259,6 @@ public class Battle {
 		resourcesGathered += performWeaponsAttacks();	
 		addTurnTitansToLane();
 		updateLanesDangerLevels();
-		numberOfTurns++;
 		finalizeTurns();
 	}
 

@@ -109,7 +109,7 @@ public class Lane implements Comparable<Lane> {
 		 while(!temp.isEmpty())
 			 this.titans.add(temp.poll());
 		 
-		 this.dangerLevel = (size>0) ? totalDangerLevel / size :0;
+		 this.dangerLevel = (size>0) ? totalDangerLevel :0;
 	 }
 	 
 	 
