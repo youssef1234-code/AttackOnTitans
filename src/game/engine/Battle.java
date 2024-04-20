@@ -190,7 +190,63 @@ public class Battle {
 		
 	}
 
+	private int performWeaponsAttacks() {
+        int res = 0;
+        PriorityQueue<Lane> temp = new PriorityQueue<Lane>();
+        Lane currentLane = null;
+        while(!this.lanes.isEmpty()) {
+            currentLane = this.lanes.poll();
+            res += currentLane.performLaneWeaponsAttacks();
+            temp.add(currentLane);
+        }
+        while(!temp.isEmpty())
+            this.lanes.add(temp.poll());
+        return res;
+    }
 
+    private int performTitansAttacks() {
+        int res = 0;
+        PriorityQueue<Lane> temp = new PriorityQueue<Lane>();
+        Lane currentLane = null;
+        while(!this.lanes.isEmpty()) {
+            currentLane = this.lanes.poll();
+            res += currentLane.performLaneTitansAttacks();
+            temp.add(currentLane);
+        }
+        while(!temp.isEmpty())
+            this.lanes.add(temp.poll());
+        return res;
+    }
+
+    private void updateLanesDangerLevels() {
+        PriorityQueue<Lane> temp = new PriorityQueue<Lane>();
+        Lane currentLane = null;
+        while(!this.lanes.isEmpty()) {
+            currentLane = this.lanes.poll();
+            currentLane.updateLaneDangerLevel();
+            temp.add(currentLane);
+        }
+        while(!temp.isEmpty())
+            this.lanes.add(temp.poll());
+    }
+
+    private void finalizeTurns() {
+        if(numberOfTurns<15) {
+            this.battlePhase = BattlePhase.EARLY;
+            return;
+        }
+        if(numberOfTurns<30) {
+            this.battlePhase = BattlePhase.INTENSE;
+            return;
+        }
+        if(numberOfTurns>=30) {
+            this.battlePhase = BattlePhase.GRUMBLING;
+            if(numberOfTurns%5 == 0)
+                numberOfTitansPerTurn*=2;
+        }
+
+    }
+    
 	public void passTurn(){
 		performTurn();
 	}
