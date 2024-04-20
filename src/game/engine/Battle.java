@@ -136,29 +136,28 @@ public class Battle {
 	}
 
 	public void refillApproachingTitans(){
-		switch(battlePhase){
-			case EARLY:
-			for(int i = 0; i < 7; i++){	
+		if(battlePhase == BattlePhase.EARLY)
+			for(int i = 0; i < PHASES_APPROACHING_TITANS[0].length; i++){	
 				TitanRegistry titanData = titansArchives.get(PHASES_APPROACHING_TITANS[0][i]);
 				approachingTitans.add(titanData.spawnTitan(titanSpawnDistance));
-				
 			}
-			case INTENSE:
-			for(int i = 0; i < 7; i++){	
+
+		else if(battlePhase == BattlePhase.INTENSE)
+			for(int i = 0; i < PHASES_APPROACHING_TITANS[1].length; i++){	
 				TitanRegistry titanData = titansArchives.get(PHASES_APPROACHING_TITANS[1][i]);
 				approachingTitans.add(titanData.spawnTitan(titanSpawnDistance));
-				
-			}
-			case GRUMBLING:
-			for(int i = 0; i < 7; i++){	
+			
+		}
+		else if(battlePhase == BattlePhase.GRUMBLING)
+			for(int i = 0; i < PHASES_APPROACHING_TITANS[2].length; i++){	
 				TitanRegistry titanData = titansArchives.get(PHASES_APPROACHING_TITANS[2][i]);
 				approachingTitans.add(titanData.spawnTitan(titanSpawnDistance));
 				
 			}
 		}
-	}
+	
 
-	public void purchaseWeapons(int weaponCode, Lane lane) throws InsufficientResourcesException,
+	public void purchaseWeapon(int weaponCode, Lane lane) throws InsufficientResourcesException,
 	InvalidLaneException{
 		if(lane.isLaneLost())
 		throw new InvalidLaneException();
@@ -255,8 +254,8 @@ public class Battle {
 	}
 	private void performTurn(){
 		moveTitans();
-		resourcesGathered += performTitansAttacks();
 		resourcesGathered += performWeaponsAttacks();	
+		resourcesGathered += performTitansAttacks();
 		addTurnTitansToLane();
 		updateLanesDangerLevels();
 		finalizeTurns();

@@ -1,5 +1,6 @@
 package game.engine.weapons;
 
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 import game.engine.titans.Titan;
@@ -14,11 +15,9 @@ public class PiercingCannon extends Weapon {
 
 	public int turnAttack(PriorityQueue<Titan> laneTitans) {
 		int totalResources = 0;
-		PriorityQueue <Titan> tempStore = new PriorityQueue<Titan>();
-		
-		for(int i=1;i<=laneTitans.size();i++) {
-			if(i>5) 
-				break;
+		ArrayList <Titan> tempStore = new ArrayList<Titan>();
+		int size = laneTitans.size();
+		for(int i=0;i< size && i < 5;i++) {
 			
 			Titan beingDefeated = laneTitans.poll();
 			beingDefeated.takeDamage(this.getDamage());
@@ -30,8 +29,8 @@ public class PiercingCannon extends Weapon {
 
 		}
 		
-		while(!tempStore.isEmpty())
-			laneTitans.add((Titan)tempStore.poll());
+		for(int i = 0; i < tempStore.size(); i++)
+			laneTitans.add((Titan)tempStore.get(i));
 		
 		return totalResources;		
 	}

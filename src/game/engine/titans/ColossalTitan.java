@@ -10,9 +10,11 @@ public class ColossalTitan extends Titan implements Mobil{
 	
 	@Override
 	public boolean move() {
-		this.setSpeed(this.getSpeed()+1);
+		this.setSpeed(this.getSpeed());
 		this.setDistance(this.getDistance() - this.getSpeed());
+		this.setSpeed(this.getSpeed()+1);
 		return this.hasReachedTarget();
+		
 	}
 
 }
