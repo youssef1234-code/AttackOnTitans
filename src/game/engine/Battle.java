@@ -211,7 +211,8 @@ public class Battle {
         while(!this.lanes.isEmpty()) {
             currentLane = this.lanes.poll();
             res += currentLane.performLaneTitansAttacks();
-            temp.add(currentLane);
+			if(!currentLane.isLaneLost())
+            	temp.add(currentLane);
         }
         while(!temp.isEmpty())
             this.lanes.add(temp.poll());
@@ -250,7 +251,19 @@ public class Battle {
 	public void passTurn(){
 		performTurn();
 	}
-	private void performTurn(){}
+	private void performTurn(){
+		moveTitans();
+		resourcesGathered += performTitansAttacks();
+		resourcesGathered += performWeaponsAttacks();	
+		addTurnTitansToLane();
+		updateLanesDangerLevels();
+		numberOfTurns++;
+		finalizeTurns();
+	}
+
+	public boolean isGameOver(){
+		return lanes.isEmpty();
+	}
 
 
 
