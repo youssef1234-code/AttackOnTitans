@@ -13,7 +13,7 @@ public class WeaponFactory {
 
 	public WeaponFactory() throws IOException{
 		weaponShop = DataLoader.readWeaponRegistry();
-		
+	
 	}
 
 	public HashMap<Integer, WeaponRegistry> getWeaponShop() {

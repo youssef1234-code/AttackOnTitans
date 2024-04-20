@@ -1,10 +1,12 @@
 package game.engine;
 
+import game.engine.weapons.factory.FactoryResponse;
 import game.engine.weapons.factory.WeaponFactory;
 import game.engine.titans.*;
 import game.engine.lanes.Lane;
 import game.engine.base.Wall;
 import game.engine.dataloader.DataLoader;
+import game.engine.exceptions.*;
 import java.util.HashMap;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -136,64 +138,64 @@ public class Battle {
 	public void refillApproachingTitans(){
 		switch(battlePhase){
 			case EARLY:
-			for(int i = 0; i < 8; i++){	
+			for(int i = 0; i < 7; i++){	
 				TitanRegistry titanData = titansArchives.get(PHASES_APPROACHING_TITANS[0][i]);
-				switch(titanData.getCode()){
-					case 1:
-						approachingTitans.add(new PureTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
-						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
-					case 2:
-						approachingTitans.add(new AbnormalTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
-						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
-					case 3:
-						approachingTitans.add(new ArmoredTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
-						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
-					case 4:
-						approachingTitans.add(new ColossalTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
-						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
-				}
+				approachingTitans.add(titanData.spawnTitan(titanSpawnDistance));
 				
 			}
 			case INTENSE:
-			for(int i = 0; i < 5; i++){	
+			for(int i = 0; i < 7; i++){	
 				TitanRegistry titanData = titansArchives.get(PHASES_APPROACHING_TITANS[1][i]);
-				switch(titanData.getCode()){
-					case 1:
-						approachingTitans.add(new PureTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
-						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
-					case 2:
-						approachingTitans.add(new AbnormalTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
-						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
-					case 3:
-						approachingTitans.add(new ArmoredTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
-						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
-					case 4:
-						approachingTitans.add(new ColossalTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
-						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
-				}
+				approachingTitans.add(titanData.spawnTitan(titanSpawnDistance));
 				
 			}
 			case GRUMBLING:
-			for(int i = 0; i < 5; i++){	
+			for(int i = 0; i < 7; i++){	
 				TitanRegistry titanData = titansArchives.get(PHASES_APPROACHING_TITANS[2][i]);
-				switch(titanData.getCode()){
-					case 1:
-						approachingTitans.add(new PureTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
-						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
-					case 2:
-						approachingTitans.add(new AbnormalTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
-						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
-					case 3:
-						approachingTitans.add(new ArmoredTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
-						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
-					case 4:
-						approachingTitans.add(new ColossalTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
-						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
-				}
+				approachingTitans.add(titanData.spawnTitan(titanSpawnDistance));
 				
 			}
 		}
 	}
-	
+
+	public void purchaseWeapons(int weaponCode, Lane lane) throws InsufficientResourcesException,
+	InvalidLaneException{
+		if(lane.isLaneLost())
+		throw new InvalidLaneException();
+
+		FactoryResponse response = weaponFactory.buyWeapon(resourcesGathered, weaponCode);
+		lane.addWeapon(response.getWeapon());
+			
+	}
+
+	private void addTurnTitansToLane(){
+		Lane currLane = lanes.peek();
+		for(int i = 0; i < numberOfTitansPerTurn; i++){
+			if(approachingTitans.isEmpty())
+				refillApproachingTitans();
+			currLane.addTitan(approachingTitans.remove(0));
+		}
+
+	}
+
+	private void moveTitans(){
+		ArrayList<Lane> temp = new ArrayList<Lane>();
+		while(!lanes.isEmpty()){
+			lanes.peek().moveLaneTitans();
+			temp.add(lanes.poll());
+		}
+		while(!temp.isEmpty()){
+			lanes.add(temp.remove(0));
+		}
+		
+	}
+
+
+	public void passTurn(){
+		performTurn();
+	}
+	private void performTurn(){}
+
+
 
 }
