@@ -43,7 +43,7 @@ public class Battle {
 		this.approachingTitans = new ArrayList<Titan>();
 		this.lanes = new PriorityQueue<Lane>();
 		initializeLanes(initialNumOfLanes);
-		this.battlePhase = battlePhase.EARLY;
+		this.battlePhase = BattlePhase.EARLY;
 
 	}
 
@@ -133,6 +133,67 @@ public class Battle {
 		return lanes;
 	}
 
+	public void refillApproachingTitans(){
+		switch(battlePhase){
+			case EARLY:
+			for(int i = 0; i < 8; i++){	
+				TitanRegistry titanData = titansArchives.get(PHASES_APPROACHING_TITANS[0][i]);
+				switch(titanData.getCode()){
+					case 1:
+						approachingTitans.add(new PureTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
+						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
+					case 2:
+						approachingTitans.add(new AbnormalTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
+						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
+					case 3:
+						approachingTitans.add(new ArmoredTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
+						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
+					case 4:
+						approachingTitans.add(new ColossalTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
+						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
+				}
+				
+			}
+			case INTENSE:
+			for(int i = 0; i < 5; i++){	
+				TitanRegistry titanData = titansArchives.get(PHASES_APPROACHING_TITANS[1][i]);
+				switch(titanData.getCode()){
+					case 1:
+						approachingTitans.add(new PureTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
+						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
+					case 2:
+						approachingTitans.add(new AbnormalTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
+						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
+					case 3:
+						approachingTitans.add(new ArmoredTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
+						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
+					case 4:
+						approachingTitans.add(new ColossalTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
+						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
+				}
+				
+			}
+			case GRUMBLING:
+			for(int i = 0; i < 5; i++){	
+				TitanRegistry titanData = titansArchives.get(PHASES_APPROACHING_TITANS[2][i]);
+				switch(titanData.getCode()){
+					case 1:
+						approachingTitans.add(new PureTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
+						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
+					case 2:
+						approachingTitans.add(new AbnormalTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
+						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
+					case 3:
+						approachingTitans.add(new ArmoredTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
+						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
+					case 4:
+						approachingTitans.add(new ColossalTitan(titanData.getBaseHealth(), titanData.getBaseDamage(), titanData.getHeightInMeters(), 
+						titanSpawnDistance, titanData.getSpeed(), titanData.getResourcesValue(), titanData.getDangerLevel()));
+				}
+				
+			}
+		}
+	}
+	
+
 }
-
-
