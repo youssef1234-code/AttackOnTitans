@@ -8,14 +8,13 @@ import game.engine.base.Wall;
 import game.engine.dataloader.DataLoader;
 import game.engine.exceptions.*;
 import java.util.HashMap;
+import java.util.Objects;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class Battle {
 	
-	
-
 	private static final int [][] PHASES_APPROACHING_TITANS = {
 			{ 1, 1, 1, 2, 1, 3, 4 },
 			{ 2, 2, 2, 1, 3, 3, 4 },
@@ -159,12 +158,27 @@ public class Battle {
 
 	public void purchaseWeapon(int weaponCode, Lane lane) throws InsufficientResourcesException,
 	InvalidLaneException{
-		if(lane.isLaneLost())
-		throw new InvalidLaneException();
+		boolean flag = false;
+		ArrayList<Lane> temp = new ArrayList<Lane>();
+		Lane currentLane = null;
+		while(!this.lanes.isEmpty()) {
+			currentLane = lanes.poll();
+			if(currentLane.getDangerLevel() == lane.getDangerLevel() &&
+	                Objects.equals(currentLane.getLaneWall(), lane.getLaneWall()) &&
+	                Objects.equals(currentLane.getTitans(),lane.getTitans()) &&
+	                Objects.equals(currentLane.getWeapons(), lane.getWeapons()))
+				flag = true;
+			if(!currentLane.isLaneLost())
+				temp.add(currentLane);
+		}
+		for(int i= 0 ;i<temp.size();i++) {
+			this.lanes.add(temp.get(i));
+		}
+		if(lane.isLaneLost() || !flag)
+			throw new InvalidLaneException();
 
 		FactoryResponse response = weaponFactory.buyWeapon(resourcesGathered, weaponCode);
 		lane.addWeapon(response.getWeapon());
-			
 	}
 
 	private void addTurnTitansToLane(){
@@ -191,15 +205,17 @@ public class Battle {
 
 	private int performWeaponsAttacks() {
         int res = 0;
-        PriorityQueue<Lane> temp = new PriorityQueue<Lane>();
+        ArrayList<Lane> temp = new ArrayList<Lane>();
         Lane currentLane = null;
         while(!this.lanes.isEmpty()) {
             currentLane = this.lanes.poll();
-            res += currentLane.performLaneWeaponsAttacks();
-            temp.add(currentLane);
+            if(!currentLane.isLaneLost()){
+            	res += currentLane.performLaneWeaponsAttacks();
+                temp.add(currentLane);
+            }
         }
-        while(!temp.isEmpty())
-            this.lanes.add(temp.poll());
+        for(int i=0;i<temp.size();i++)
+            this.lanes.add(temp.get(i));
         return res;
     }
 
@@ -231,7 +247,7 @@ public class Battle {
     }
 
     private void finalizeTurns() {
-		numberOfTurns++; // C
+		numberOfTurns++; 
         if(numberOfTurns<15) {
             this.battlePhase = BattlePhase.EARLY;
             return;
@@ -242,7 +258,7 @@ public class Battle {
         }
         if(numberOfTurns>=30) {
             this.battlePhase = BattlePhase.GRUMBLING;
-            if(numberOfTurns%5 == 0 && numberOfTurns != 30) //C
+            if(numberOfTurns%5 == 0 && numberOfTurns != 30)
                 numberOfTitansPerTurn*=2;
         }
 		

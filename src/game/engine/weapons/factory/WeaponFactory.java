@@ -22,27 +22,27 @@ public class WeaponFactory {
 
 	public FactoryResponse buyWeapon(int resources, int weaponCode) throws InsufficientResourcesException{
 			WeaponRegistry wp = this.weaponShop.get(weaponCode);
-			if(wp == null) 
-				return null;
+			//if(wp == null) 
+				//return null;
 			if(wp.getPrice() > resources)
 				throw new InsufficientResourcesException(resources);
-			if(weaponCode>=1 && weaponCode<=4)
+			//if(weaponCode>=1 && weaponCode<=4)
 				return new FactoryResponse(wp.buildWeapon(),resources - wp.getPrice());
-			return null;
+			//return null;
 	}
 	
 	public void addWeaponToShop(int code, int price) {
-		if(code >=1 && code<=4)
+		//if(code >=1 && code<=4)
 			weaponShop.put(code, new WeaponRegistry(code,price));
 	}
 	
 	public  void addWeaponToShop(int code, int price, int damage, String name) {
-		if(code >=1 && code<=4 && code!=3)
+		if(code!=3)
 		weaponShop.put(code, new WeaponRegistry(code,price,damage,name));
 	}
 	
 	public  void addWeaponToShop(int code, int price, int damage, String name,int minRange, int maxRange) {
-		if(code >=1 && code<=4 && code==3)
+		//if(code >=1 && code<=4 && code==3)
 		weaponShop.put(code, new WeaponRegistry(code,price,damage,name,minRange,maxRange));
 	}
 	
