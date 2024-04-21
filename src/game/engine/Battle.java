@@ -182,7 +182,9 @@ public class Battle {
 		
 		FactoryResponse response = weaponFactory.buyWeapon(resourcesGathered, weaponCode);
 		lane.addWeapon(response.getWeapon());
+		this.resourcesGathered = response.getRemainingResources();
 		this.lanes.add(lane);
+		performTurn();
 	}
 
 	private void addTurnTitansToLane(){
