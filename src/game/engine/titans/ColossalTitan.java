@@ -1,6 +1,6 @@
 package game.engine.titans;
 import game.engine.interfaces.*;
-public class ColossalTitan extends Titan implements Mobil{
+public class ColossalTitan extends Titan{
 	
 	public static final int TITAN_CODE = 4;
 	

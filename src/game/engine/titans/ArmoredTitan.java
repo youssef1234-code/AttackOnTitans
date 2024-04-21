@@ -1,6 +1,6 @@
 package game.engine.titans;
 import  game.engine.interfaces.*;
-public class ArmoredTitan extends Titan implements Attackee{
+public class ArmoredTitan extends Titan{
 	
 	public static final int TITAN_CODE = 3;
 	

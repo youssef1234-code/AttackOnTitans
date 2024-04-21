@@ -155,7 +155,6 @@ public class Battle {
 			}
 		}
 	
-
 	public void purchaseWeapon(int weaponCode, Lane lane) throws InsufficientResourcesException,
 	InvalidLaneException{
 		boolean flag = false;
@@ -166,19 +165,24 @@ public class Battle {
 			if(currentLane.getDangerLevel() == lane.getDangerLevel() &&
 	                Objects.equals(currentLane.getLaneWall(), lane.getLaneWall()) &&
 	                Objects.equals(currentLane.getTitans(),lane.getTitans()) &&
-	                Objects.equals(currentLane.getWeapons(), lane.getWeapons()))
+	                Objects.equals(currentLane.getWeapons(), lane.getWeapons())) {
 				flag = true;
-			if(!currentLane.isLaneLost())
-				temp.add(currentLane);
+		}
+			else {
+				if(!currentLane.isLaneLost())
+					temp.add(currentLane);
+			}	
 		}
 		for(int i= 0 ;i<temp.size();i++) {
 			this.lanes.add(temp.get(i));
 		}
+		
 		if(lane.isLaneLost() || !flag)
 			throw new InvalidLaneException();
-
+		
 		FactoryResponse response = weaponFactory.buyWeapon(resourcesGathered, weaponCode);
 		lane.addWeapon(response.getWeapon());
+		this.lanes.add(lane);
 	}
 
 	private void addTurnTitansToLane(){
@@ -203,22 +207,24 @@ public class Battle {
 		
 	}
 
+	//REDO 
 	private int performWeaponsAttacks() {
         int res = 0;
         ArrayList<Lane> temp = new ArrayList<Lane>();
         Lane currentLane = null;
         while(!this.lanes.isEmpty()) {
             currentLane = this.lanes.poll();
-            if(!currentLane.isLaneLost()){
-            	res += currentLane.performLaneWeaponsAttacks();
-                temp.add(currentLane);
-            }
+            res += currentLane.performLaneWeaponsAttacks();
+            temp.add(currentLane);
         }
         for(int i=0;i<temp.size();i++)
             this.lanes.add(temp.get(i));
+        
+        this.score += res;
+        this.resourcesGathered += res;
         return res;
     }
-
+	//REDO
     private int performTitansAttacks() {
         int res = 0;
         PriorityQueue<Lane> temp = new PriorityQueue<Lane>();
@@ -235,15 +241,16 @@ public class Battle {
     }
 
     private void updateLanesDangerLevels() {
-        PriorityQueue<Lane> temp = new PriorityQueue<Lane>();
+        ArrayList<Lane> temp = new ArrayList<Lane>();
         Lane currentLane = null;
         while(!this.lanes.isEmpty()) {
             currentLane = this.lanes.poll();
             currentLane.updateLaneDangerLevel();
-            temp.add(currentLane);
+            if(!currentLane.isLaneLost())
+            	temp.add(currentLane);
         }
-        while(!temp.isEmpty())
-            this.lanes.add(temp.poll());
+        for(int j=0;j<temp.size();j++)
+            this.lanes.add(temp.get(j));
     }
 
     private void finalizeTurns() {
@@ -270,8 +277,8 @@ public class Battle {
 	}
 	private void performTurn(){
 		moveTitans();
-		resourcesGathered += performWeaponsAttacks();	
-		resourcesGathered += performTitansAttacks();
+		performWeaponsAttacks();	
+		performTitansAttacks();
 		addTurnTitansToLane();
 		updateLanesDangerLevels();
 		finalizeTurns();

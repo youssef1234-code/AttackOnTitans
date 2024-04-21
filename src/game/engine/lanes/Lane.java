@@ -68,17 +68,18 @@ public class Lane implements Comparable<Lane> {
 	
 	 public int performLaneTitansAttacks() {
 		 int resources = 0;
-		 PriorityQueue<Titan> temp = new PriorityQueue<Titan>();
+		 ArrayList<Titan> temp = new ArrayList<Titan>();
 		 Titan currentTitan = null;
 		 int size = this.getTitans().size();
 		 for(int i=0;i<size;i++) {
 			 currentTitan = this.titans.poll();
 			 if(currentTitan.hasReachedTarget())
 				 resources+=currentTitan.attack(this.laneWall);
-			 temp.add(currentTitan);
+				 temp.add(currentTitan);
 		 }
-		 while(!temp.isEmpty())
-			 this.titans.add(temp.poll());
+		 for(int j=0;j<temp.size();j++)
+			 this.titans.add(temp.get(j));
+		 
 		 return resources;
 	 }
 	 

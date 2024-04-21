@@ -2,7 +2,7 @@ package game.engine.titans;
 
 import game.engine.interfaces.*;
 
-public class AbnormalTitan extends Titan implements Attacker{
+public class AbnormalTitan extends Titan {
 
 	public static final int TITAN_CODE = 2;
 
