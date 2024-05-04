@@ -11,6 +11,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class MainMenu extends Application {
@@ -21,7 +22,7 @@ public class MainMenu extends Application {
         Parent root = loader.load();
         //<Controller Class Name> controller = loader.getController();
         Scene scene = new Scene(root);
-        
+        Font.loadFont(getClass().getResourceAsStream("Oswald-Bold.ttf"), 14);
         scene.setOnKeyPressed(event ->{
             if(event.getCode() == KeyCode.F11)
                 primaryStage.setFullScreen(!primaryStage.isFullScreen());
@@ -39,8 +40,10 @@ public class MainMenu extends Application {
         
         Image icon = new Image(getClass().getResourceAsStream("icon.jpg"));
         primaryStage.getIcons().add(icon);
-        String css = this.getClass().getResource("application.css").toExternalForm();
+
+        String css = getClass().getResource("application.css").toExternalForm();
         scene.getStylesheets().add(css);
+
         primaryStage.show();
     } 
 
@@ -54,7 +57,7 @@ public class MainMenu extends Application {
                 stage.close();
         }
     }
-    
+
     public static void main(String[] args) {
         launch(args);
     }

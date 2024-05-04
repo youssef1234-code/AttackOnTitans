@@ -16,17 +16,17 @@
             <Font size="61.0" />
          </font>
       </Label>
-      <Button  styleClass="button" fx:id="startGame" layoutX="724.0" layoutY="424.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="508.0" text="New Game">
+      <Button fx:id="startGame" layoutX="724.0" layoutY="424.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="508.0" text="New Game">
          <font>
             <Font size="41.0" />
          </font>
       </Button>
-      <Button styleClass="button" fx:id="credits" layoutX="724.0" layoutY="593.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="508.0" text="Credits">
+      <Button fx:id="credits" layoutX="724.0" layoutY="593.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="508.0" text="Credits">
          <font>
             <Font size="41.0" />
          </font>
       </Button>
-      <Button styleClass="button" fx:id="quitGame" layoutX="724.0" layoutY="762.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="87.0" prefWidth="508.0" text="Quit">
+      <Button fx:id="quitGame" layoutX="724.0" layoutY="762.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="87.0" prefWidth="508.0" text="Quit">
          <font>
             <Font size="41.0" />
          </font>
