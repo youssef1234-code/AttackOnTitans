@@ -1,17 +1,26 @@
 package game.gui;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class mainController {
+public class mainController implements Initializable {
     
 
     @FXML
@@ -23,11 +32,13 @@ public class mainController {
     @FXML
     private AnchorPane scenePane;
 
+    @FXML
+    private MediaView backgroundVideo;
+
     public Stage stage;
 
     public void exitGame(ActionEvent event){
         stage = (Stage) scenePane.getScene().getWindow();
-
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Quit");
         alert.setHeaderText("You're about to Quit!!");
@@ -38,10 +49,34 @@ public class mainController {
             System.out.println("You exited the game through quit button");
             stage.close();
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        String videoFile = getClass().getResource("bgvideo.mp4").toExternalForm();
+        Media media = new Media(videoFile);
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        backgroundVideo.setMediaPlayer(mediaPlayer);
+
+        String audioFile = getClass().getResource("bgmusic.mp3").toExternalForm();
+        Media audioMedia = new Media(audioFile);
+        MediaPlayer audioPlayer = new MediaPlayer(audioMedia);
+        audioPlayer.setAutoPlay(true);
+        audioPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+
+        startGame.setOnKeyPressed(this::handleButtonKeyPress);
+        credits.setOnKeyPressed(this::handleButtonKeyPress);
+        quitGame.setOnKeyPressed(this::handleButtonKeyPress);
     } 
 
- 
-
+    private void handleButtonKeyPress(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            Button sourceButton = (Button) event.getSource();
+            sourceButton.fire();
+        }
+    }
 
 }
 

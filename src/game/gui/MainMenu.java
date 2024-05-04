@@ -53,8 +53,8 @@ public class MainMenu extends Application {
                 System.out.println("You have successfully closed the window");
                 stage.close();
         }
-
     }
+    
     public static void main(String[] args) {
         launch(args);
     }
