@@ -7,6 +7,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.control.Button;
 import javafx.scene.media.MediaView;
 
+
+
 abstract public class BGMedia {
     private static MediaPlayer bgAudioPlayer = new MediaPlayer(new Media(BGMedia.class.getResource("assets/bgmusic.mp3").toString()));
     private static MediaPlayer videoPlayer = new MediaPlayer(new Media(BGMedia.class.getResource("assets/bgvideo.mp4").toString()));
