@@ -34,7 +34,7 @@
       </Button>
       <Button id="muteButton" fx:id="muteButton" layoutX="70.0" layoutY="50.0" mnemonicParsing="false" onAction="#mute" prefHeight="83.0" prefWidth="240.0" text="Mute">
          <graphic>
-            <ImageView fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="muteImage" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@volume.png" />
                </image>

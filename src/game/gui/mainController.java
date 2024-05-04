@@ -11,6 +11,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorInput;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -34,7 +38,10 @@ public class mainController implements Initializable {
 
     @FXML
     private MediaView backgroundVideo;
-
+    
+    @FXML
+    private ImageView muteImage;
+    
     private MediaPlayer bgAudioPlayer = new MediaPlayer(new Media(getClass().getResource("bgmusic.mp3").toExternalForm()));
     public boolean isMute = false;
     public Stage stage;
@@ -61,9 +68,11 @@ public class mainController implements Initializable {
         } else {
             bgAudioPlayer.setVolume(0.0);
             isMute = true;
-            muteButton.setText("Unmute"); 
+            muteButton.setText("Unmute");
         }
     }
+    
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
