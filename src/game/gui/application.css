@@ -1,4 +1,4 @@
-#muteButton, #startGame, #credits, #quitGame {
+#textBox1, #textBox2, #backButton, #muteButton, #startGame, #credits, #quitGame {
     -fx-text-fill: #FFF;
     -fx-background-color: transparent;
     -fx-border-color: rgba(255,255,255,0.5);
@@ -6,7 +6,7 @@
     -fx-text-size: 50px;
     -fx-font-family: "Oswald";
 }
-#muteButton{
+#muteButton, #backButton{
     -fx-font-size: 30px;
 }
 

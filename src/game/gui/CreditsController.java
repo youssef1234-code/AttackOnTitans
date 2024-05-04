@@ -1,5 +1,6 @@
 package game.gui;
 
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -8,34 +9,28 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
+import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Node;
 
-public class mainController implements Initializable {
-    
-
-    @FXML
-    private Label Title;
-
-    @FXML
-    private Button startGame,credits,quitGame,muteButton;
+public class CreditsController implements Initializable{ 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+    private final String css = getClass().getResource("application.css").toExternalForm();
 
     @FXML
-    private AnchorPane scenePane;
+    private Label textBox1, textBox2;
+
+    @FXML
+    private Button backButton, muteButton;
 
     @FXML
     private MediaView backgroundVideo;
@@ -43,24 +38,6 @@ public class mainController implements Initializable {
     private MediaPlayer bgAudioPlayer = new MediaPlayer(new Media(getClass().getResource("assets/bgmusic.mp3").toExternalForm()));
     public boolean isMute = false;
 
-    private Scene scene;
-    private Parent root;
-    public Stage stage;
-    private final String css = getClass().getResource("application.css").toExternalForm();
-
-    public void exitGame(ActionEvent event){
-        stage = (Stage) scenePane.getScene().getWindow();
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Quit");
-        alert.setHeaderText("You're about to Quit!!");
-        alert.setContentText("You will lose all your progress if you quit !!");
-        alert.initModality(Modality.APPLICATION_MODAL);
-        alert.initOwner(stage);
-        if(alert.showAndWait().get() == ButtonType.OK){
-            System.out.println("You exited the game through quit button");
-            stage.close();
-        }
-    }
 
     public void mute(ActionEvent event){
         if (isMute) {
@@ -74,15 +51,14 @@ public class mainController implements Initializable {
         }
     }
 
-        public void goToCredits(ActionEvent event) throws IOException{
-        root = FXMLLoader.load(getClass().getResource("CreditsScene.fxml"));
+    public void goToMainMenu(ActionEvent event) throws IOException{
+        root = FXMLLoader.load(getClass().getResource("MainMenuScene.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(css);
 
         bgAudioPlayer.stop();
 
-        stage.setScene(scene);
         stage.setScene(scene);
         scene.setOnKeyPressed(ev ->{
             if(ev.getCode() == KeyCode.F11)
@@ -94,8 +70,7 @@ public class mainController implements Initializable {
 
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources){
         String videoFile = getClass().getResource("assets/bgvideo.mp4").toExternalForm();
         Media media = new Media(videoFile);
         MediaPlayer mediaPlayer = new MediaPlayer(media);
@@ -103,24 +78,15 @@ public class mainController implements Initializable {
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         backgroundVideo.setMediaPlayer(mediaPlayer);
 
+
         bgAudioPlayer.setAutoPlay(true);
         bgAudioPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        
-        
-        startGame.setOnKeyPressed(this::handleButtonKeyPress);
-        credits.setOnKeyPressed(this::handleButtonKeyPress);
-        quitGame.setOnKeyPressed(this::handleButtonKeyPress);
-    } 
-
-    private void handleButtonKeyPress(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
-            Button sourceButton = (Button) event.getSource();
-            sourceButton.fire();
-        }
     }
+
 
     
 
+    
 
+    
 }
-

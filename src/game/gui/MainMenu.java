@@ -38,7 +38,7 @@ public class MainMenu extends Application {
             exit(primaryStage); 
         });
         
-        Image icon = new Image(getClass().getResourceAsStream("icon.jpg"));
+        Image icon = new Image(getClass().getResourceAsStream("assets/icon.jpg"));
         primaryStage.getIcons().add(icon);
 
         String css = getClass().getResource("application.css").toExternalForm();

@@ -22,7 +22,7 @@
             <Font size="48.0" />
          </font>
       </Button>
-      <Button fx:id="credits" layoutX="724.0" layoutY="593.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="508.0" text="Credits">
+      <Button fx:id="credits" layoutX="724.0" layoutY="593.0" mnemonicParsing="false" onAction="#goToCredits" prefHeight="87.0" prefWidth="508.0" text="Credits">
          <font>
             <Font size="48.0" />
          </font>
@@ -36,7 +36,7 @@
          <graphic>
             <ImageView fx:id="muteImage" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@volume.png" />
+                  <Image url="@assets/volume.png" />
                </image>
             </ImageView>
          </graphic>
