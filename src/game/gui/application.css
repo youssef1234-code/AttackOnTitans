@@ -1,4 +1,4 @@
-#textBox1, #textBox2, #backButton, #muteButton, #startGame, #credits, #quitGame {
+#backButton, #muteButton, #startGame, #credits, #quitGame {
     -fx-text-fill: #FFF;
     -fx-background-color: transparent;
     -fx-border-color: rgba(255,255,255,0.5);
@@ -14,7 +14,8 @@
 #startGame:hover, #startGame:focused,
 #credits:hover, #credits:focused,
 #quitGame:hover, #quitGame:focused {
-    -fx-font-size: 50px; /* Adjust the font size to your desired value */
+    -fx-font-size: 50px;
+    -fx-effect: dropshadow(three-pass-box, #FFF, 10, 0, 0, 0);
 }
 
 #Title{
@@ -22,4 +23,38 @@
     -fx-font-family: "Oswald";
     -fx-font-size: 150px ;
     -fx-font-style: italic;
+}
+#textBox1, #textBox2{
+    -fx-text-fill: #FFF;
+    -fx-font-family: "Oswald";
+    -fx-font-size: 50px ;
+    -fx-font-style: italic;
+}
+
+.exitDialog {
+    -fx-background-color: #ffffff; /* Set background color to white /
+}
+
+.exitDialog > .button-bar > .container {
+    -fx-background-color: #ffffff; / Set button bar background color to white /
+}
+
+.exitDialog > .label.content {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #292929; / Set text color to dark gray /
+}
+
+.exitDialog:header > .header-panel {
+    -fx-background-color: #ffffff; / Set header panel background color to white /
+}
+
+.exitDialog:header > .header-panel > .label {
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+    -fx-text-fill: #292929; / Set header text color to dark gray */
+}
+
+.exitDialog .alert-icon {
+    -fx-visibility: hidden;
 }

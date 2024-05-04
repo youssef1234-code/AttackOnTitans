@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -25,7 +26,7 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class mainController implements Initializable {
+public class mainController extends BGMedia implements Initializable  {
     
 
     @FXML
@@ -40,8 +41,6 @@ public class mainController implements Initializable {
     @FXML
     private MediaView backgroundVideo;
 
-    private MediaPlayer bgAudioPlayer = new MediaPlayer(new Media(getClass().getResource("assets/bgmusic.mp3").toExternalForm()));
-    public boolean isMute = false;
 
     private Scene scene;
     private Parent root;
@@ -54,6 +53,11 @@ public class mainController implements Initializable {
         alert.setTitle("Quit");
         alert.setHeaderText("You're about to Quit!!");
         alert.setContentText("You will lose all your progress if you quit !!");
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+        dialogPane.getStyleClass().add("exitDialog");
+
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.initOwner(stage);
         if(alert.showAndWait().get() == ButtonType.OK){
@@ -63,15 +67,7 @@ public class mainController implements Initializable {
     }
 
     public void mute(ActionEvent event){
-        if (isMute) {
-            bgAudioPlayer.setVolume(1.0);
-            isMute = false;
-            muteButton.setText("Mute"); 
-        } else {
-            bgAudioPlayer.setVolume(0.0);
-            isMute = true;
-            muteButton.setText("Unmute"); 
-        }
+        muteMedia(event, muteButton);
     }
 
         public void goToCredits(ActionEvent event) throws IOException{
@@ -80,9 +76,12 @@ public class mainController implements Initializable {
         scene = new Scene(root);
         scene.getStylesheets().add(css);
 
-        bgAudioPlayer.stop();
+        Button nextMuteButton = (Button) root.lookup("#muteButton");
+        if(muteButton.getText().equals("Mute"))
+            nextMuteButton.setText("Mute");
+        else 
+            nextMuteButton.setText("Unmute");
 
-        stage.setScene(scene);
         stage.setScene(scene);
         scene.setOnKeyPressed(ev ->{
             if(ev.getCode() == KeyCode.F11)
@@ -90,22 +89,15 @@ public class mainController implements Initializable {
         });
         stage.setResizable(false);
         stage.setFullScreen(true);
+        
+    
         stage.show();
 
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        String videoFile = getClass().getResource("assets/bgvideo.mp4").toExternalForm();
-        Media media = new Media(videoFile);
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        backgroundVideo.setMediaPlayer(mediaPlayer);
-
-        bgAudioPlayer.setAutoPlay(true);
-        bgAudioPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        
+        playMedia(backgroundVideo);
         
         startGame.setOnKeyPressed(this::handleButtonKeyPress);
         credits.setOnKeyPressed(this::handleButtonKeyPress);

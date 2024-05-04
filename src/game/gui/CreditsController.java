@@ -20,7 +20,7 @@ import javafx.scene.media.MediaView;
 import javafx.scene.Parent;
 import javafx.scene.Node;
 
-public class CreditsController implements Initializable{ 
+public class CreditsController extends BGMedia implements Initializable{ 
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -35,20 +35,10 @@ public class CreditsController implements Initializable{
     @FXML
     private MediaView backgroundVideo;
 
-    private MediaPlayer bgAudioPlayer = new MediaPlayer(new Media(getClass().getResource("assets/bgmusic.mp3").toExternalForm()));
-    public boolean isMute = false;
 
 
     public void mute(ActionEvent event){
-        if (isMute) {
-            bgAudioPlayer.setVolume(1.0);
-            isMute = false;
-            muteButton.setText("Mute"); 
-        } else {
-            bgAudioPlayer.setVolume(0.0);
-            isMute = true;
-            muteButton.setText("Unmute"); 
-        }
+      muteMedia(event, muteButton);
     }
 
     public void goToMainMenu(ActionEvent event) throws IOException{
@@ -57,7 +47,12 @@ public class CreditsController implements Initializable{
         scene = new Scene(root);
         scene.getStylesheets().add(css);
 
-        bgAudioPlayer.stop();
+        Button nextMuteButton = (Button) root.lookup("#muteButton");
+        if(muteButton.getText().equals("Mute"))
+            nextMuteButton.setText("Mute");
+        else 
+            nextMuteButton.setText("Unmute");
+
 
         stage.setScene(scene);
         scene.setOnKeyPressed(ev ->{
@@ -66,21 +61,13 @@ public class CreditsController implements Initializable{
         });
         stage.setResizable(false);
         stage.setFullScreen(true);
+
         stage.show();
 
     }
 
     public void initialize(URL location, ResourceBundle resources){
-        String videoFile = getClass().getResource("assets/bgvideo.mp4").toExternalForm();
-        Media media = new Media(videoFile);
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        backgroundVideo.setMediaPlayer(mediaPlayer);
-
-
-        bgAudioPlayer.setAutoPlay(true);
-        bgAudioPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+       playMedia(backgroundVideo);
     }
 
 
