@@ -27,7 +27,7 @@ public class mainController implements Initializable {
     private Label Title;
 
     @FXML
-    private Button startGame,credits,quitGame;
+    private Button startGame,credits,quitGame,muteButton;
 
     @FXML
     private AnchorPane scenePane;
@@ -35,6 +35,8 @@ public class mainController implements Initializable {
     @FXML
     private MediaView backgroundVideo;
 
+    private MediaPlayer bgAudioPlayer = new MediaPlayer(new Media(getClass().getResource("bgmusic.mp3").toExternalForm()));
+    public boolean isMute = false;
     public Stage stage;
 
     public void exitGame(ActionEvent event){
@@ -51,6 +53,18 @@ public class mainController implements Initializable {
         }
     }
 
+    public void mute(ActionEvent event){
+        if (isMute) {
+            bgAudioPlayer.setVolume(1.0);
+            isMute = false;
+            muteButton.setText("Mute"); 
+        } else {
+            bgAudioPlayer.setVolume(0.0);
+            isMute = true;
+            muteButton.setText("Unmute"); 
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         String videoFile = getClass().getResource("bgvideo.mp4").toExternalForm();
@@ -60,12 +74,10 @@ public class mainController implements Initializable {
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         backgroundVideo.setMediaPlayer(mediaPlayer);
 
-        String audioFile = getClass().getResource("bgmusic.mp3").toExternalForm();
-        Media audioMedia = new Media(audioFile);
-        MediaPlayer audioPlayer = new MediaPlayer(audioMedia);
-        audioPlayer.setAutoPlay(true);
-        audioPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-
+        bgAudioPlayer.setAutoPlay(true);
+        bgAudioPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        
+        
         startGame.setOnKeyPressed(this::handleButtonKeyPress);
         credits.setOnKeyPressed(this::handleButtonKeyPress);
         quitGame.setOnKeyPressed(this::handleButtonKeyPress);
@@ -77,6 +89,9 @@ public class mainController implements Initializable {
             sourceButton.fire();
         }
     }
+
+    
+
 
 }
 

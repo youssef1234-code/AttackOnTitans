@@ -1,12 +1,13 @@
-#startGame, #credits, #quitGame {
+#muteButton, #startGame, #credits, #quitGame {
     -fx-text-fill: #FFF;
     -fx-background-color: transparent;
     -fx-border-color: rgba(255,255,255,0.5);
-    -fx-border-width: 3px;
-    -fx-border-style: solid;
-    -fx-position: relative;
+    -fx-border-width: 0px;
+    -fx-text-size: 50px;
     -fx-font-family: "Oswald";
-
+}
+#muteButton{
+    -fx-font-size: 30px;
 }
 
 #Title{
