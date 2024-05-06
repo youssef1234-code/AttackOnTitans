@@ -22,7 +22,7 @@ public class MainMenu extends Application {
         Parent root = loader.load();
         //<Controller Class Name> controller = loader.getController();
         Scene scene = new Scene(root);
-        Font.loadFont(getClass().getResourceAsStream("Oswald-Bold.ttf"), 14);
+        Font.loadFont(getClass().getResourceAsStream("assets/Oswald-Bold.ttf"), 14);
         scene.setOnKeyPressed(event ->{
             if(event.getCode() == KeyCode.F11)
                 primaryStage.setFullScreen(!primaryStage.isFullScreen());

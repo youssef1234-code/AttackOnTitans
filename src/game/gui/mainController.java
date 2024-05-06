@@ -70,7 +70,7 @@ public class mainController extends BGMedia implements Initializable  {
         muteMedia(event, muteButton);
     }
 
-        public void goToCredits(ActionEvent event) throws IOException{
+    public void goToCredits(ActionEvent event) throws IOException{
         root = FXMLLoader.load(getClass().getResource("CreditsScene.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -92,7 +92,30 @@ public class mainController extends BGMedia implements Initializable  {
         
     
         stage.show();
+    }
 
+    public void goToNewGame(ActionEvent event) throws IOException{
+        root = FXMLLoader.load(getClass().getResource("NewGameScene.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        scene.getStylesheets().add(css);
+
+        Button nextMuteButton = (Button) root.lookup("#muteButton");
+        if(muteButton.getText().equals("Mute"))
+            nextMuteButton.setText("Mute");
+        else 
+            nextMuteButton.setText("Unmute");
+
+        stage.setScene(scene);
+        scene.setOnKeyPressed(ev ->{
+            if(ev.getCode() == KeyCode.F11)
+                stage.setFullScreen(!stage.isFullScreen());
+        });
+        stage.setResizable(false);
+        stage.setFullScreen(true);
+        
+    
+        stage.show();
     }
 
     @Override

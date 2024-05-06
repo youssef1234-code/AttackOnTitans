@@ -1,43 +1,47 @@
 package game.gui;
 
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.stage.Stage;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaView;
-import javafx.scene.Parent;
-import javafx.scene.Node;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
-public class CreditsController extends BGMedia implements Initializable{ 
+public class NewGameController extends BGMedia implements Initializable{
+
     private Stage stage;
     private Scene scene;
     private Parent root;
     private final String css = getClass().getResource("application.css").toExternalForm();
 
+  
     @FXML
-    private Label textBox1, textBox2;
-
+    private AnchorPane newGamePane;
     @FXML
-    private Button backButton, muteButton;
+    private Button backButton, muteButton, easyButton, hardButton, instructionsButton;
 
     @FXML
     private MediaView backgroundVideo;
 
+    //@FXML
+    //private StackPane stack;
+   
 
 
-    public void mute(ActionEvent event){
+
+   public void mute(ActionEvent event){
       muteMedia(event, muteButton);
     }
 
@@ -65,9 +69,24 @@ public class CreditsController extends BGMedia implements Initializable{
         stage.show();
 
     }
+    
+
+    public void showInstructions(ActionEvent event) throws IOException{
+        root = FXMLLoader.load(getClass().getResource("InstructionsWindow.fxml"));
+        //stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+        root.getStylesheets().add(css);
+        scene = new Scene(root);
+        scene.getStylesheets().add(css);
+        newGamePane.getChildren().add(6, root);
+
+        AnchorPane.setTopAnchor(root, 240.0);
+        AnchorPane.setRightAnchor(root, 460.0);
+     
+
+    }
 
     public void initialize(URL location, ResourceBundle resources){
        resumeMedia(backgroundVideo);
     }
-
 }
