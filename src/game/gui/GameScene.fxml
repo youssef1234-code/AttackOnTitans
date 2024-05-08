@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="MainBackground" fitHeight="826.0" fitWidth="1922.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/MainBackground.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Lane1" fitHeight="150.0" fitWidth="1875.0" layoutX="32.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/Lane1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Lane2" fitHeight="150.0" fitWidth="1875.0" layoutX="26.0" layoutY="314.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/Lane1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Lane3" fitHeight="150.0" fitWidth="1875.0" layoutX="28.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/Lane1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Lane4" fitHeight="150.0" fitWidth="1875.0" layoutX="16.0" layoutY="632.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/Lane1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Lane41" fitHeight="150.0" fitWidth="1875.0" layoutX="12.0" layoutY="778.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/Lane1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="770.0" fitWidth="214.0" layoutX="8.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/Houses.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

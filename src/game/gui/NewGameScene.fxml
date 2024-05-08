@@ -32,7 +32,7 @@
             <Font size="48.0" />
          </font>
       </Button>
-      <Button fx:id="hardButton" layoutX="734.0" layoutY="533.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="508.0" text="Hard">
+      <Button fx:id="hardButton" layoutX="734.0" layoutY="533.0" mnemonicParsing="false" onAction="#initializeGame" prefHeight="87.0" prefWidth="508.0" text="Hard">
          <font>
             <Font size="48.0" />
          </font>

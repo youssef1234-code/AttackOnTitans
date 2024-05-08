@@ -15,11 +15,11 @@ public class InstructionsController  {
     private Button close;
 
     public void escape(ActionEvent event){
-    Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-    Scene scene = stage.getScene();
-    Parent root = scene.getRoot();
-    AnchorPane pane = (AnchorPane) root.lookup("#newGamePane");
-    pane.getChildren().remove(6);
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Scene scene = stage.getScene();
+        Parent root = scene.getRoot();
+        AnchorPane pane = (AnchorPane) root.lookup("#newGamePane");
+        pane.getChildren().remove(6);
 
     }
     
