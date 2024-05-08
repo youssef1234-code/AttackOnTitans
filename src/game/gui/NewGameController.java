@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaView;
@@ -88,5 +89,17 @@ public class NewGameController extends BGMedia implements Initializable{
 
     public void initialize(URL location, ResourceBundle resources){
        resumeMedia(backgroundVideo);
+       hardButton.setOnKeyPressed(this::handleButtonKeyPress);
+       easyButton.setOnKeyPressed(this::handleButtonKeyPress);
+       instructionsButton.setOnKeyPressed(this::handleButtonKeyPress);
+
     }
+
+     private void handleButtonKeyPress(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            Button sourceButton = (Button) event.getSource();
+            sourceButton.fire();
+        }
+    }
+
 }
