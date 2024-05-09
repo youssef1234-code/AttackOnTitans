@@ -79,6 +79,7 @@ public class NewGameController extends BGMedia implements Initializable{
         });
         stage.setResizable(false);
         stage.setFullScreen(true);
+        muteNoText(event);
         stage.show();
 
     }

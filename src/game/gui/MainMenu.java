@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 
 public class MainMenu extends Application {
 
+    public static Parent newGameRoot;
+
     @Override
     public void start(Stage primaryStage) throws IOException { 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenuScene.fxml"));
@@ -32,7 +34,6 @@ public class MainMenu extends Application {
         primaryStage.setFullScreenExitHint("Press F11 to remove Full-Screen");
         primaryStage.setScene(scene);
         primaryStage.setTitle("Attack On Titans - Utopia");
-
         primaryStage.setOnCloseRequest(event -> {
             event.consume();
             exit(primaryStage); 
