@@ -77,6 +77,11 @@
             <Image url="@assets/TopViewMenu.png" />
          </image>
       </ImageView>
-      <Button fx:id="PauseMenu" layoutX="1796.0" layoutY="20.0" mnemonicParsing="false" prefHeight="106.0" prefWidth="101.0" text="Button" />
+      <Button fx:id="PauseMenu" layoutX="1801.0" layoutY="2.0" mnemonicParsing="false" prefHeight="106.0" prefWidth="101.0" text="Button" />
+      <ImageView fx:id="Lane111" fitHeight="150.0" fitWidth="1875.0" layoutX="194.0" layoutY="919.0" pickOnBounds="true" preserveRatio="true" scaleX="1.2659" scaleY="1.274">
+         <image>
+            <Image url="@assets/ButtomViewMenu.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
