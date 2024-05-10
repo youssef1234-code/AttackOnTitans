@@ -12,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-public class GameController implements Initializable{
+public class HardGameController implements Initializable{
 
     //Lane Anchor Panes
     @FXML
@@ -47,7 +47,10 @@ public class GameController implements Initializable{
     private ImageView Wall4;
 
     @FXML
-    private ImageView Wall5;
+    private ImageView Wall51;
+
+    @FXML
+    private ImageView Wall52;
 
     //Weapon Shop Buttons
     @FXML
@@ -84,7 +87,7 @@ public class GameController implements Initializable{
 
    
     public void initialize(URL location, ResourceBundle resources) {
-        MediaPlayer backgroundMusic = new MediaPlayer(new Media(BGMedia.class.getResource("assets/BattleMusic.mp3").toString()));
+        MediaPlayer backgroundMusic = new MediaPlayer(new Media(HardGameController.class.getResource("assets/BattleMusic.mp3").toString()));
         backgroundMusic.setAutoPlay(true);
         backgroundMusic.setCycleCount(MediaPlayer.INDEFINITE);
     }

@@ -28,13 +28,7 @@ abstract public class BGMedia {
     }
 
     public void muteNoText(ActionEvent event){
-        if (isMute) {
-            bgAudioPlayer.setVolume(1.0);
-            isMute = false;
-        } else {
-            bgAudioPlayer.setVolume(0.0);
-            isMute = true;
-        }
+        bgAudioPlayer.stop();
     }
 
     public void playMedia(MediaView backgroundVideo){
