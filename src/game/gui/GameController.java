@@ -9,8 +9,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
-public class GameController {
+public class GameController implements Initializable{
 
     //Lane Anchor Panes
     @FXML
@@ -80,13 +82,14 @@ public class GameController {
 
 
 
-    /*
-      @Override
+   
     public void initialize(URL location, ResourceBundle resources) {
-        
+        MediaPlayer backgroundMusic = new MediaPlayer(new Media(BGMedia.class.getResource("assets/BattleMusic.mp3").toString()));
+        backgroundMusic.setAutoPlay(true);
+        backgroundMusic.setCycleCount(MediaPlayer.INDEFINITE);
     }
 
-     */
+   
    
     
 
