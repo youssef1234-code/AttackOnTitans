@@ -78,3 +78,46 @@
 .exitDialog .alert-icon {
     -fx-visibility: hidden;
 }
+
+/*$green: #75b800;
+$gray-light: #eef1f3;
+
+
+$bar-size: 5px;
+$bar-radius: 60px;
+$bar-bg: rgba(0,0,0,0.075);
+
+body {
+    -fx-background-color: #eef1f3;
+}
+
+
+.track{
+    -fx-border-radius: 60px;
+    -fx-background-color:rgb(133, 15, 15);
+    -fx-padding: 0px;
+    -fx-background-insets: 0; 
+}
+
+.bar {
+    -fx-background-color: #75b800;
+    -fx-text-fill: #fff;
+}
+
+*/
+.progress-bar .track {
+    -fx-background-color: rgb(133, 15, 15);
+    
+}
+
+
+.progress-bar .bar {
+    -fx-background-color: #75b800; 
+    -fx-background-insets: 0, 0000, 0000;
+    -fx-text-fill: #fff;
+}
+
+
+.progress-bar .bar .bar-background {
+    -fx-background-color: rgb(133, 15, 15); 
+}

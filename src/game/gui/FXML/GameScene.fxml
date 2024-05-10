@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -146,7 +147,7 @@
       </Button>
       <Label fx:id="phaseAndTurnText" alignment="CENTER" layoutX="717.0" layoutY="994.0" prefHeight="41.0" prefWidth="397.0" style="-fx-text-fill: #631E1E; -fx-font-family: Oswald; -fx-font-size: 35;" stylesheets="@../application.css" text=" Early (1)" />
       <Label fx:id="resourcesGatheredText" layoutX="671.0" layoutY="18.0" prefHeight="71.0" prefWidth="281.0" style="-fx-font-family: Oswald; -fx-text-fill: #631E1E; -fx-font-size: 40;" stylesheets="@../application.css" text="0" />
-      <Button fx:id="SettingsButton" layoutX="1800.0" layoutY="13.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="73.0" style="-fx-background-color: transparent;" stylesheets="@../application.css">
+      <Button fx:id="SettingsButton" layoutX="1800.0" layoutY="13.0" mnemonicParsing="false" onAction="#updateTexts" prefHeight="80.0" prefWidth="73.0" style="-fx-background-color: transparent;" stylesheets="@../application.css">
          <graphic>
             <ImageView fitHeight="80.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -155,7 +156,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label fx:id="ScoreText" layoutX="1655.0" layoutY="20.0" prefHeight="71.0" prefWidth="115.0" style="-fx-font-family: Oswald; -fx-text-fill: #631E1E; -fx-font-size: 40;" stylesheets="@../application.css" text="00" />
+      <Label fx:id="scoreText" layoutX="1655.0" layoutY="20.0" prefHeight="71.0" prefWidth="115.0" style="-fx-font-family: Oswald; -fx-text-fill: #631E1E; -fx-font-size: 40;" stylesheets="@../application.css" text="00" />
       <Button fx:id="passTurnButton" layoutX="1159.0" layoutY="973.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="73.0" style="-fx-background-color: transparent;" stylesheets="@../application.css">
          <graphic>
             <ImageView fitHeight="80.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
@@ -165,5 +166,15 @@
             </ImageView>
          </graphic>
       </Button>
+      <Label fx:id="lane1Danger" layoutX="95.0" layoutY="141.0" prefHeight="30.0" prefWidth="70.0" style="-fx-text-fill: #631E1E; -fx-font-family: Oswald; -fx-font-size: 22;" stylesheets="@../application.css" text="Label" />
+      <Label fx:id="lane2Danger" layoutX="95.0" layoutY="297.0" prefHeight="30.0" prefWidth="70.0" style="-fx-text-fill: #631E1E; -fx-font-family: Oswald; -fx-font-size: 22;" stylesheets="@../application.css" text="Label" />
+      <Label fx:id="lane3Danger" layoutX="95.0" layoutY="454.0" prefHeight="30.0" prefWidth="70.0" style="-fx-text-fill: #631E1E; -fx-font-family: Oswald; -fx-font-size: 22;" stylesheets="@../application.css" text="Label" />
+      <Label fx:id="lane4Danger" layoutX="95.0" layoutY="598.0" prefHeight="30.0" prefWidth="70.0" style="-fx-text-fill: #631E1E; -fx-font-family: Oswald; -fx-font-size: 22;" stylesheets="@../application.css" text="Label" />
+      <Label fx:id="lane5Danger" layoutX="95.0" layoutY="781.0" prefHeight="30.0" prefWidth="70.0" style="-fx-text-fill: #631E1E; -fx-font-family: Oswald; -fx-font-size: 22;" stylesheets="@../application.css" text="Label" />
+      <ProgressBar fx:id="wall1Bar" layoutX="165.0" layoutY="147.0" prefWidth="150.0" progress="0.59" stylesheets="@../application.css" />
+      <ProgressBar fx:id="wall2Bar" layoutX="165.0" layoutY="304.0" prefWidth="150.0" progress="1.0" stylesheets="@../application.css" />
+      <ProgressBar fx:id="wall3Bar" layoutX="165.0" layoutY="460.0" prefWidth="150.0" progress="1.0" stylesheets="@../application.css" />
+      <ProgressBar fx:id="wall4Bar" layoutX="165.0" layoutY="605.0" prefWidth="150.0" progress="1.0" stylesheets="@../application.css" />
+      <ProgressBar fx:id="wall5Bar" layoutX="165.0" layoutY="788.0" prefWidth="150.0" progress="1.0" stylesheets="@../application.css" />
    </children>
 </AnchorPane>
