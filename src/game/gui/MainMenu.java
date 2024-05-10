@@ -55,6 +55,7 @@ public class MainMenu extends Application {
         alert.setContentText("You will lose all your progress if you quit !!");
         if(alert.showAndWait().get() == ButtonType.OK){
                 System.out.println("You have successfully closed the window");
+                
                 stage.close();
         }
     }
