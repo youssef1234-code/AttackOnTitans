@@ -87,9 +87,21 @@ public class HardGameController implements Initializable{
 
    
     public void initialize(URL location, ResourceBundle resources) {
-        MediaPlayer backgroundMusic = new MediaPlayer(new Media(HardGameController.class.getResource("assets/BattleMusic.mp3").toString()));
-        backgroundMusic.setAutoPlay(true);
-        backgroundMusic.setCycleCount(MediaPlayer.INDEFINITE);
+        try {
+            String resourcePath = "assets/BattleMusic.mp3";
+            URL resourceUrl = getClass().getResource(resourcePath);
+            if (resourceUrl == null) {
+                System.err.println("Failed to load resource: " + resourcePath);
+            } else {
+                System.out.println("Resource URL: " + resourceUrl);
+                MediaPlayer backgroundMusic = new MediaPlayer(new Media(resourceUrl.toString()));
+                backgroundMusic.setAutoPlay(true);
+                backgroundMusic.setCycleCount(MediaPlayer.INDEFINITE);
+            }
+        } catch (Exception e) {
+            System.err.println("Error initializing media player: " + e.getMessage());
+        }
+        
     }
 
    
