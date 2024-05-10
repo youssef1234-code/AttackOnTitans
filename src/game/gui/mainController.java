@@ -71,7 +71,7 @@ public class mainController extends BGMedia implements Initializable  {
     }
 
     public void goToCredits(ActionEvent event) throws IOException{
-        root = FXMLLoader.load(getClass().getResource("CreditsScene.fxml"));
+        root = FXMLLoader.load(getClass().getResource("FXML/CreditsScene.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(css);
@@ -95,7 +95,7 @@ public class mainController extends BGMedia implements Initializable  {
     }
 
     public void goToNewGame(ActionEvent event) throws IOException{
-        root = FXMLLoader.load(getClass().getResource("NewGameScene.fxml"));
+        root = FXMLLoader.load(getClass().getResource("FXML/NewGameScene.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(css);

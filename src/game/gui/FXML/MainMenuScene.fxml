@@ -36,7 +36,7 @@
          <graphic>
             <ImageView fx:id="muteImage" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@assets/volume.png" />
+                  <Image url="@../assets/volume.png" />
                </image>
             </ImageView>
          </graphic>

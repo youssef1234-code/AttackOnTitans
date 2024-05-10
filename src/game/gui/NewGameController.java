@@ -44,7 +44,7 @@ public class NewGameController extends BGMedia implements Initializable{
     }
 
     public void goToMainMenu(ActionEvent event) throws IOException{
-        root = FXMLLoader.load(getClass().getResource("MainMenuScene.fxml"));
+        root = FXMLLoader.load(getClass().getResource("FXML/MainMenuScene.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(css);
@@ -68,7 +68,7 @@ public class NewGameController extends BGMedia implements Initializable{
 
     }
     public void initializeGame(ActionEvent event) throws IOException{
-        root = FXMLLoader.load(getClass().getResource("GameScene.fxml"));
+        root = FXMLLoader.load(getClass().getResource("FXML/GameScene.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(css);
@@ -86,7 +86,7 @@ public class NewGameController extends BGMedia implements Initializable{
     
 
     public void showInstructions(ActionEvent event) throws IOException{
-        root = FXMLLoader.load(getClass().getResource("InstructionsWindow.fxml"));
+        root = FXMLLoader.load(getClass().getResource("FXML/InstructionsWindow.fxml"));
         root.getStylesheets().add(css);
         scene = new Scene(root);
         scene.getStylesheets().add(css);

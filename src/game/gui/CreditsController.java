@@ -38,7 +38,7 @@ public class CreditsController extends BGMedia implements Initializable{
     }
 
     public void goToMainMenu(ActionEvent event) throws IOException{
-        root = FXMLLoader.load(getClass().getResource("MainMenuScene.fxml"));
+        root = FXMLLoader.load(getClass().getResource("FXML/MainMenuScene.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(css);
