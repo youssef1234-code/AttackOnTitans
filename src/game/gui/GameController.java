@@ -1,0 +1,95 @@
+package game.gui;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+
+public class GameController {
+
+    //Lane Anchor Panes
+    @FXML
+    private AnchorPane Lane1Pane;
+
+    @FXML
+    private AnchorPane Lane2Pane;
+    
+    @FXML
+    private AnchorPane Lane3Pane;
+    
+    @FXML
+    private AnchorPane Lane4Pane;
+    
+    @FXML
+    private AnchorPane Lane5Pane;
+
+    // Wall Image Views
+    @FXML
+    private ImageView Wall1;
+
+    @FXML
+    private ImageView Wall2;
+
+    @FXML
+    private ImageView Wall31;
+
+    @FXML
+    private ImageView Wall32;
+
+    @FXML
+    private ImageView Wall4;
+
+    @FXML
+    private ImageView Wall5;
+
+    //Weapon Shop Buttons
+    @FXML
+    private Button purchaseSniperButton;
+
+    @FXML
+    private Button purchasePiercingButton;
+
+    @FXML
+    private Button purchaseVolleyButton;
+
+    @FXML
+    private Button purchaseTrapButton;
+    
+    //Menu and pass buttons
+    @FXML
+    private Button passTurnButton;
+
+    @FXML
+    private Button SettingsButton;
+  
+    //Labels
+    @FXML
+    private Label ScoreText;
+
+    @FXML
+    private Label phaseAndTurnText;
+
+    @FXML
+    private Label resourcesGatheredText;
+
+
+
+
+    /*
+      @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        
+    }
+
+     */
+   
+    
+
+
+
+}
