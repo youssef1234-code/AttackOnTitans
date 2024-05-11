@@ -5,16 +5,34 @@ import java.util.ResourceBundle;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
+import java.util.Random;
+import java.io.InputStream;
+
 import game.engine.lanes.Lane;
+import game.engine.titans.AbnormalTitan;
 import game.engine.titans.PureTitan;
-import game.gui.titansGUI.PureTitanGUI;
+import game.engine.titans.ArmoredTitan;
+import game.engine.titans.ColossalTitan;
+import game.engine.titans.Titan;
 import game.engine.Battle;
+
+import game.gui.titansGUI.PureTitanGUI;
+import game.gui.titansGUI.TitanGUI;
+import game.gui.titansGUI.AbnormalTitanGUI;
+import game.gui.titansGUI.ArmoredTitanGUI;
+import game.gui.titansGUI.ColossalTitanGUI;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -122,7 +140,9 @@ public class HardGameController implements Initializable{
 
 
     
-    public static Battle battle;
+    private static Battle battle;
+    private AnchorPane [] lanesGui = new AnchorPane[5];
+    private ArrayList<ArrayList<TitanGUI>> titanImages = new ArrayList<ArrayList<TitanGUI>>();
 
 
     public PureTitanGUI testTitan = new PureTitanGUI(new PureTitan(1000, 0100, 100, 1100, 05, 20, 1));
@@ -135,7 +155,7 @@ public class HardGameController implements Initializable{
         try {
             String resourcePath = "assets/BattleMusic.mp3";
             URL resourceUrl = getClass().getResource(resourcePath);
-             battle = new Battle(1, 0, 1090, 5, 125);
+            battle = new Battle(1, 0, 50, 5, 125);
             if (resourceUrl == null) {
                 System.err.println("Failed to load resource: " + resourcePath);
             } else {
@@ -148,8 +168,29 @@ public class HardGameController implements Initializable{
             System.err.println("Error initializing media player: " + e.getMessage());
         }
         updateTexts();
-        Lane1Pane.getChildren().add(testTitan.pureTitanView);
-        AnchorPane.setRightAnchor(testTitan.pureTitanView, 0.0);
+
+        setupDrag(purchaseSniperButton, "SniperCannon");
+        setupDrag(purchasePiercingButton, "PeircingSpreadCannon");
+        setupDrag(purchaseVolleyButton, "VolleyCannon");
+        setupDrag(purchaseTrapButton, "wallTrap");
+        
+        lanesGui[0] = Lane1Pane;
+        lanesGui[1] = Lane2Pane;
+        lanesGui[2] = Lane3Pane;
+        lanesGui[3] = Lane4Pane;
+        lanesGui[4] = Lane5Pane;
+
+        titanImages.add(new ArrayList<TitanGUI>());
+        titanImages.add(new ArrayList<TitanGUI>());
+        titanImages.add(new ArrayList<TitanGUI>());
+        titanImages.add(new ArrayList<TitanGUI>());
+        titanImages.add(new ArrayList<TitanGUI>());
+
+        System.out.print(lanesGui[0]);
+        System.out.print(lanesGui[1]);
+        System.out.print(lanesGui[2]);
+        System.out.print(lanesGui[3]);
+        System.out.print(lanesGui[4]);
         
         
         
@@ -172,15 +213,134 @@ public class HardGameController implements Initializable{
                 }
 
                 switch(i){
-                    case 0: wall1Bar.setProgress(lanes.get(i).getLaneWall().getCurrentHealth()/lanes.get(i).getLaneWall().getBaseHealth());break;
-                    case 1: wall2Bar.setProgress(lanes.get(i).getLaneWall().getCurrentHealth()/lanes.get(i).getLaneWall().getBaseHealth());break;
-                    case 2: wall3Bar.setProgress(lanes.get(i).getLaneWall().getCurrentHealth()/lanes.get(i).getLaneWall().getBaseHealth());break;
-                    case 3: wall4Bar.setProgress(lanes.get(i).getLaneWall().getCurrentHealth()/lanes.get(i).getLaneWall().getBaseHealth());break;
-                    case 4: wall5Bar.setProgress(lanes.get(i).getLaneWall().getCurrentHealth()/lanes.get(i).getLaneWall().getBaseHealth());break;
+                    case 0: wall1Bar.setProgress((lanes.get(i).getLaneWall().getCurrentHealth() + 0.0)/lanes.get(i).getLaneWall().getBaseHealth());break;
+                    case 1: wall2Bar.setProgress((lanes.get(i).getLaneWall().getCurrentHealth()+ 0.0)/lanes.get(i).getLaneWall().getBaseHealth());break;
+                    case 2: wall3Bar.setProgress((lanes.get(i).getLaneWall().getCurrentHealth()+ 0.0)/lanes.get(i).getLaneWall().getBaseHealth());break;
+                    case 3: wall4Bar.setProgress((lanes.get(i).getLaneWall().getCurrentHealth()+ 0.0)/lanes.get(i).getLaneWall().getBaseHealth());break;
+                    case 4: wall5Bar.setProgress((lanes.get(i).getLaneWall().getCurrentHealth()+ 0.0)/lanes.get(i).getLaneWall().getBaseHealth());break;
                 }
             }
         }
-            testTitan.translate();
+            
+    }
+
+    public void addTitansToLane(){
+        
+        for(int j = 0; j < lanesGui.length; j++ ){
+        PriorityQueue<Titan> laneTitans =  battle.getOriginalLanes().get(j).getTitans();
+        PriorityQueue<Titan> temp = new PriorityQueue<Titan>();
+        ArrayList<Titan> titanArray = new ArrayList<Titan>();
+        while(!laneTitans.isEmpty()){
+            titanArray.add(laneTitans.peek());
+            temp.add(laneTitans.poll());
+        }
+        while(!temp.isEmpty()){
+            laneTitans.add(temp.poll());
+        }
+
+        
+        if(!battle.getOriginalLanes().get(j).isLaneLost())
+            for(int i = 0; i < titanArray.size(); i++){
+                if(titanArray.get(i).getDistance()==50){
+                    Random random = new Random();
+                    int offset = random.nextInt(10);
+                    offset = (random.nextBoolean())? offset*-1: offset;
+
+                    switch (titanArray.get(i).getDangerLevel()) {
+                        
+                        case 1:
+                            PureTitanGUI  pureTitan = new PureTitanGUI((PureTitan) titanArray.get(i));
+                            lanesGui[j].getChildren().add(pureTitan.pureTitanView);
+                            titanImages.get(j).add(pureTitan);
+                            AnchorPane.setRightAnchor(pureTitan.pureTitanView, 0.0);
+                            AnchorPane.setTopAnchor(pureTitan.pureTitanView, offset + 0.0);
+                            break;
+                        case 2:
+                            AbnormalTitanGUI  abnormalTitan = new AbnormalTitanGUI((AbnormalTitan) titanArray.get(i));
+                            lanesGui[j].getChildren().add(abnormalTitan.abnormalTitanView);
+                            titanImages.get(j).add(abnormalTitan);
+                            AnchorPane.setRightAnchor(abnormalTitan.abnormalTitanView, 0.0);
+                            AnchorPane.setTopAnchor(abnormalTitan.abnormalTitanView, offset + 0.0);
+                            break;
+                        case 3:
+                            ArmoredTitanGUI  armoredTitan = new ArmoredTitanGUI((ArmoredTitan) titanArray.get(i));
+                            lanesGui[j].getChildren().add(armoredTitan.armoredTitanView);
+                            titanImages.get(j).add(armoredTitan);
+                            AnchorPane.setRightAnchor(armoredTitan.armoredTitanView, 0.0);
+                            AnchorPane.setTopAnchor(armoredTitan.armoredTitanView, offset + 0.0);
+                            break;
+                        case 4:
+                            ColossalTitanGUI  colossalTitan = new ColossalTitanGUI((ColossalTitan) titanArray.get(i));
+                            lanesGui[j].getChildren().add(colossalTitan.colossalTitanView);
+                            titanImages.get(j).add(colossalTitan);
+                            AnchorPane.setRightAnchor(colossalTitan.colossalTitanView, 0.0);
+                            AnchorPane.setTopAnchor(colossalTitan.colossalTitanView, offset + 0.0);
+                            break;
+                        
+                        
+                    }
+
+                }
+            }
+        }
+    }
+
+    public void moveTitans(){
+        for(int i = 0; i < lanesGui.length; i++){
+            for(int j = 1; j < lanesGui[i].getChildren().size(); j++)
+                lanesGui[i].getChildren().get(j);
+        }
+    }
+
+    private void setupDrag(Button button, String weaponName) {
+        button.setOnDragDetected(event -> {
+            Dragboard db = button.startDragAndDrop(TransferMode.ANY);
+            ClipboardContent content = new ClipboardContent();
+            content.putString(weaponName); 
+            db.setContent(content);
+            event.consume();
+        });
+    }
+
+    public void onDragOver(DragEvent event) {
+        if (event.getGestureSource() != event.getSource() && event.getDragboard().hasString()) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    public void onDragDropped(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        boolean success = false;
+        String weaponName = db.getString();
+
+        if (db.hasString()) {
+            try {
+                String imagePath = "assets/" + weaponName + ".png";
+                System.out.println("Loading image from: " + imagePath);
+                InputStream inputStream = getClass().getResourceAsStream(imagePath);
+                if (inputStream != null) {
+                    ImageView weaponImage = new ImageView(new Image(inputStream));
+                    AnchorPane targetPane = (AnchorPane) event.getSource();
+                    targetPane.getChildren().add(weaponImage);
+                    success = true;
+                    System.out.println("Weapon image added successfully.");
+                } else {
+                    System.err.println("Failed to load image: " + imagePath);
+                }
+            } catch (Exception e) {
+                System.err.println("Error loading weapon image: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        event.setDropCompleted(success);
+        event.consume();
+    }
+
+    public void skipTurn(ActionEvent event){
+        battle.passTurn();
+        addTitansToLane();
+        updateTexts();
     }
 
     

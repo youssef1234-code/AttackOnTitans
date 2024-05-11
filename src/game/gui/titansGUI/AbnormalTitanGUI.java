@@ -1,25 +1,25 @@
 package game.gui.titansGUI;
 
-import game.engine.titans.PureTitan;
+import game.engine.titans.AbnormalTitan;
 import javafx.animation.TranslateTransition;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
-public class PureTitanGUI extends TitanGUI{
+public class AbnormalTitanGUI extends TitanGUI{
 
-    private PureTitan titanObj;
-    public AnchorPane pureTitanView  = new AnchorPane();
+    private AbnormalTitan titanObj;
+    public AnchorPane abnormalTitanView  = new AnchorPane();
     private ProgressBar healthBar;
     private ImageView  sprite;
     private int StepsCount = 0;
-    private int MAX_STEPSCOUNT = 5;
+    private int MAX_STEPSCOUNT = 3;
 
-    public PureTitanGUI(PureTitan titanObj) {
+    public AbnormalTitanGUI(AbnormalTitan titanObj){
         this.titanObj = titanObj;
-        pureTitanView.setPrefWidth(90.0);
-        pureTitanView.setPrefHeight(100);
+        abnormalTitanView.setPrefWidth(70.0);
+        abnormalTitanView.setPrefHeight(80);
         
         healthBar = new ProgressBar(1);
         healthBar.setMinHeight(0);
@@ -28,17 +28,18 @@ public class PureTitanGUI extends TitanGUI{
     
         
         
-        sprite = new ImageView(getClass().getResource("../assets/Titan1.png").toString());
-        sprite.setFitWidth(80);
-        sprite.setFitHeight(90);
-        sprite.setRotate(90.0);
+        sprite = new ImageView(getClass().getResource("../assets/Titan2.png").toString());
+        sprite.setFitWidth(60);
+        sprite.setFitHeight(70);
+        //sprite.setRotate(90.0);
 
-        pureTitanView.getChildren().addAll(healthBar, sprite);
+        abnormalTitanView.getChildren().addAll(healthBar, sprite);
 
         AnchorPane.setTopAnchor(healthBar, 0.0);
         AnchorPane.setLeftAnchor(healthBar, 5.0);
         AnchorPane.setRightAnchor(healthBar, 5.0);
         AnchorPane.setTopAnchor(sprite, 0.0);
+
     }
 
     public void takeDamage(){
@@ -48,8 +49,8 @@ public class PureTitanGUI extends TitanGUI{
     public void translate(){
         if(StepsCount<MAX_STEPSCOUNT){
             TranslateTransition transition = new TranslateTransition();
-            transition.setNode(pureTitanView);
-            transition.setToX(pureTitanView.getTranslateX() - titanObj.getSpeed()*43.0);
+            transition.setNode(abnormalTitanView);
+            transition.setToX(abnormalTitanView.getTranslateX() - titanObj.getSpeed()*73.0);
             transition.setDuration(Duration.millis(1000)); 
             transition.play();
             StepsCount++;
@@ -60,7 +61,4 @@ public class PureTitanGUI extends TitanGUI{
         
 }
     
-
-    
-
 }

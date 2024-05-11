@@ -1,25 +1,24 @@
 package game.gui.titansGUI;
-
-import game.engine.titans.PureTitan;
+import game.engine.titans.ColossalTitan;
 import javafx.animation.TranslateTransition;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
-public class PureTitanGUI extends TitanGUI{
+public class ColossalTitanGUI extends TitanGUI {
 
-    private PureTitan titanObj;
-    public AnchorPane pureTitanView  = new AnchorPane();
+    private ColossalTitan titanObj;
+    public AnchorPane colossalTitanView  = new AnchorPane();
     private ProgressBar healthBar;
     private ImageView  sprite;
     private int StepsCount = 0;
     private int MAX_STEPSCOUNT = 5;
 
-    public PureTitanGUI(PureTitan titanObj) {
+    public ColossalTitanGUI(ColossalTitan titanObj) {
         this.titanObj = titanObj;
-        pureTitanView.setPrefWidth(90.0);
-        pureTitanView.setPrefHeight(100);
+        colossalTitanView.setPrefWidth(120.0);
+        colossalTitanView.setPrefHeight(150);
         
         healthBar = new ProgressBar(1);
         healthBar.setMinHeight(0);
@@ -28,12 +27,12 @@ public class PureTitanGUI extends TitanGUI{
     
         
         
-        sprite = new ImageView(getClass().getResource("../assets/Titan1.png").toString());
+        sprite = new ImageView(getClass().getResource("../assets/Titan4.png").toString());
         sprite.setFitWidth(80);
         sprite.setFitHeight(90);
-        sprite.setRotate(90.0);
+        //sprite.setRotate(90.0);
 
-        pureTitanView.getChildren().addAll(healthBar, sprite);
+        colossalTitanView.getChildren().addAll(healthBar, sprite);
 
         AnchorPane.setTopAnchor(healthBar, 0.0);
         AnchorPane.setLeftAnchor(healthBar, 5.0);
@@ -48,8 +47,8 @@ public class PureTitanGUI extends TitanGUI{
     public void translate(){
         if(StepsCount<MAX_STEPSCOUNT){
             TranslateTransition transition = new TranslateTransition();
-            transition.setNode(pureTitanView);
-            transition.setToX(pureTitanView.getTranslateX() - titanObj.getSpeed()*43.0);
+            transition.setNode(colossalTitanView);
+            transition.setToX(colossalTitanView.getTranslateX() - titanObj.getSpeed()*35.0);
             transition.setDuration(Duration.millis(1000)); 
             transition.play();
             StepsCount++;
@@ -59,8 +58,6 @@ public class PureTitanGUI extends TitanGUI{
             System.out.println("Beside Wall");
         
 }
-    
-
     
 
 }

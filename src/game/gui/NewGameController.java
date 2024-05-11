@@ -68,9 +68,9 @@ public class NewGameController extends BGMedia implements Initializable{
 
     }
     public void initializeGame(ActionEvent event) throws IOException{
-        root = FXMLLoader.load(getClass().getResource("FXML/GameScene.fxml"));
+        
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        scene = new Scene(MainMenu.newGameRoot);
         scene.getStylesheets().add(css);
         stage.setScene(scene);
         scene.setOnKeyPressed(ev ->{

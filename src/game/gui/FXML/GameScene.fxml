@@ -14,7 +14,7 @@
             <Image url="@../assets/MainBackground.png" />
          </image>
       </ImageView>
-      <AnchorPane fx:id="Lane1Pane" layoutX="81.0" layoutY="145.0" prefHeight="154.0" prefWidth="1828.0">
+      <AnchorPane fx:id="Lane1Pane" layoutX="81.0" layoutY="145.0" prefHeight="154.0" prefWidth="1828.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver">
          <children>
             <ImageView fx:id="Lane1" fitHeight="150.0" fitWidth="1875.0" layoutX="-53.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -23,7 +23,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Lane2Pane" layoutX="79.0" layoutY="315.0" prefHeight="154.0" prefWidth="1828.0">
+      <AnchorPane fx:id="Lane2Pane" layoutX="79.0" layoutY="315.0" prefHeight="154.0" prefWidth="1828.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver">
          <children>
             <ImageView fx:id="Lane2" fitHeight="150.0" fitWidth="1875.0" layoutX="-53.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -32,7 +32,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Lane3Pane" layoutX="83.0" layoutY="470.0" prefHeight="154.0" prefWidth="1828.0">
+      <AnchorPane fx:id="Lane3Pane" layoutX="83.0" layoutY="470.0" prefHeight="154.0" prefWidth="1828.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver">
          <children>
             <ImageView fx:id="Lane3" fitHeight="150.0" fitWidth="1875.0" layoutX="-53.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -41,7 +41,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Lane4Pane" layoutX="82.0" layoutY="630.0" prefHeight="154.0" prefWidth="1828.0">
+      <AnchorPane fx:id="Lane4Pane" layoutX="82.0" layoutY="630.0" prefHeight="154.0" prefWidth="1828.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver">
          <children>
             <ImageView fx:id="Lane4" fitHeight="150.0" fitWidth="1875.0" layoutX="-53.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -50,7 +50,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Lane5Pane" layoutX="103.0" layoutY="800.0" prefHeight="154.0" prefWidth="1828.0">
+      <AnchorPane fx:id="Lane5Pane" layoutX="103.0" layoutY="800.0" prefHeight="154.0" prefWidth="1828.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver">
          <children>
             <ImageView fx:id="Lane5" fitHeight="150.0" fitWidth="1875.0" layoutX="-53.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -157,7 +157,7 @@
          </graphic>
       </Button>
       <Label fx:id="scoreText" layoutX="1655.0" layoutY="20.0" prefHeight="71.0" prefWidth="115.0" style="-fx-font-family: Oswald; -fx-text-fill: #631E1E; -fx-font-size: 40;" stylesheets="@../application.css" text="00" />
-      <Button fx:id="passTurnButton" layoutX="1159.0" layoutY="973.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="73.0" style="-fx-background-color: transparent;" stylesheets="@../application.css">
+      <Button fx:id="passTurnButton" layoutX="1159.0" layoutY="973.0" mnemonicParsing="false" onAction="#skipTurn" prefHeight="80.0" prefWidth="73.0" style="-fx-background-color: transparent;" stylesheets="@../application.css">
          <graphic>
             <ImageView fitHeight="80.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
                <image>
