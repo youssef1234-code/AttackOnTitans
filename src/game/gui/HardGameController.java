@@ -2,7 +2,6 @@ package game.gui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Random;
@@ -14,10 +13,20 @@ import game.engine.titans.PureTitan;
 import game.engine.titans.ArmoredTitan;
 import game.engine.titans.ColossalTitan;
 import game.engine.titans.Titan;
+import game.engine.weapons.PiercingCannon;
+import game.engine.weapons.SniperCannon;
+import game.engine.weapons.VolleySpreadCannon;
+import game.engine.weapons.WallTrap;
 import game.engine.Battle;
-
+import game.engine.exceptions.InsufficientResourcesException;
+import game.engine.exceptions.InvalidLaneException;
 import game.gui.titansGUI.PureTitanGUI;
 import game.gui.titansGUI.TitanGUI;
+import game.gui.weaponsGUI.PiercingCannonGUI;
+import game.gui.weaponsGUI.SniperCannonGUI;
+import game.gui.weaponsGUI.VolleySpreadCannonGUI;
+import game.gui.weaponsGUI.WallTrapGUI;
+import game.gui.weaponsGUI.WeaponsGUI;
 import game.gui.titansGUI.AbnormalTitanGUI;
 import game.gui.titansGUI.ArmoredTitanGUI;
 import game.gui.titansGUI.ColossalTitanGUI;
@@ -39,6 +48,8 @@ import javafx.scene.media.MediaPlayer;
 
 public class HardGameController implements Initializable{
 
+    @FXML
+    private AnchorPane MainParent;
     //Lane Anchor Panes
     @FXML
     private AnchorPane Lane1Pane;
@@ -145,7 +156,6 @@ public class HardGameController implements Initializable{
     private ArrayList<ArrayList<TitanGUI>> titanImages = new ArrayList<ArrayList<TitanGUI>>();
 
 
-    public PureTitanGUI testTitan = new PureTitanGUI(new PureTitan(1000, 0100, 100, 1100, 05, 20, 1));
 
 
 
@@ -185,15 +195,6 @@ public class HardGameController implements Initializable{
         titanImages.add(new ArrayList<TitanGUI>());
         titanImages.add(new ArrayList<TitanGUI>());
         titanImages.add(new ArrayList<TitanGUI>());
-
-        System.out.print(lanesGui[0]);
-        System.out.print(lanesGui[1]);
-        System.out.print(lanesGui[2]);
-        System.out.print(lanesGui[3]);
-        System.out.print(lanesGui[4]);
-        
-        
-        
     }   
 
     public void updateTexts(){
@@ -225,7 +226,6 @@ public class HardGameController implements Initializable{
     }
 
     public void addTitansToLane(){
-        
         for(int j = 0; j < lanesGui.length; j++ ){
         PriorityQueue<Titan> laneTitans =  battle.getOriginalLanes().get(j).getTitans();
         PriorityQueue<Titan> temp = new PriorityQueue<Titan>();
@@ -276,8 +276,6 @@ public class HardGameController implements Initializable{
                             AnchorPane.setRightAnchor(colossalTitan.colossalTitanView, 0.0);
                             AnchorPane.setTopAnchor(colossalTitan.colossalTitanView, offset + 0.0);
                             break;
-                        
-                        
                     }
 
                 }
@@ -313,42 +311,115 @@ public class HardGameController implements Initializable{
         Dragboard db = event.getDragboard();
         boolean success = false;
         String weaponName = db.getString();
-
+        WeaponsGUI chosenWeapon = null;
+        AnchorPane targetPane = (AnchorPane) event.getSource();
         if (db.hasString()) {
-            try {
-                String imagePath = "assets/" + weaponName + ".png";
-                System.out.println("Loading image from: " + imagePath);
-                InputStream inputStream = getClass().getResourceAsStream(imagePath);
-                if (inputStream != null) {
-                    ImageView weaponImage = new ImageView(new Image(inputStream));
-                    AnchorPane targetPane = (AnchorPane) event.getSource();
-                    targetPane.getChildren().add(weaponImage);
+            switch(weaponName){
+                case "SniperCannon": chosenWeapon = new SniperCannonGUI(new SniperCannon(10));break;
+                case "PiercingSpreadCannon": chosenWeapon = new PiercingCannonGUI(new PiercingCannon(35));break;
+                case "VolleyCannon": chosenWeapon = new VolleySpreadCannonGUI(new VolleySpreadCannon(5, 20, 50));break;
+                case "wallTrap":chosenWeapon = new WallTrapGUI(new WallTrap(100));break;
+            }
+
+            int weaponCode = chosenWeapon.getweaponCode();
+            Lane lane  = null;
+            int chosenLane = 0;
+            if(targetPane == Lane1Pane){
+                lane = battle.getOriginalLanes().get(0);
+                chosenLane = 1;
+            }
+            else if(targetPane == Lane2Pane){
+                lane = battle.getOriginalLanes().get(1);
+                chosenLane = 2;
+            }
+
+            else if(targetPane == Lane3Pane){
+                lane = battle.getOriginalLanes().get(2);
+                chosenLane = 3;
+            }
+
+            else if(targetPane == Lane4Pane){
+                lane = battle.getOriginalLanes().get(3);
+                chosenLane = 4;
+            }
+
+            else if(targetPane == Lane5Pane){
+                lane = battle.getOriginalLanes().get(4);
+                chosenLane = 5;
+            }
+
+            try{
+                this.battle.purchaseWeapon(weaponCode ,lane);
+                try{
+                    targetPane.getChildren().add(chosenWeapon.getPane());
                     success = true;
-                    System.out.println("Weapon image added successfully.");
-                } else {
-                    System.err.println("Failed to load image: " + imagePath);
                 }
-            } catch (Exception e) {
-                System.err.println("Error loading weapon image: " + e.getMessage());
-                e.printStackTrace();
+                catch(NullPointerException Exception){
+                    System.out.println("error in choosing a weapon !!");
+                }
+            }
+            catch(InsufficientResourcesException Exception ){
+                //TODO handel InsufficientResourcesException (Show a red label or something !!!)
+                System.out.println("NOT ENOUGH RESOURCES!! ");
+            }
+            catch(InvalidLaneException Exception ){
+                //Lane1Pane
+                switch(chosenLane){
+                    case 1: Wall1.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                    case 2: Wall2.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                    case 3: Wall31.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                    case 4: Wall4.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                    case 5: Wall51.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                }
+
+                if(chosenLane == 3)
+                    Wall32.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));
+                if(chosenLane == 5)
+                    Wall52.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString())); 
+
+                switch(chosenLane){
+                    case 1: MainParent.getChildren().remove(Lane1Pane);break;
+                    case 2: MainParent.getChildren().remove(Lane2Pane);break;
+                    case 3: MainParent.getChildren().remove(Lane3Pane);break;
+                    case 4: MainParent.getChildren().remove(Lane4Pane);break;
+                    case 5: MainParent.getChildren().remove(Lane5Pane);break;
+                } 
             }
         }
         event.setDropCompleted(success);
         event.consume();
+        updateTexts();
     }
 
     public void skipTurn(ActionEvent event){
+        ArrayList<Lane> currentLanes = battle.getOriginalLanes();
+        for(int i=0;i<currentLanes.size();i++){
+            if(currentLanes.get(i).isLaneLost()){
+                switch(i+1){
+                    case 1: MainParent.getChildren().remove(Lane1Pane);break;
+                    case 2: MainParent.getChildren().remove(Lane2Pane);break;
+                    case 3: MainParent.getChildren().remove(Lane3Pane);break;
+                    case 4: MainParent.getChildren().remove(Lane4Pane);break;
+                    case 5: MainParent.getChildren().remove(Lane5Pane);break;
+                }
+                switch(i+1){
+                    case 1: Wall1.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                    case 2: Wall2.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                    case 3: Wall31.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                    case 4: Wall4.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                    case 5: Wall51.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                }
+                if(i+1 == 3)
+                    Wall32.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));
+                if(i+1 == 5)
+                    Wall52.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString())); 
+
+            }
+        }
         battle.passTurn();
         addTitansToLane();
         updateTexts();
     }
-
-    
-
-   
-   
-    
-
 
 
 }

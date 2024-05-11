@@ -155,7 +155,7 @@ public class Battle {
 			}
 		}
 	
-	public void purchaseWeapon(int weaponCode, Lane lane) throws InsufficientResourcesException,
+	public  void purchaseWeapon(int weaponCode, Lane lane) throws InsufficientResourcesException,
 	InvalidLaneException{
 		boolean flag = false;
 		ArrayList<Lane> temp = new ArrayList<Lane>();
