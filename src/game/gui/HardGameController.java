@@ -147,8 +147,7 @@ public class HardGameController implements Initializable{
         } catch (Exception e) {
             System.err.println("Error initializing media player: " + e.getMessage());
         }
-    
-
+        updateTexts();
         Lane1Pane.getChildren().add(testTitan.pureTitanView);
         AnchorPane.setRightAnchor(testTitan.pureTitanView, 0.0);
         
@@ -180,13 +179,8 @@ public class HardGameController implements Initializable{
                     case 4: wall5Bar.setProgress(lanes.get(i).getLaneWall().getCurrentHealth()/lanes.get(i).getLaneWall().getBaseHealth());break;
                 }
             }
-
         }
-
-        
-        testTitan.translate();
-
-        System.out.println("A7a");
+            testTitan.translate();
     }
 
     
