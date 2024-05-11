@@ -388,6 +388,7 @@ public class HardGameController implements Initializable{
         }
         event.setDropCompleted(success);
         event.consume();
+        addTitansToLane();
         updateTexts();
     }
 
