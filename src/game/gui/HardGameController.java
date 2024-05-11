@@ -170,7 +170,7 @@ public class HardGameController implements Initializable{
         updateTexts();
 
         setupDrag(purchaseSniperButton, "SniperCannon");
-        setupDrag(purchasePiercingButton, "PeircingSpreadCannon");
+        setupDrag(purchasePiercingButton, "PiercingSpreadCannon");
         setupDrag(purchaseVolleyButton, "VolleyCannon");
         setupDrag(purchaseTrapButton, "wallTrap");
         
