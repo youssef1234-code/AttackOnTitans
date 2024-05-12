@@ -28,7 +28,7 @@ abstract public class BGMedia {
     }
 
     public void muteNoText(ActionEvent event){
-        bgAudioPlayer.stop();
+        bgAudioPlayer.setVolume(0);
     }
 
     public void playMedia(MediaView backgroundVideo){

@@ -1,6 +1,7 @@
 package game.gui;
 
 import java.net.URL;
+import java.time.Duration;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
@@ -170,6 +171,8 @@ public class HardGameController implements Initializable{
     private static Battle battle;
     private AnchorPane [] lanesGui = new AnchorPane[5];
     private ArrayList<ArrayList<TitanGUI>> titanImages = new ArrayList<ArrayList<TitanGUI>>();
+    private Thread gameOverThread;
+    private Parent root;
 
 
 
@@ -182,6 +185,9 @@ public class HardGameController implements Initializable{
             String resourcePath = "assets/BattleMusic.mp3";
             URL resourceUrl = getClass().getResource(resourcePath);
             battle = new Battle(1, 0, 50, 5, 125);
+            root = FXMLLoader.load(getClass().getResource("FXML/GameOverScene.fxml"));
+            root.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
             if (resourceUrl == null) {
                 System.err.println("Failed to load resource: " + resourcePath);
             } else {
@@ -189,12 +195,39 @@ public class HardGameController implements Initializable{
                 MediaPlayer backgroundMusic = new MediaPlayer(new Media(resourceUrl.toString()));
                 backgroundMusic.setAutoPlay(true);
                 backgroundMusic.setCycleCount(MediaPlayer.INDEFINITE);
+                backgroundMusic.setVolume(1);
             }
         } catch (Exception e) {
             System.err.println("Error initializing media player: " + e.getMessage());
         }
         updateTexts();
+        /*gameOverThread = new Thread(new Runnable(){
 
+            @Override
+            public void run() {
+               while (true) {
+                System.out.println(100);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                if(battle.isGameOver()){
+                    try{
+                        isGameOverDisplay();
+                        break;
+                    }catch(IOException e){
+         
+                    }
+                 }
+               }
+            }
+
+
+        });
+        gameOverThread.start();*/
+        
         setupDrag(purchaseSniperButton, "SniperCannon");
         setupDrag(purchasePiercingButton, "PiercingSpreadCannon");
         setupDrag(purchaseVolleyButton, "VolleyCannon");
@@ -447,11 +480,12 @@ public class HardGameController implements Initializable{
 
         System.out.println(battle.isGameOver());
         if(battle.isGameOver()){
-           try{
-            isGameOverDisplay();
-           }catch(IOException e){
-
-           }
+            try{
+                isGameOverDisplay();
+                
+            }catch(IOException e){
+ 
+            }
         }
         
        
@@ -459,33 +493,23 @@ public class HardGameController implements Initializable{
 
     public void isGameOverDisplay() throws IOException{
         System.out.println("Works");
-        Parent root = FXMLLoader.load(getClass().getResource("FXML/GameOverScene.fxml"));
-        root.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+  
 
-        //((Label)root.getChildrenUnmodifiable().get(1)).setText("" + battle.getScore());
-        MainParent.getChildren().add(35, root);
+        ((Label)root.getChildrenUnmodifiable().get(1)).setText("" + battle.getScore());
+        MainParent.getChildren().add(root);
+        AnchorPane.setTopAnchor(root,240.0);
+        AnchorPane.setLeftAnchor(root,460.0);
+
+        passTurnButton.setDisable(true);
+        SettingsButton.setDisable(true);
+        purchasePiercingButton.setDisable(true);
+        purchaseSniperButton.setDisable(true);
+        purchaseTrapButton.setDisable(true);
+        purchaseVolleyButton.setDisable(true);
         
     }
 
-    public void goToMainMenu(ActionEvent event) throws IOException{
-        System.out.println("Big Funny");
-        Parent root = FXMLLoader.load(getClass().getResource("FXML/MainMenuScene.fxml"));
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-
-
-        stage.setScene(scene);
-        scene.setOnKeyPressed(ev ->{
-            if(ev.getCode() == KeyCode.F11)
-                stage.setFullScreen(!stage.isFullScreen());
-        });
-        stage.setResizable(false);
-        stage.setFullScreen(true);
-
-        stage.show();
-
-    }
+    
 
 
 }
