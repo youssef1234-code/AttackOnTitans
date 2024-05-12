@@ -409,6 +409,7 @@ public class HardGameController implements Initializable{
         }
         event.setDropCompleted(success);
         event.consume();
+        chosenWeapon.attackTitans();
         moveTitans();
         addTitansToLane();
         updateTexts();
