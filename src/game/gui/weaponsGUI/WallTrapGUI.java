@@ -4,7 +4,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 public class WallTrapGUI extends WeaponsGUI{
-    private static final int weaponCode = 1;
+    private static final int weaponCode = 4;
     private Weapon wallTrapObject;
     public AnchorPane wallTrapPane = new AnchorPane();
     private ImageView wallTrapImage;
@@ -31,8 +31,16 @@ public class WallTrapGUI extends WeaponsGUI{
         return this.weaponCode;
     }
     
+    @Override
     public void attackTitans(){
-        
+        System.out.println("Attakcing Titans!!!");
+        //No attack animation is required
+    }
+
+    @Override
+    public AnchorPane getBallPane(){
+        //No attack animation is required
+        return wallTrapPane;
     }
     
 

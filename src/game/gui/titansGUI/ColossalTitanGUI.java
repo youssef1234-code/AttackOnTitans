@@ -12,8 +12,7 @@ public class ColossalTitanGUI extends TitanGUI {
     public AnchorPane colossalTitanView  = new AnchorPane();
     private ProgressBar healthBar;
     private ImageView  sprite;
-    private int StepsCount = 0;
-    private int MAX_STEPSCOUNT = 5;
+
 
     public ColossalTitanGUI(ColossalTitan titanObj) {
         this.titanObj = titanObj;
@@ -32,7 +31,7 @@ public class ColossalTitanGUI extends TitanGUI {
         sprite.setFitHeight(90);
         //sprite.setRotate(90.0);
 
-        colossalTitanView.getChildren().addAll(healthBar, sprite);
+        colossalTitanView.getChildren().addAll(sprite, healthBar);
 
         AnchorPane.setTopAnchor(healthBar, 0.0);
         AnchorPane.setLeftAnchor(healthBar, 5.0);
@@ -45,14 +44,12 @@ public class ColossalTitanGUI extends TitanGUI {
     }
 
     public void translate(){
-        if(StepsCount<MAX_STEPSCOUNT){
+        if(colossalTitanView.getLayoutX() + colossalTitanView.getTranslateX() > 700){
             TranslateTransition transition = new TranslateTransition();
             transition.setNode(colossalTitanView);
-            transition.setToX(colossalTitanView.getTranslateX() - titanObj.getSpeed()*35.0);
+            transition.setToX(colossalTitanView.getTranslateX() - titanObj.getSpeed()*14);
             transition.setDuration(Duration.millis(1000)); 
             transition.play();
-            StepsCount++;
-            System.out.println(StepsCount);
         }
         else    
             System.out.println("Beside Wall");

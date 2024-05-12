@@ -68,9 +68,9 @@ public class NewGameController extends BGMedia implements Initializable{
 
     }
     public void initializeGame(ActionEvent event) throws IOException{
-        
+        root = FXMLLoader.load(getClass().getResource("FXML/GameScene.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(MainMenu.newGameRoot);
+        scene = new Scene(root);
         scene.getStylesheets().add(css);
         stage.setScene(scene);
         scene.setOnKeyPressed(ev ->{
@@ -88,8 +88,7 @@ public class NewGameController extends BGMedia implements Initializable{
     public void showInstructions(ActionEvent event) throws IOException{
         root = FXMLLoader.load(getClass().getResource("FXML/InstructionsWindow.fxml"));
         root.getStylesheets().add(css);
-        scene = new Scene(root);
-        scene.getStylesheets().add(css);
+       
         newGamePane.getChildren().add(6, root);
 
         AnchorPane.setTopAnchor(root, 240.0);

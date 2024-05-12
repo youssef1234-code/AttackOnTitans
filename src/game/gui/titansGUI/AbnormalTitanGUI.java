@@ -13,8 +13,7 @@ public class AbnormalTitanGUI extends TitanGUI{
     public AnchorPane abnormalTitanView  = new AnchorPane();
     private ProgressBar healthBar;
     private ImageView  sprite;
-    private int StepsCount = 0;
-    private int MAX_STEPSCOUNT = 3;
+
 
     public AbnormalTitanGUI(AbnormalTitan titanObj){
         this.titanObj = titanObj;
@@ -33,7 +32,7 @@ public class AbnormalTitanGUI extends TitanGUI{
         sprite.setFitHeight(70);
         //sprite.setRotate(90.0);
 
-        abnormalTitanView.getChildren().addAll(healthBar, sprite);
+        abnormalTitanView.getChildren().addAll(sprite, healthBar);
 
         AnchorPane.setTopAnchor(healthBar, 0.0);
         AnchorPane.setLeftAnchor(healthBar, 5.0);
@@ -47,14 +46,12 @@ public class AbnormalTitanGUI extends TitanGUI{
     }
 
     public void translate(){
-        if(StepsCount<MAX_STEPSCOUNT){
+        if(abnormalTitanView.getLayoutX() + abnormalTitanView.getTranslateX() > 700){
             TranslateTransition transition = new TranslateTransition();
             transition.setNode(abnormalTitanView);
-            transition.setToX(abnormalTitanView.getTranslateX() - titanObj.getSpeed()*73.0);
-            transition.setDuration(Duration.millis(1000)); 
+            transition.setToX(abnormalTitanView.getTranslateX() - titanObj.getSpeed()*24.5);
+            transition.setDuration(Duration.millis(750)); 
             transition.play();
-            StepsCount++;
-            System.out.println(StepsCount);
         }
         else    
             System.out.println("Beside Wall");

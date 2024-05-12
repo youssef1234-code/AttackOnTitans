@@ -16,14 +16,13 @@ import javafx.stage.Stage;
 
 public class MainMenu extends Application {
 
-    public static Parent newGameRoot;
     
 
     @Override
     public void start(Stage primaryStage) throws IOException { 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/MainMenuScene.fxml"));
         Parent root = loader.load();
-        newGameRoot = FXMLLoader.load(getClass().getResource("FXML/GameScene.fxml"));
+        
         //<Controller Class Name> controller = loader.getController();
         Scene scene = new Scene(root);
         Font.loadFont(getClass().getResourceAsStream("assets/Oswald-Bold.ttf"), 14);

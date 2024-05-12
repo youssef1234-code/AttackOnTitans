@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Random;
 import java.io.InputStream;
+import java.io.IOException;
 
 import game.engine.lanes.Lane;
 import game.engine.titans.AbnormalTitan;
@@ -20,6 +21,7 @@ import game.engine.weapons.WallTrap;
 import game.engine.Battle;
 import game.engine.exceptions.InsufficientResourcesException;
 import game.engine.exceptions.InvalidLaneException;
+
 import game.gui.titansGUI.PureTitanGUI;
 import game.gui.titansGUI.TitanGUI;
 import game.gui.weaponsGUI.PiercingCannonGUI;
@@ -30,9 +32,14 @@ import game.gui.weaponsGUI.WeaponsGUI;
 import game.gui.titansGUI.AbnormalTitanGUI;
 import game.gui.titansGUI.ArmoredTitanGUI;
 import game.gui.titansGUI.ColossalTitanGUI;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -41,10 +48,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 
 public class HardGameController implements Initializable{
 
@@ -149,6 +158,13 @@ public class HardGameController implements Initializable{
     @FXML
     private ProgressBar wall5Bar;
 
+    //Game Over Screen
+    @FXML
+    private Button gameOverBackButton;
+
+    @FXML
+    private Label finalScoreLabel;
+
 
     
     private static Battle battle;
@@ -243,8 +259,8 @@ public class HardGameController implements Initializable{
             for(int i = 0; i < titanArray.size(); i++){
                 if(titanArray.get(i).getDistance()==50){
                     Random random = new Random();
-                    int offset = random.nextInt(10);
-                    offset = (random.nextBoolean())? offset*-1: offset;
+                    int offset = random.nextInt(40);
+                    //offset = (random.nextBoolean())? offset*-1: offset;
 
                     switch (titanArray.get(i).getDangerLevel()) {
                         
@@ -284,9 +300,10 @@ public class HardGameController implements Initializable{
     }
 
     public void moveTitans(){
-        for(int i = 0; i < lanesGui.length; i++){
-            for(int j = 1; j < lanesGui[i].getChildren().size(); j++)
-                lanesGui[i].getChildren().get(j);
+        for(int i = 0; i < titanImages.size(); i++){
+            for(int j = 0; j < titanImages.get(i).size(); j++)
+                    if(titanImages.get(i) != null && titanImages.get(i).get(j) != null)
+                        titanImages.get(i).get(j).translate();
         }
     }
 
@@ -349,9 +366,13 @@ public class HardGameController implements Initializable{
             }
 
             try{
-                this.battle.purchaseWeapon(weaponCode ,lane);
+                battle.purchaseWeapon(weaponCode ,lane);
                 try{
-                    targetPane.getChildren().add(chosenWeapon.getPane());
+                    if(weaponCode == 4){
+                        targetPane.getChildren().add(chosenWeapon.getPane());
+                    }else{
+                        targetPane.getChildren().addAll(chosenWeapon.getPane(),chosenWeapon.getBallPane());
+                    }
                     success = true;
                 }
                 catch(NullPointerException Exception){
@@ -388,11 +409,16 @@ public class HardGameController implements Initializable{
         }
         event.setDropCompleted(success);
         event.consume();
+        moveTitans();
         addTitansToLane();
         updateTexts();
     }
 
     public void skipTurn(ActionEvent event){
+        battle.passTurn();
+        moveTitans();
+        addTitansToLane();
+        updateTexts();
         ArrayList<Lane> currentLanes = battle.getOriginalLanes();
         for(int i=0;i<currentLanes.size();i++){
             if(currentLanes.get(i).isLaneLost()){
@@ -417,9 +443,47 @@ public class HardGameController implements Initializable{
 
             }
         }
-        battle.passTurn();
-        addTitansToLane();
-        updateTexts();
+
+        System.out.println(battle.isGameOver());
+        if(battle.isGameOver()){
+           try{
+            isGameOverDisplay();
+           }catch(IOException e){
+
+           }
+        }
+        
+       
+    }
+
+    public void isGameOverDisplay() throws IOException{
+        System.out.println("Works");
+        Parent root = FXMLLoader.load(getClass().getResource("FXML/GameOverScene.fxml"));
+        root.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+        //((Label)root.getChildrenUnmodifiable().get(1)).setText("" + battle.getScore());
+        MainParent.getChildren().add(35, root);
+        
+    }
+
+    public void goToMainMenu(ActionEvent event) throws IOException{
+        System.out.println("Big Funny");
+        Parent root = FXMLLoader.load(getClass().getResource("FXML/MainMenuScene.fxml"));
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+
+        stage.setScene(scene);
+        scene.setOnKeyPressed(ev ->{
+            if(ev.getCode() == KeyCode.F11)
+                stage.setFullScreen(!stage.isFullScreen());
+        });
+        stage.setResizable(false);
+        stage.setFullScreen(true);
+
+        stage.show();
+
     }
 
 

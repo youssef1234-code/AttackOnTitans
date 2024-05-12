@@ -13,8 +13,7 @@ public class ArmoredTitanGUI extends TitanGUI{
     public AnchorPane armoredTitanView  = new AnchorPane();
     private ProgressBar healthBar;
     private ImageView  sprite;
-    private int StepsCount = 0;
-    private int MAX_STEPSCOUNT = 5;
+
 
     public ArmoredTitanGUI(ArmoredTitan titanObj){
         this.titanObj = titanObj;
@@ -33,7 +32,7 @@ public class ArmoredTitanGUI extends TitanGUI{
         sprite.setFitHeight(70);
         //sprite.setRotate(90.0);
 
-        armoredTitanView.getChildren().addAll(healthBar, sprite);
+        armoredTitanView.getChildren().addAll(sprite, healthBar);
 
         AnchorPane.setTopAnchor(healthBar, 0.0);
         AnchorPane.setLeftAnchor(healthBar, 5.0);
@@ -47,14 +46,12 @@ public class ArmoredTitanGUI extends TitanGUI{
     }
 
     public void translate(){
-        if(StepsCount<MAX_STEPSCOUNT){
+        if(armoredTitanView.getLayoutX() + armoredTitanView.getTranslateX() > 700){
             TranslateTransition transition = new TranslateTransition();
             transition.setNode(armoredTitanView);
-            transition.setToX(armoredTitanView.getTranslateX() - titanObj.getSpeed()*40.0);
+            transition.setToX(armoredTitanView.getTranslateX() - titanObj.getSpeed()*22.0);
             transition.setDuration(Duration.millis(1000)); 
             transition.play();
-            StepsCount++;
-            System.out.println(StepsCount);
         }
         else    
             System.out.println("Beside Wall");
