@@ -24,7 +24,7 @@ public class VolleySpreadCannonGUI extends WeaponsGUI{
 
         //290*35
         volleyCannonBallPane.setPrefSize(25,25);
-        ball = new ImageView(getClass().getResource("../assets/VolleyCannonBall.png").toString());
+        ball = new ImageView(getClass().getResource("../assets/volleyBall.png").toString());
         ball.setFitWidth(25);
         ball.setFitHeight(25);
         volleyCannonBallPane.getChildren().add(ball);

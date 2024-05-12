@@ -63,18 +63,28 @@ public class HardGameController implements Initializable{
     //Lane Anchor Panes
     @FXML
     private AnchorPane Lane1Pane;
+    private static double availableposXLane1 = 500.0;
+    private boolean Lane1hasTrap = false;
 
     @FXML
     private AnchorPane Lane2Pane;
-    
+    private static double availableposXLane2 = 500.0;
+    private boolean Lane2hasTrap = false;
+
     @FXML
     private AnchorPane Lane3Pane;
+    private static double availableposXLane3 = 500.0;
+    private boolean Lane3hasTrap = false;
     
     @FXML
     private AnchorPane Lane4Pane;
-    
+    private static  double availableposXLane4 = 500.0;
+    private boolean Lane4hasTrap = false;
+
     @FXML
     private AnchorPane Lane5Pane;
+    private static  double availableposXLane5 = 500.0;
+    private boolean Lane5hasTrap = false;
 
     // Wall Image Views
     @FXML
@@ -401,10 +411,58 @@ public class HardGameController implements Initializable{
             try{
                 battle.purchaseWeapon(weaponCode ,lane);
                 try{
+                    
                     if(weaponCode == 4){
                         targetPane.getChildren().add(chosenWeapon.getPane());
+                        targetPane.setLeftAnchor(chosenWeapon.getPane(), 650.0);
+                        targetPane.setTopAnchor(chosenWeapon.getPane(), 20.0);
+                        if(chosenLane == 1){
+                            if(Lane1hasTrap)
+                                targetPane.setTopAnchor(chosenWeapon.getPane(), 70.0);
+                            Lane1hasTrap = !Lane1hasTrap;
+                        }
+                        else if(chosenLane == 2){
+                            if(Lane2hasTrap)
+                                targetPane.setTopAnchor(chosenWeapon.getPane(), 70.0);
+                            Lane2hasTrap = !Lane2hasTrap;
+                        } else if(chosenLane == 3){
+                            if(Lane3hasTrap)
+                                targetPane.setTopAnchor(chosenWeapon.getPane(),70.0);
+                            Lane3hasTrap = !Lane3hasTrap;
+                        } else if(chosenLane == 4){
+                            if(Lane4hasTrap)
+                                targetPane.setTopAnchor(chosenWeapon.getPane(), 70.0);
+                            Lane4hasTrap = !Lane4hasTrap;
+                        } else if(chosenLane == 5){
+                            if(Lane5hasTrap)
+                                targetPane.setTopAnchor(chosenWeapon.getPane(), 70.0);
+                            Lane5hasTrap = !Lane5hasTrap;
+                        }
+
                     }else{
-                        targetPane.getChildren().addAll(chosenWeapon.getPane(),chosenWeapon.getBallPane());
+                        double distanceInPixels = 0;
+                        switch(chosenLane){
+                            case 1 :distanceInPixels = availableposXLane1;break;
+                            case 2 :distanceInPixels = availableposXLane2;break;
+                            case 3 :distanceInPixels = availableposXLane3;break;
+                            case 4 :distanceInPixels = availableposXLane4;break;
+                            case 5 :distanceInPixels = availableposXLane5;break;
+                        }
+                        switch(chosenLane){
+                            case 1 :availableposXLane1-=125;break;
+                            case 2 :availableposXLane2-=125 ;break;
+                            case 3 :availableposXLane3-=125 ;break;
+                            case 4 :availableposXLane4-=125 ;break;
+                            case 5 :availableposXLane5-=125;break;
+                        }
+                        if(distanceInPixels>=0){
+                            targetPane.getChildren().addAll(chosenWeapon.getPane(),chosenWeapon.getBallPane());
+                            targetPane.setLeftAnchor(chosenWeapon.getPane(), distanceInPixels);
+                            chosenWeapon.getPane().toFront();
+                        }
+                        if(weaponCode == 3 || weaponCode == 2 )
+                            targetPane.setTopAnchor(chosenWeapon.getPane(), 20.0);
+        
                     }
                     success = true;
                 }
@@ -442,11 +500,12 @@ public class HardGameController implements Initializable{
         }
         event.setDropCompleted(success);
         event.consume();
-        chosenWeapon.attackTitans();
+        //chosenWeapon.attackTitans();
         moveTitans();
         addTitansToLane();
         updateTexts();
     }
+
 
     public void skipTurn(ActionEvent event){
         battle.passTurn();
