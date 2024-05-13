@@ -1,5 +1,6 @@
 package game.engine;
 
+import game.engine.weapons.Weapon;
 import game.engine.weapons.factory.FactoryResponse;
 import game.engine.weapons.factory.WeaponFactory;
 import game.engine.titans.*;
@@ -155,36 +156,21 @@ public class Battle {
 			}
 		}
 	
-	public  void purchaseWeapon(int weaponCode, Lane lane) throws InsufficientResourcesException,
-	InvalidLaneException{
-		boolean flag = false;
-		ArrayList<Lane> temp = new ArrayList<Lane>();
-		Lane currentLane = null;
-		while(!this.lanes.isEmpty()) {
-			currentLane = lanes.poll();
-			if(currentLane.getDangerLevel() == lane.getDangerLevel() &&
-	                Objects.equals(currentLane.getLaneWall(), lane.getLaneWall()) &&
-	                Objects.equals(currentLane.getTitans(),lane.getTitans()) &&
-	                Objects.equals(currentLane.getWeapons(), lane.getWeapons())) {
-				flag = true;
+	public void purchaseWeapon(int weaponCode, Lane lane) throws InsufficientResourcesException, InvalidLaneException{
+		if (!this.getLanes().contains(lane))
+		{
+			throw new InvalidLaneException("Weapon purchase failed");
 		}
-			else {
-				if(!currentLane.isLaneLost())
-					temp.add(currentLane);
-			}	
+
+		FactoryResponse factoryResponse = this.getWeaponFactory().buyWeapon(getResourcesGathered(), weaponCode);
+		Weapon purchasedWeapon = factoryResponse.getWeapon();
+
+		if (purchasedWeapon != null)
+		{
+			lane.addWeapon(purchasedWeapon);
+			this.setResourcesGathered(factoryResponse.getRemainingResources());
+			performTurn();
 		}
-		for(int i= 0 ;i<temp.size();i++) {
-			this.lanes.add(temp.get(i));
-		}
-		
-		if(lane.isLaneLost() || !flag)
-			throw new InvalidLaneException();
-		
-		FactoryResponse response = weaponFactory.buyWeapon(resourcesGathered, weaponCode);
-		lane.addWeapon(response.getWeapon());
-		this.resourcesGathered = response.getRemainingResources();
-		this.lanes.add(lane);
-		performTurn();
 	}
 
 	private void addTurnTitansToLane(){

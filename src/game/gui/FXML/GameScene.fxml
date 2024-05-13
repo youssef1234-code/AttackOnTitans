@@ -7,14 +7,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="MainParent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.HardGameController">
+<AnchorPane fx:id="MainParent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.HardGameController">
    <children>
       <ImageView fx:id="MainBackground" fitHeight="826.0" fitWidth="1922.0" layoutX="195.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" scaleX="1.35" scaleY="1.35">
          <image>
             <Image url="@../assets/MainBackground.png" />
          </image>
       </ImageView>
-      <AnchorPane fx:id="Lane1Pane" layoutX="81.0" layoutY="145.0" prefHeight="154.0" prefWidth="1828.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver">
+      <AnchorPane fx:id="Lane1Pane" layoutX="81.0" layoutY="145.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="154.0" prefWidth="1828.0">
          <children>
             <ImageView fx:id="Lane1" fitHeight="150.0" fitWidth="1875.0" layoutX="-53.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -23,7 +23,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Lane2Pane" layoutX="79.0" layoutY="315.0" prefHeight="154.0" prefWidth="1828.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver">
+      <AnchorPane fx:id="Lane2Pane" layoutX="79.0" layoutY="315.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="154.0" prefWidth="1828.0">
          <children>
             <ImageView fx:id="Lane2" fitHeight="150.0" fitWidth="1875.0" layoutX="-53.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -32,7 +32,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Lane3Pane" layoutX="83.0" layoutY="470.0" prefHeight="154.0" prefWidth="1828.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver">
+      <AnchorPane fx:id="Lane3Pane" layoutX="83.0" layoutY="470.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="154.0" prefWidth="1828.0">
          <children>
             <ImageView fx:id="Lane3" fitHeight="150.0" fitWidth="1875.0" layoutX="-53.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -41,7 +41,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Lane4Pane" layoutX="82.0" layoutY="630.0" prefHeight="154.0" prefWidth="1828.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver">
+      <AnchorPane fx:id="Lane4Pane" layoutX="82.0" layoutY="630.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="154.0" prefWidth="1828.0">
          <children>
             <ImageView fx:id="Lane4" fitHeight="150.0" fitWidth="1875.0" layoutX="-53.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -50,7 +50,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Lane5Pane" layoutX="103.0" layoutY="800.0" prefHeight="154.0" prefWidth="1828.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver">
+      <AnchorPane fx:id="Lane5Pane" layoutX="103.0" layoutY="800.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="154.0" prefWidth="1828.0">
          <children>
             <ImageView fx:id="Lane5" fitHeight="150.0" fitWidth="1875.0" layoutX="-53.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -176,5 +176,10 @@
       <ProgressBar fx:id="wall3Bar" layoutX="165.0" layoutY="460.0" prefWidth="150.0" progress="1.0" stylesheets="@../application.css" />
       <ProgressBar fx:id="wall4Bar" layoutX="165.0" layoutY="605.0" prefWidth="150.0" progress="1.0" stylesheets="@../application.css" />
       <ProgressBar fx:id="wall5Bar" layoutX="165.0" layoutY="788.0" prefWidth="150.0" progress="1.0" stylesheets="@../application.css" />
+      <ImageView fx:id="errorDialogue" fitHeight="75.0" fitWidth="270.0" layoutX="1600.0" layoutY="37.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/ErrorDialogue.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

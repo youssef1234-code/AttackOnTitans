@@ -50,7 +50,6 @@ public class PureTitanGUI extends TitanGUI{
             transition.setToX(pureTitanView.getTranslateX() - titanObj.getSpeed()*22);
             transition.setDuration(Duration.millis(1000)); 
             transition.play();
-            System.out.println(pureTitanView.getTranslateX());
         }
         else    
             System.out.println("Beside Wall");

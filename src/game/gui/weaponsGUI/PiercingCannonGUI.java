@@ -26,7 +26,7 @@ public class PiercingCannonGUI extends WeaponsGUI{
 
         piercingCannonBallPane.setPrefSize(190, 25);
         ball = new ImageView(getClass().getResource("../assets/Arrow.png").toString());
-        ball.setFitWidth(190);
+        ball.setFitWidth(90);
         ball.setFitHeight(25);
 
         

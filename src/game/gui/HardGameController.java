@@ -1,12 +1,10 @@
 package game.gui;
 
 import java.net.URL;
-import java.time.Duration;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Random;
-import java.io.InputStream;
 import java.io.IOException;
 
 import game.engine.lanes.Lane;
@@ -33,14 +31,14 @@ import game.gui.weaponsGUI.WeaponsGUI;
 import game.gui.titansGUI.AbnormalTitanGUI;
 import game.gui.titansGUI.ArmoredTitanGUI;
 import game.gui.titansGUI.ColossalTitanGUI;
-
+import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -49,12 +47,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class HardGameController implements Initializable{
 
@@ -107,6 +104,8 @@ public class HardGameController implements Initializable{
 
     @FXML
     private ImageView Wall52;
+
+    
 
     //Weapon Shop Buttons
     @FXML
@@ -176,6 +175,9 @@ public class HardGameController implements Initializable{
     @FXML
     private Label finalScoreLabel;
 
+    @FXML
+    private ImageView errorDialogue;
+
 
     
     private static Battle battle;
@@ -194,14 +196,13 @@ public class HardGameController implements Initializable{
         try {
             String resourcePath = "assets/BattleMusic.mp3";
             URL resourceUrl = getClass().getResource(resourcePath);
-            battle = new Battle(1, 0, 50, 5, 125);
+            battle = new Battle(1, 0, 50, 5, 1);
             root = FXMLLoader.load(getClass().getResource("FXML/GameOverScene.fxml"));
             root.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
             if (resourceUrl == null) {
                 System.err.println("Failed to load resource: " + resourcePath);
             } else {
-                System.out.println("Resource URL: " + resourceUrl);
                 MediaPlayer backgroundMusic = new MediaPlayer(new Media(resourceUrl.toString()));
                 backgroundMusic.setAutoPlay(true);
                 backgroundMusic.setCycleCount(MediaPlayer.INDEFINITE);
@@ -368,6 +369,7 @@ public class HardGameController implements Initializable{
     }
 
     public void onDragDropped(DragEvent event) {
+        System.out.println("Drag is Left");
         Dragboard db = event.getDragboard();
         boolean success = false;
         String weaponName = db.getString();
@@ -410,8 +412,7 @@ public class HardGameController implements Initializable{
 
             try{
                 battle.purchaseWeapon(weaponCode ,lane);
-                try{
-                    
+                System.out.println("Weapon is being purchased!!");
                     if(weaponCode == 4){
                         targetPane.getChildren().add(chosenWeapon.getPane());
                         targetPane.setLeftAnchor(chosenWeapon.getPane(), 650.0);
@@ -458,54 +459,74 @@ public class HardGameController implements Initializable{
                         if(distanceInPixels>=0){
                             targetPane.getChildren().addAll(chosenWeapon.getPane(),chosenWeapon.getBallPane());
                             targetPane.setLeftAnchor(chosenWeapon.getPane(), distanceInPixels);
-                            chosenWeapon.getPane().toFront();
                         }
                         if(weaponCode == 3 || weaponCode == 2 )
                             targetPane.setTopAnchor(chosenWeapon.getPane(), 20.0);
         
                     }
                     success = true;
-                }
-                catch(NullPointerException Exception){
-                    System.out.println("error in choosing a weapon !!");
-                }
+                //chosenWeapon.attackTitans();
+                moveTitans();
+                addTitansToLane();
+                updateTexts();
             }
             catch(InsufficientResourcesException Exception ){
-                //TODO handel InsufficientResourcesException (Show a red label or something !!!)
-                System.out.println("NOT ENOUGH RESOURCES!! ");
+                ///errorDialogue.setOpacity(1.0);
+                FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), errorDialogue);
+                fadeIn.setFromValue(0);
+                fadeIn.setToValue(1);
+                FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), errorDialogue);
+                fadeOut.setFromValue(1);
+                fadeOut.setToValue(0);
+                Timeline timeline = new Timeline(
+                        new KeyFrame(Duration.ZERO, e -> {
+                            fadeIn.play();
+                        }),
+                        new KeyFrame(Duration.seconds(2), e -> {
+                            fadeOut.play();
+                        })
+                );
+                timeline.play();               
             }
             catch(InvalidLaneException Exception ){
                 //Lane1Pane
-                switch(chosenLane){
-                    case 1: Wall1.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                    case 2: Wall2.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                    case 3: Wall31.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                    case 4: Wall4.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                    case 5: Wall51.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                System.out.println("Lane is NULL??? " + lane == null);
+                if(lane.isLaneLost()){
+                    switch(chosenLane){
+                        case 1: Wall1.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                        case 2: Wall2.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                        case 3: Wall31.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                        case 4: Wall4.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                        case 5: Wall51.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                    }
+    
+                    if(chosenLane == 3)
+                        Wall32.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));
+                    if(chosenLane == 5)
+                        Wall52.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString())); 
+    
+                    switch(chosenLane){
+                        case 1: MainParent.getChildren().remove(Lane1Pane);break;
+                        case 2: MainParent.getChildren().remove(Lane2Pane);break;
+                        case 3: MainParent.getChildren().remove(Lane3Pane);break;
+                        case 4: MainParent.getChildren().remove(Lane4Pane);break;
+                        case 5: MainParent.getChildren().remove(Lane5Pane);break;
+                    } 
                 }
-
-                if(chosenLane == 3)
-                    Wall32.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));
-                if(chosenLane == 5)
-                    Wall52.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString())); 
-
-                switch(chosenLane){
-                    case 1: MainParent.getChildren().remove(Lane1Pane);break;
-                    case 2: MainParent.getChildren().remove(Lane2Pane);break;
-                    case 3: MainParent.getChildren().remove(Lane3Pane);break;
-                    case 4: MainParent.getChildren().remove(Lane4Pane);break;
-                    case 5: MainParent.getChildren().remove(Lane5Pane);break;
-                } 
+            
             }
         }
+        System.out.println("Excuted");
         event.setDropCompleted(success);
         event.consume();
-        //chosenWeapon.attackTitans();
-        moveTitans();
-        addTitansToLane();
-        updateTexts();
     }
+    public void WeaponsAttackTitans(){
+        //Iterates over the all the weapons Guis and performs the attack of weapons on the titans only in the GUI 
+        //Balls should move
+        //Titan health bars should be edited 
+        //Titan death also be triggered
 
+    }
 
     public void skipTurn(ActionEvent event){
         battle.passTurn();
@@ -536,8 +557,6 @@ public class HardGameController implements Initializable{
 
             }
         }
-
-        System.out.println(battle.isGameOver());
         if(battle.isGameOver()){
             try{
                 isGameOverDisplay();
@@ -553,7 +572,6 @@ public class HardGameController implements Initializable{
     public void isGameOverDisplay() throws IOException{
         System.out.println("Works");
   
-
         ((Label)root.getChildrenUnmodifiable().get(1)).setText("" + battle.getScore());
         MainParent.getChildren().add(root);
         AnchorPane.setTopAnchor(root,240.0);

@@ -18,7 +18,6 @@ public class GameOverController {
     
     
     public void goToMainMenu(ActionEvent event) throws IOException{
-        System.out.println("Big Funny");
         Parent root = FXMLLoader.load(getClass().getResource("FXML/MainMenuScene.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
