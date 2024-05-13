@@ -59,7 +59,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import javafx.scene.Node;
 
-public class EasyGameController implements Initializable {
+public class EasyGameController  extends GameMedia implements Initializable {
 
   @FXML
   private AnchorPane MainParent;
@@ -169,23 +169,15 @@ public class EasyGameController implements Initializable {
 
   public void initialize(URL location, ResourceBundle resources) {
     try {
-      String resourcePath = "assets/BattleMusic.mp3";
-      URL resourceUrl = getClass().getResource(resourcePath);
+   
       battle = new Battle(1, 0, 50, 3, 250);
       gameOverRoot = FXMLLoader.load(getClass().getResource("FXML/GameOverScene.fxml"));
       gameOverRoot.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-
       pauseMenuRoot = FXMLLoader.load(getClass().getResource("FXML/PauseMenuScene.fxml"));
       pauseMenuRoot.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+      playMedia();
 
-      if (resourceUrl == null) {
-        System.err.println("Failed to load resource: " + resourcePath);
-      } else {
-        MediaPlayer backgroundMusic = new MediaPlayer(new Media(resourceUrl.toString()));
-        backgroundMusic.setAutoPlay(true);
-        backgroundMusic.setCycleCount(MediaPlayer.INDEFINITE);
-        backgroundMusic.setVolume(1);
-      }
+        
     } catch (Exception e) {
       System.err.println("Error initializing media player: " + e.getMessage());
     }

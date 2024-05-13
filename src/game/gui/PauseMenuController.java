@@ -18,7 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class PauseMenuController {
+public class PauseMenuController extends GameMedia {
     @FXML
     private AnchorPane pauseMenuPane;
 
@@ -47,6 +47,7 @@ public class PauseMenuController {
         stage.setFullScreen(true);
 
         stage.show();
+        muteNoText(event);
 
     }
 
@@ -70,7 +71,7 @@ public class PauseMenuController {
     }
 
     public void pauseMenuMute(ActionEvent event){
-
+        muteMedia(event, muteButton);
     }
 
     public void escape(ActionEvent event){
@@ -79,7 +80,7 @@ public class PauseMenuController {
         Parent root = scene.getRoot();
         AnchorPane pane = (AnchorPane) root.lookup("#MainParent");
         pane.getChildren().remove(pauseMenuPane);
-
+        
     }
     
 }

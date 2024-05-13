@@ -35,7 +35,7 @@ abstract public class BGMedia {
         videoPlayer.setAutoPlay(true);
         videoPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         backgroundVideo.setMediaPlayer(videoPlayer);
-
+        bgAudioPlayer.setVolume(1);
         bgAudioPlayer.setAutoPlay(true);
         bgAudioPlayer.setCycleCount(MediaPlayer.INDEFINITE);
     }
