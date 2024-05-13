@@ -886,6 +886,19 @@ public class HardGameController extends GameMedia implements Initializable {
       } catch (IOException e) {
 
       }
+    }else{
+      passTurnButton.setDisable(true);
+      //passTurnButton.setOpacity(1);
+      new java.util.Timer().schedule( 
+        new java.util.TimerTask() {
+          @Override
+            public void run() {
+              // Enable the button
+              passTurnButton.setDisable(false);
+            }
+        }, 
+      1000);
+
     }
 
   }
