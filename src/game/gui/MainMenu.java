@@ -22,10 +22,11 @@ public class MainMenu extends Application {
     public void start(Stage primaryStage) throws IOException { 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/MainMenuScene.fxml"));
         Parent root = loader.load();
+        Scene scene = new Scene(root);
         System.out.println("Initiailising Main Menu");
         
         //<Controller Class Name> controller = loader.getController();
-        Scene scene = new Scene(root);
+        
         Font.loadFont(getClass().getResourceAsStream("assets/Oswald-Bold.ttf"), 14);
         scene.setOnKeyPressed(event ->{
             if(event.getCode() == KeyCode.F11)

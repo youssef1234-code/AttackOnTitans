@@ -9,7 +9,6 @@ import game.engine.base.Wall;
 import game.engine.dataloader.DataLoader;
 import game.engine.exceptions.*;
 import java.util.HashMap;
-import java.util.Objects;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.PriorityQueue;

@@ -176,9 +176,14 @@
       <ProgressBar fx:id="wall3Bar" layoutX="165.0" layoutY="460.0" prefWidth="150.0" progress="1.0" stylesheets="@../application.css" />
       <ProgressBar fx:id="wall4Bar" layoutX="165.0" layoutY="605.0" prefWidth="150.0" progress="1.0" stylesheets="@../application.css" />
       <ProgressBar fx:id="wall5Bar" layoutX="165.0" layoutY="788.0" prefWidth="150.0" progress="1.0" stylesheets="@../application.css" />
-      <ImageView fx:id="errorDialogue" fitHeight="75.0" fitWidth="270.0" layoutX="1600.0" layoutY="37.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="errorDialogue" fitHeight="112.5" fitWidth="405.0" layoutX="1459.0" layoutY="26.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/ErrorDialogue.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="invalidLaneDialogue" fitHeight="112.5" fitWidth="405.0" layoutX="1459.0" layoutY="26.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/invalidLaneDialogue.png" />
          </image>
       </ImageView>
    </children>

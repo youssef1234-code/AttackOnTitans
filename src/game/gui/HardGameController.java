@@ -178,6 +178,11 @@ public class HardGameController implements Initializable{
     @FXML
     private ImageView errorDialogue;
 
+    @FXML
+    private ImageView invalidLaneDialogue;
+
+    
+
 
     
     private static Battle battle;
@@ -196,7 +201,7 @@ public class HardGameController implements Initializable{
         try {
             String resourcePath = "assets/BattleMusic.mp3";
             URL resourceUrl = getClass().getResource(resourcePath);
-            battle = new Battle(1, 0, 50, 5, 1);
+            battle = new Battle(1, 0, 50, 5, 125);
             root = FXMLLoader.load(getClass().getResource("FXML/GameOverScene.fxml"));
             root.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
@@ -264,7 +269,8 @@ public class HardGameController implements Initializable{
         
         ArrayList<Lane> lanes = battle.getOriginalLanes();
         for(int i = 0; i < lanes.size(); i++){
-            if(!lanes.get(i).isLaneLost()){
+            Lane currentLane  = lanes.get(i);
+            if(!currentLane.isLaneLost()){
                 switch(i){
                     case 0: lane1Danger.setText(""+lanes.get(i).getDangerLevel());break;
                     case 1: lane2Danger.setText(""+lanes.get(i).getDangerLevel());break;
@@ -280,6 +286,33 @@ public class HardGameController implements Initializable{
                     case 3: wall4Bar.setProgress((lanes.get(i).getLaneWall().getCurrentHealth()+ 0.0)/lanes.get(i).getLaneWall().getBaseHealth());break;
                     case 4: wall5Bar.setProgress((lanes.get(i).getLaneWall().getCurrentHealth()+ 0.0)/lanes.get(i).getLaneWall().getBaseHealth());break;
                 }
+            }
+            else{
+                switch(i+1){
+                    case 1: Wall1.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                    case 2: Wall2.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                    case 3: Wall31.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                    case 4: Wall4.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                    case 5: Wall51.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                }
+
+                if(i+1 == 3)
+                    Wall32.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));
+                if(i+1 == 5){
+                    Wall52.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString())); 
+                    Wall52.setFitWidth(94.0);
+                    Wall52.setFitHeight(199.0);
+                }
+                   
+
+                switch(i+1){
+                    case 1: Lane1Pane.getChildren().removeAll();break;
+                    case 2: Lane2Pane.getChildren().removeAll();break;
+                    case 3: Lane3Pane.getChildren().removeAll();break;
+                    case 4: Lane4Pane.getChildren().removeAll();break;
+                    case 5: Lane3Pane.getChildren().removeAll();break;
+                } 
+
             }
         }
             
@@ -489,30 +522,23 @@ public class HardGameController implements Initializable{
                 timeline.play();               
             }
             catch(InvalidLaneException Exception ){
-                //Lane1Pane
+                //Lane1Pane Dialogue box
                 System.out.println("Lane is NULL??? " + lane == null);
-                if(lane.isLaneLost()){
-                    switch(chosenLane){
-                        case 1: Wall1.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                        case 2: Wall2.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                        case 3: Wall31.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                        case 4: Wall4.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                        case 5: Wall51.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                    }
-    
-                    if(chosenLane == 3)
-                        Wall32.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));
-                    if(chosenLane == 5)
-                        Wall52.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString())); 
-    
-                    switch(chosenLane){
-                        case 1: MainParent.getChildren().remove(Lane1Pane);break;
-                        case 2: MainParent.getChildren().remove(Lane2Pane);break;
-                        case 3: MainParent.getChildren().remove(Lane3Pane);break;
-                        case 4: MainParent.getChildren().remove(Lane4Pane);break;
-                        case 5: MainParent.getChildren().remove(Lane5Pane);break;
-                    } 
-                }
+                FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), invalidLaneDialogue);
+                fadeIn.setFromValue(0);
+                fadeIn.setToValue(1);
+                FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), invalidLaneDialogue);
+                fadeOut.setFromValue(1);
+                fadeOut.setToValue(0);
+                Timeline timeline = new Timeline(
+                        new KeyFrame(Duration.ZERO, e -> {
+                            fadeIn.play();
+                        }),
+                        new KeyFrame(Duration.seconds(2), e -> {
+                            fadeOut.play();
+                        })
+                );
+                timeline.play();       
             
             }
         }
