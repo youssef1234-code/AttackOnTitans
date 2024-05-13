@@ -40,7 +40,7 @@ public class PureTitanGUI extends TitanGUI{
     }
 
     public void takeDamage(){
-        healthBar.setProgress(titanObj.getCurrentHealth()/titanObj.getBaseHealth());
+        healthBar.setProgress( (double) titanObj.getCurrentHealth()/titanObj.getBaseHealth());
     }
 
     public void translate(){ // 
@@ -59,7 +59,14 @@ public class PureTitanGUI extends TitanGUI{
         return pureTitanView.getLayoutX() + pureTitanView.getTranslateX() ;
     }
     
-
+    @Override 
+    public AnchorPane getPane(){
+        return pureTitanView;
+    }
     
+    @Override 
+    public boolean isDead(){
+        return this.titanObj.isDefeated();
+    }
 
 }

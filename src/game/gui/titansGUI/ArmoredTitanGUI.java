@@ -42,7 +42,7 @@ public class ArmoredTitanGUI extends TitanGUI{
     }
 
     public void takeDamage(){
-        healthBar.setProgress(titanObj.getCurrentHealth()/titanObj.getBaseHealth());
+        healthBar.setProgress( (double) titanObj.getCurrentHealth()/titanObj.getBaseHealth());
     }
 
     public void translate(){
@@ -61,5 +61,12 @@ public class ArmoredTitanGUI extends TitanGUI{
     public double getpos(){
         return armoredTitanView.getLayoutX() + armoredTitanView.getTranslateX() ;
     }
-
+    @Override 
+    public AnchorPane getPane(){
+        return armoredTitanView;
+    }
+    @Override 
+    public boolean isDead(){
+        return this.titanObj.isDefeated();
+    }
 }

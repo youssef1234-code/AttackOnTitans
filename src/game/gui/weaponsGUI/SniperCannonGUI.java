@@ -38,7 +38,7 @@ public class SniperCannonGUI extends WeaponsGUI{
 
     @Override
     public AnchorPane getPane(){
-        return this.sniperCannonPane;
+        return this.sniperCannonPane;        
     }
 
 

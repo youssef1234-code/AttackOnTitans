@@ -40,7 +40,7 @@ public class ColossalTitanGUI extends TitanGUI {
     }
 
     public void takeDamage(){
-        healthBar.setProgress(titanObj.getCurrentHealth()/titanObj.getBaseHealth());
+        healthBar.setProgress( (double) titanObj.getCurrentHealth()/titanObj.getBaseHealth());
     }
 
     public void translate(){
@@ -59,5 +59,12 @@ public class ColossalTitanGUI extends TitanGUI {
     public double getpos(){
         return colossalTitanView.getLayoutX() + colossalTitanView.getTranslateX() ;
     }
-
+    @Override 
+    public AnchorPane getPane(){
+        return colossalTitanView;
+    }
+    @Override 
+    public boolean isDead(){
+        return this.titanObj.isDefeated();
+    }
 }
