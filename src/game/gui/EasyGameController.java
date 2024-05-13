@@ -335,6 +335,7 @@ public class EasyGameController  extends GameMedia implements Initializable {
 
   public void onDragDropped(DragEvent event) {
     System.out.println("Drag is Left");
+    updateTexts();
     Dragboard db = event.getDragboard();
     boolean success = false;
     String weaponName = db.getString();
@@ -494,6 +495,9 @@ public class EasyGameController  extends GameMedia implements Initializable {
     if (battle.isGameOver()) {
       try {
         isGameOverDisplay();
+        Lane2Weapons = new ArrayList < WeaponsGUI > ();
+        Lane3Weapons = new ArrayList < WeaponsGUI > ();
+        Lane4Weapons = new ArrayList < WeaponsGUI > ();
       } catch (IOException e) {}
     }
   }
@@ -698,6 +702,9 @@ public class EasyGameController  extends GameMedia implements Initializable {
     if (battle.isGameOver()) {
       try {
         isGameOverDisplay();
+        Lane2Weapons = new ArrayList < WeaponsGUI > ();
+        Lane3Weapons = new ArrayList < WeaponsGUI > ();
+        Lane4Weapons = new ArrayList < WeaponsGUI > ();
 
       } catch (IOException e) {
 

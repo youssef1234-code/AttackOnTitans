@@ -12,7 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
-public class GameOverController {
+public class GameOverController extends GameMedia {
     @FXML
     private Button gameOverBackButton;
     
@@ -29,9 +29,9 @@ public class GameOverController {
             if(ev.getCode() == KeyCode.F11)
                 stage.setFullScreen(!stage.isFullScreen());
         });
+        muteNoText(event);
         stage.setResizable(false);
         stage.setFullScreen(true);
-
         stage.show();
 
     }

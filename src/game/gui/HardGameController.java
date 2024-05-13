@@ -361,6 +361,7 @@ public class HardGameController extends GameMedia implements Initializable {
   }
 
   public void onDragOver(DragEvent event) {
+    updateTexts();
     if (event.getGestureSource() != event.getSource() && event.getDragboard().hasString()) {
       event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
     }
@@ -369,6 +370,7 @@ public class HardGameController extends GameMedia implements Initializable {
 
   public void onDragDropped(DragEvent event) {
     System.out.println("Drag is Left");
+    updateTexts();
     Dragboard db = event.getDragboard();
     boolean success = false;
     String weaponName = db.getString();
@@ -560,10 +562,17 @@ public class HardGameController extends GameMedia implements Initializable {
     if (battle.isGameOver()) {
       try {
         isGameOverDisplay();
+        Lane1Weapons = new ArrayList < WeaponsGUI > ();
+        Lane2Weapons = new ArrayList < WeaponsGUI > ();
+        Lane3Weapons = new ArrayList < WeaponsGUI > ();
+        Lane4Weapons = new ArrayList < WeaponsGUI > ();
+        Lane5Weapons = new ArrayList < WeaponsGUI > ();
+
       } catch (IOException e) {}
     }
   }
   public void weaponsAttackTitans() {
+    updateTexts();
     //Iterates over the all the weapons Guis and performs the attack of weapons on the titans only in the GUI 
     for (int i = 0; i < Lane1Weapons.size(); i++) {
       WeaponsGUI currentWeapon = Lane1Weapons.get(i);
@@ -862,6 +871,11 @@ public class HardGameController extends GameMedia implements Initializable {
     if (battle.isGameOver()) {
       try {
         isGameOverDisplay();
+        Lane1Weapons = new ArrayList < WeaponsGUI > ();
+        Lane2Weapons = new ArrayList < WeaponsGUI > ();
+        Lane3Weapons = new ArrayList < WeaponsGUI > ();
+        Lane4Weapons = new ArrayList < WeaponsGUI > ();
+        Lane5Weapons = new ArrayList < WeaponsGUI > ();
 
       } catch (IOException e) {
 
