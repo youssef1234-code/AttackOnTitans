@@ -194,6 +194,12 @@ public class HardGameController extends GameMedia implements Initializable {
   private Parent gameOverRoot;
   private Parent pauseMenuRoot;
 
+  //Remaining Tasks:
+//1- Handling Multiple Weapons 
+//2- Handling Null Pointer Excpetions
+//3- Updating Values accordingly
+//4- Pass Turn prevent scam
+
   public void initialize(URL location, ResourceBundle resources) {
     try {
       battle = new Battle(1, 0, 50, 5, 125);

@@ -59,6 +59,12 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import javafx.scene.Node;
 
+//Remaining Tasks:
+//1- Handling Multiple Weapons 
+//2- Handling Null Pointer Excpetions
+//3- Updating Values accordingly
+//4- Pass Turn prevent scam
+
 public class EasyGameController  extends GameMedia implements Initializable {
 
   @FXML
