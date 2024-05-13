@@ -57,4 +57,9 @@ public class ArmoredTitanGUI extends TitanGUI{
         //    System.out.println("Beside Wall");
         
 }
+    @Override
+    public double getpos(){
+        return armoredTitanView.getLayoutX() + armoredTitanView.getTranslateX() ;
+    }
+
 }

@@ -13,14 +13,15 @@ public class SniperCannonGUI extends WeaponsGUI{
     private ImageView sniperCannonImage;
     public AnchorPane sniperCannonBallPane = new AnchorPane();
     private ImageView ball; 
-
-
-
+    private double weaponLeftDistance;
+    private double width;
     public SniperCannonGUI(Weapon sniperCannonObject) {
+        
+        this.weaponLeftDistance = 0;
         this.sniperCannonObject = sniperCannonObject;
         sniperCannonPane.setPrefWidth(115);
         sniperCannonPane.setPrefHeight(127);
-
+        this.width = 115;
         sniperCannonImage = new ImageView(getClass().getResource("../assets/SniperCannon.png").toString());
         sniperCannonImage.setFitWidth(115);
         sniperCannonImage.setFitHeight(75);
@@ -36,14 +37,20 @@ public class SniperCannonGUI extends WeaponsGUI{
     }
 
     @Override
-    public AnchorPane getBallPane(){
-        return this.sniperCannonBallPane;
+    public AnchorPane getPane(){
+        return this.sniperCannonPane;
     }
 
 
     @Override
-    public AnchorPane getPane(){
-        return this.sniperCannonPane;
+    public AnchorPane getBallPane(){
+        AnchorPane res = new AnchorPane();
+        res.setPrefSize(25, 25);
+        ball = new ImageView(getClass().getResource("../assets/SniperCannonBall.png").toString());
+        ball.setFitWidth(25);
+        ball.setFitHeight(25);
+        res.getChildren().add(ball);
+        return res;
     }
 
     @Override
@@ -51,17 +58,19 @@ public class SniperCannonGUI extends WeaponsGUI{
         return this.weaponCode;
     }
 
-    @Override
-    public void attackTitans(){
-        System.out.println("Attakcing Titans!!!");
-         //getNearestTitan() should be implemented to get the first titan in the lane where the cannon ball should stop
-        TranslateTransition transition = new TranslateTransition();
-        transition.setNode(sniperCannonBallPane);
-        //Should be upadated to the value of the nearest Titan location
-        transition.setToX(1200);
-        transition.setDuration(Duration.millis(1000)); 
-        transition.play();
-    }
-    
 
+    
+    @Override
+    public void setLeftAnchorDistanceInPixels(double weaponLeftDistance){
+        this.weaponLeftDistance = weaponLeftDistance;
+    }
+
+    public double getLeftAnchorDistanceInPixels(){
+        return this.weaponLeftDistance;
+    }
+    @Override
+    public double getWidth(){
+        return this.weaponLeftDistance;
+    }
+     
 }

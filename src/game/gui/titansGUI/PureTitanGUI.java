@@ -53,8 +53,11 @@ public class PureTitanGUI extends TitanGUI{
         }
         //else    
         //    System.out.println("Beside Wall");
-        
-}
+    }
+    @Override
+    public double getpos(){
+        return pureTitanView.getLayoutX() + pureTitanView.getTranslateX() ;
+    }
     
 
     

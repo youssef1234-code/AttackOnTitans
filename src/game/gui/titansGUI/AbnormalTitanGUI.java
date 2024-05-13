@@ -57,5 +57,9 @@ public class AbnormalTitanGUI extends TitanGUI{
         //    System.out.println("Beside Wall");
         
 }
-    
+    @Override
+    public double getpos(){
+        return abnormalTitanView.getLayoutX() + abnormalTitanView.getTranslateX()  ;
+    }
+
 }

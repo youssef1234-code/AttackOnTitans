@@ -8,8 +8,10 @@ public class WallTrapGUI extends WeaponsGUI{
     private Weapon wallTrapObject;
     public AnchorPane wallTrapPane = new AnchorPane();
     private ImageView wallTrapImage;
-
+    private double weaponLeftDistance;
+    
     public WallTrapGUI(Weapon wallTrapObject) {
+        this.weaponLeftDistance = 0;
         this.wallTrapObject = wallTrapObject;
         wallTrapPane.setPrefWidth(50);
         wallTrapPane.setPrefHeight(50);
@@ -31,17 +33,25 @@ public class WallTrapGUI extends WeaponsGUI{
         return this.weaponCode;
     }
     
-    @Override
-    public void attackTitans(){
-        System.out.println("Attakcing Titans!!!");
-        //No attack animation is required
-    }
 
     @Override
     public AnchorPane getBallPane(){
         //No attack animation is required
         return wallTrapPane;
     }
-    
+    @Override
+    public void setLeftAnchorDistanceInPixels(double weaponLeftDistance){
+        this.weaponLeftDistance = weaponLeftDistance;
+    }
+
+    public double getLeftAnchorDistanceInPixels(){
+        return this.weaponLeftDistance;
+    }
+     
+    @Override
+    public double getWidth(){
+        return this.weaponLeftDistance;
+    }
+     
 
 }

@@ -55,6 +55,9 @@ public class ColossalTitanGUI extends TitanGUI {
         //   System.out.println("Beside Wall");
         
 }
-    
+    @Override
+    public double getpos(){
+        return colossalTitanView.getLayoutX() + colossalTitanView.getTranslateX() ;
+    }
 
 }

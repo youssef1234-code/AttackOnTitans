@@ -11,9 +11,11 @@ public class VolleySpreadCannonGUI extends WeaponsGUI{
     public AnchorPane volleySpredCannonPane = new AnchorPane();
     private ImageView volleySpreadImage;
     public AnchorPane volleyCannonBallPane = new AnchorPane();
-    private ImageView ball; 
-
+    private ImageView ball;
+    private double weaponLeftDistance;
+    private double width ; 
     public VolleySpreadCannonGUI(Weapon volleySpredObject) {
+        this.weaponLeftDistance = 0;
         this.volleySpredObject = volleySpredObject;
         volleySpredCannonPane.setPrefWidth(115);
         volleySpredCannonPane.setPrefHeight(127);
@@ -21,6 +23,7 @@ public class VolleySpreadCannonGUI extends WeaponsGUI{
         volleySpreadImage = new ImageView(getClass().getResource("../assets/VolleyCannon.png").toString());
         volleySpreadImage.setFitWidth(115);
         volleySpreadImage.setFitHeight(75);
+        this.width = 115;
 
         //290*35
         volleyCannonBallPane.setPrefSize(25,25);
@@ -45,19 +48,28 @@ public class VolleySpreadCannonGUI extends WeaponsGUI{
 
     @Override 
     public AnchorPane getBallPane() {
-        return volleyCannonBallPane;
+        AnchorPane res = new AnchorPane();
+        res.setPrefSize(35, 35);
+        ball = new ImageView(getClass().getResource("../assets/volleyBall.png").toString());
+        ball.setFitWidth(35);
+        ball.setFitHeight(35);
+        res.getChildren().add(ball);
+        return res;
+    }
+
+
+    @Override
+    public void setLeftAnchorDistanceInPixels(double weaponLeftDistance){
+        this.weaponLeftDistance = weaponLeftDistance;
+    }
+
+    public double getLeftAnchorDistanceInPixels(){
+        return this.weaponLeftDistance;
     }
     @Override
-    public void attackTitans(){
-        System.out.println("PERFORMING WEAPON ATTACK !!!");
-        //getNearestTitan() should be implemented to get the first titan in the lane where the cannon ball should stop
-        TranslateTransition transition = new TranslateTransition();
-        transition.setNode(volleyCannonBallPane);
-        //Should be upadated to the value of the nearest Titan location
-        transition.setToX(1200);
-        transition.setDuration(Duration.millis(1000)); 
-        transition.play();
+    public double getWidth(){
+        return this.weaponLeftDistance;
     }
-    
+     
 
 }

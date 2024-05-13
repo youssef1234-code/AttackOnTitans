@@ -13,13 +13,14 @@ public class PiercingCannonGUI extends WeaponsGUI{
     private ImageView piercingCannonImage;
     public AnchorPane piercingCannonBallPane = new AnchorPane();
     private ImageView ball; 
+    private double weaponLeftDistance;
     // private int currentLocation; to get the location of the cannon to start firing from there 
 
     public PiercingCannonGUI(Weapon piercingCannonObject) {
+        this.weaponLeftDistance = 0;
         this.piercingCannonObject = piercingCannonObject;
         piercingCannonPane.setPrefWidth(115);
         piercingCannonPane.setPrefHeight(127);
-
         piercingCannonImage = new ImageView(getClass().getResource("../assets/PiercingSpreadCannon.png").toString());
         piercingCannonImage.setFitWidth(115);
         piercingCannonImage.setFitHeight(115);
@@ -34,22 +35,17 @@ public class PiercingCannonGUI extends WeaponsGUI{
         piercingCannonPane.getChildren().add(piercingCannonImage);
     }
 
-    @Override
-    public void attackTitans(){
-    
-        //getNearestTitan() should be implemented to get the first titan in the lane where the cannon ball should stop
-        TranslateTransition transition = new TranslateTransition();
-        transition.setNode(piercingCannonBallPane);
-        //Should be upadated to the value of the nearest Titan location
-        transition.setToX(1200);
-        transition.setDuration(Duration.millis(1000)); 
-        transition.play();
 
-    }
 
     @Override
     public AnchorPane getBallPane(){
-        return piercingCannonBallPane;
+        AnchorPane res = new AnchorPane();
+        res.setPrefSize(190, 25);
+        ball = new ImageView(getClass().getResource("../assets/Arrow.png").toString());
+        ball.setFitWidth(90);
+        ball.setFitHeight(25);
+        res.getChildren().add(ball);
+        return res;
     }
 
     @Override
@@ -61,4 +57,16 @@ public class PiercingCannonGUI extends WeaponsGUI{
     public int getweaponCode(){
         return this.weaponCode;
     }
+    @Override
+    public void setLeftAnchorDistanceInPixels(double weaponLeftDistance){
+        this.weaponLeftDistance = weaponLeftDistance;
+    }
+    public double getLeftAnchorDistanceInPixels(){
+        return this.weaponLeftDistance;
+    }
+    @Override
+    public double getWidth(){
+        return this.weaponLeftDistance;
+    }
+     
 }

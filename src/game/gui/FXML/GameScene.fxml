@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="MainParent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.HardGameController">
+<AnchorPane fx:id="MainParent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.HardGameController">
    <children>
       <ImageView fx:id="MainBackground" fitHeight="826.0" fitWidth="1922.0" layoutX="195.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" scaleX="1.35" scaleY="1.35">
          <image>
@@ -147,7 +147,7 @@
       </Button>
       <Label fx:id="phaseAndTurnText" alignment="CENTER" layoutX="717.0" layoutY="994.0" prefHeight="41.0" prefWidth="397.0" style="-fx-text-fill: #631E1E; -fx-font-family: Oswald; -fx-font-size: 35;" stylesheets="@../application.css" text=" Early (1)" />
       <Label fx:id="resourcesGatheredText" layoutX="671.0" layoutY="18.0" prefHeight="71.0" prefWidth="281.0" style="-fx-font-family: Oswald; -fx-text-fill: #631E1E; -fx-font-size: 40;" stylesheets="@../application.css" text="0" />
-      <Button fx:id="SettingsButton" layoutX="1800.0" layoutY="13.0" mnemonicParsing="false" onAction="#updateTexts" prefHeight="80.0" prefWidth="73.0" style="-fx-background-color: transparent;" stylesheets="@../application.css">
+      <Button fx:id="SettingsButton" layoutX="1800.0" layoutY="13.0" mnemonicParsing="false" onAction="#showPauseMenu" prefHeight="80.0" prefWidth="73.0" style="-fx-background-color: transparent;" stylesheets="@../application.css">
          <graphic>
             <ImageView fitHeight="80.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -176,12 +176,12 @@
       <ProgressBar fx:id="wall3Bar" layoutX="165.0" layoutY="460.0" prefWidth="150.0" progress="1.0" stylesheets="@../application.css" />
       <ProgressBar fx:id="wall4Bar" layoutX="165.0" layoutY="605.0" prefWidth="150.0" progress="1.0" stylesheets="@../application.css" />
       <ProgressBar fx:id="wall5Bar" layoutX="165.0" layoutY="788.0" prefWidth="150.0" progress="1.0" stylesheets="@../application.css" />
-      <ImageView fx:id="errorDialogue" fitHeight="112.5" fitWidth="405.0" layoutX="1459.0" layoutY="26.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="errorDialogue" fitHeight="63.0" fitWidth="334.0" layoutX="1459.0" layoutY="26.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/ErrorDialogue.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="invalidLaneDialogue" fitHeight="112.5" fitWidth="405.0" layoutX="1459.0" layoutY="26.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="invalidLaneDialogue" fitHeight="55.0" fitWidth="327.0" layoutX="1459.0" layoutY="26.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/invalidLaneDialogue.png" />
          </image>

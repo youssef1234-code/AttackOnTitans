@@ -3,6 +3,7 @@ package game.gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Random;
 import java.io.IOException;
@@ -33,7 +34,9 @@ import game.gui.titansGUI.ArmoredTitanGUI;
 import game.gui.titansGUI.ColossalTitanGUI;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
+import javafx.animation.ParallelTransition;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,26 +65,31 @@ public class HardGameController implements Initializable{
     private AnchorPane Lane1Pane;
     private static double availableposXLane1 = 500.0;
     private boolean Lane1hasTrap = false;
+    private List<WeaponsGUI> Lane1Weapons = new ArrayList<WeaponsGUI>();
 
     @FXML
     private AnchorPane Lane2Pane;
     private static double availableposXLane2 = 500.0;
     private boolean Lane2hasTrap = false;
+    private List<WeaponsGUI> Lane2Weapons = new ArrayList<WeaponsGUI>();
 
     @FXML
     private AnchorPane Lane3Pane;
     private static double availableposXLane3 = 500.0;
     private boolean Lane3hasTrap = false;
+    private List<WeaponsGUI> Lane3Weapons = new ArrayList<WeaponsGUI>();
     
     @FXML
     private AnchorPane Lane4Pane;
     private static  double availableposXLane4 = 500.0;
     private boolean Lane4hasTrap = false;
+    private List<WeaponsGUI> Lane4Weapons = new ArrayList<WeaponsGUI>();
 
     @FXML
     private AnchorPane Lane5Pane;
     private static  double availableposXLane5 = 500.0;
     private boolean Lane5hasTrap = false;
+    private List<WeaponsGUI> Lane5Weapons = new ArrayList<WeaponsGUI>();
 
     // Wall Image Views
     @FXML
@@ -189,7 +197,8 @@ public class HardGameController implements Initializable{
     private AnchorPane [] lanesGui = new AnchorPane[5];
     private ArrayList<ArrayList<TitanGUI>> titanImages = new ArrayList<ArrayList<TitanGUI>>();
     private Thread gameOverThread;
-    private Parent root;
+    private Parent gameOverRoot;
+    private Parent pauseMenuRoot;
 
 
 
@@ -202,8 +211,11 @@ public class HardGameController implements Initializable{
             String resourcePath = "assets/BattleMusic.mp3";
             URL resourceUrl = getClass().getResource(resourcePath);
             battle = new Battle(1, 0, 50, 5, 125);
-            root = FXMLLoader.load(getClass().getResource("FXML/GameOverScene.fxml"));
-            root.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+            gameOverRoot = FXMLLoader.load(getClass().getResource("FXML/GameOverScene.fxml"));
+            gameOverRoot.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+            pauseMenuRoot = FXMLLoader.load(getClass().getResource("FXML/PauseMenuScene.fxml"));
+            pauseMenuRoot.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
             if (resourceUrl == null) {
                 System.err.println("Failed to load resource: " + resourcePath);
@@ -457,16 +469,25 @@ public class HardGameController implements Initializable{
                             case 4 :availableposXLane4-=125 ;break;
                             case 5 :availableposXLane5-=125;break;
                         }
+                        //Scrollable pane in here 
                         if(distanceInPixels>=0){
-                            targetPane.getChildren().addAll(chosenWeapon.getPane(),chosenWeapon.getBallPane());
+                            targetPane.getChildren().add(chosenWeapon.getPane());
                             targetPane.setLeftAnchor(chosenWeapon.getPane(), distanceInPixels);
+                            chosenWeapon.setLeftAnchorDistanceInPixels(distanceInPixels);
                         }
                         if(weaponCode == 3 || weaponCode == 2 )
                             targetPane.setTopAnchor(chosenWeapon.getPane(), 20.0);
-        
                     }
-                    success = true;
-                //chosenWeapon.attackTitans();
+                success = true;
+                if(!lane.isLaneLost()){
+                    switch(chosenLane){
+                        case 1 : Lane1Weapons.add(chosenWeapon) ;break;
+                        case 2 : Lane2Weapons.add(chosenWeapon) ;break;
+                        case 3 : Lane3Weapons.add(chosenWeapon) ;break;
+                        case 4 : Lane4Weapons.add(chosenWeapon) ;break;
+                        case 5 : Lane5Weapons.add(chosenWeapon) ;break;
+                    }
+                }
                 moveTitans();
                 weaponsAttackTitans();
                 titansAttack();
@@ -533,10 +554,190 @@ public class HardGameController implements Initializable{
     }
     public void weaponsAttackTitans(){
         //Iterates over the all the weapons Guis and performs the attack of weapons on the titans only in the GUI 
-        //Balls should move
-        //Titan health bars should be edited 
-        //Titan death also be triggered
+        for(int i=0 ;i<Lane1Weapons.size();i++){
+            WeaponsGUI currentWeapon = Lane1Weapons.get(i);
+            if(currentWeapon.getweaponCode()!=4){
+                AnchorPane ball = currentWeapon.getBallPane();
+            try{
+                if(titanImages.get(0).size()!=0){
+                    Lane1Pane.getChildren().add(ball);
+                    Lane1Pane.setLeftAnchor(ball ,125 + currentWeapon.getWidth() + 10.0) ;
+                    Lane1Pane.setTopAnchor(ball,50.0);
+                    
+                    TranslateTransition transition = new TranslateTransition();
+                    transition.setNode(ball);
+                    double res = 125 + currentWeapon.getWidth() + 10.0;
+                    if(res < 700){
+                        transition.setToX(titanImages.get(0).get(0).getpos() - res);
+                        transition.setDuration(Duration.millis(1000));
+                    }
+                    else{
+                        transition.setToX(648);
+                        transition.setDuration(Duration.millis(100));
+                    }
+                    transition.setDuration(Duration.millis(1000)); 
+                    FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), ball);
+                    fadeOut.setFromValue(1);
+                    fadeOut.setToValue(0);
+                    ParallelTransition parallelTransition = new ParallelTransition(transition, fadeOut);
+                    parallelTransition.setOnFinished(event -> Lane1Pane.getChildren().remove(ball));
+                    parallelTransition.play();
+                }
+                
+            }
+            catch(Exception e){
+                System.out.println("Duplicate kid i guess");
+            }            
+          }
+        }
 
+        for(int i=0 ;i<Lane2Weapons.size();i++){
+            WeaponsGUI currentWeapon = Lane2Weapons.get(i);
+            if(currentWeapon.getweaponCode()!=4){
+                AnchorPane ball = currentWeapon.getBallPane();
+            try{
+                if(titanImages.get(1).size()!=0){
+                    Lane2Pane.getChildren().add(ball);
+                    Lane2Pane.setLeftAnchor(ball ,125 + currentWeapon.getWidth() + 10.0) ;
+                    Lane2Pane.setTopAnchor(ball,50.0);
+                    
+                    TranslateTransition transition = new TranslateTransition();
+                    transition.setNode(ball);
+                    double res = 125 + currentWeapon.getWidth() + 10.0;
+                    if(res < 700){
+                        transition.setToX(titanImages.get(1).get(0).getpos() - res);
+                        transition.setDuration(Duration.millis(1000));
+                    }
+                    else{
+                        transition.setToX(648);
+                        transition.setDuration(Duration.millis(100));
+                    }
+                    transition.setDuration(Duration.millis(1000)); 
+                    FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), ball);
+                    fadeOut.setFromValue(1);
+                    fadeOut.setToValue(0);
+                    ParallelTransition parallelTransition = new ParallelTransition(transition, fadeOut);
+                    parallelTransition.setOnFinished(event -> Lane2Pane.getChildren().remove(ball));
+                    parallelTransition.play();
+                }
+                
+            }
+            catch(Exception e){
+                System.out.println("Duplicate kid i guess");
+            }            
+          }
+        }
+
+        for(int i=0 ;i<Lane3Weapons.size();i++){
+            WeaponsGUI currentWeapon = Lane3Weapons.get(i);
+            if(currentWeapon.getweaponCode()!=4){
+                AnchorPane ball = currentWeapon.getBallPane();
+            try{
+                if(titanImages.get(2).size()!=0){
+                    Lane3Pane.getChildren().add(ball);
+                    Lane3Pane.setLeftAnchor(ball ,125 + currentWeapon.getWidth() + 10.0) ;
+                    Lane3Pane.setTopAnchor(ball,50.0);
+                    
+                    TranslateTransition transition = new TranslateTransition();
+                    transition.setNode(ball);
+                    double res = 125 + currentWeapon.getWidth() + 10.0;
+                    if(res < 700){
+                        transition.setToX(titanImages.get(2).get(0).getpos() - res);
+                        transition.setDuration(Duration.millis(1000));
+                    }
+                    else{
+                        transition.setToX(648);
+                        transition.setDuration(Duration.millis(100));
+                    }
+                    transition.setDuration(Duration.millis(1000)); 
+                    FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), ball);
+                    fadeOut.setFromValue(1);
+                    fadeOut.setToValue(0);
+                    ParallelTransition parallelTransition = new ParallelTransition(transition, fadeOut);
+                    parallelTransition.setOnFinished(event -> Lane3Pane.getChildren().remove(ball));
+                    parallelTransition.play();
+                }
+                
+            }
+            catch(Exception e){
+                System.out.println("Duplicate kid i guess");
+            }            
+          }
+        }
+
+        for(int i=0 ;i<Lane4Weapons.size();i++){
+            WeaponsGUI currentWeapon = Lane4Weapons.get(i);
+            if(currentWeapon.getweaponCode()!=4){
+                AnchorPane ball = currentWeapon.getBallPane();
+            try{
+                if(titanImages.get(3).size()!=0){
+                    Lane4Pane.getChildren().add(ball);
+                    Lane4Pane.setLeftAnchor(ball ,125 + currentWeapon.getWidth() + 10.0) ;
+                    Lane4Pane.setTopAnchor(ball,50.0);
+                    
+                    TranslateTransition transition = new TranslateTransition();
+                    transition.setNode(ball);
+                    double res = 125 + currentWeapon.getWidth() + 10.0;
+                    if(res < 700){
+                        transition.setToX(titanImages.get(3).get(0).getpos() - res);
+                        transition.setDuration(Duration.millis(1000));
+                    }
+                    else{
+                        transition.setToX(648);
+                        transition.setDuration(Duration.millis(100));
+                    }
+                    transition.setDuration(Duration.millis(1000)); 
+                    FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), ball);
+                    fadeOut.setFromValue(1);
+                    fadeOut.setToValue(0);
+                    ParallelTransition parallelTransition = new ParallelTransition(transition, fadeOut);
+                    parallelTransition.setOnFinished(event -> Lane4Pane.getChildren().remove(ball));
+                    parallelTransition.play();
+                }
+                
+            }
+            catch(Exception e){
+                System.out.println("Duplicate kid i guess");
+            }            
+          }
+        }
+
+        for(int i=0 ;i<Lane5Weapons.size();i++){
+            WeaponsGUI currentWeapon = Lane5Weapons.get(i);
+            if(currentWeapon.getweaponCode()!=4){
+                AnchorPane ball = currentWeapon.getBallPane();
+            try{
+                if(titanImages.get(4).size()!=0){
+                    Lane5Pane.getChildren().add(ball);
+                    Lane5Pane.setLeftAnchor(ball ,125 + currentWeapon.getWidth() + 10.0) ;
+                    Lane5Pane.setTopAnchor(ball,50.0);
+                    
+                    TranslateTransition transition = new TranslateTransition();
+                    transition.setNode(ball);
+                    double res = 125 + currentWeapon.getWidth() + 10.0;
+                    if(res < 700){
+                        transition.setToX(titanImages.get(4).get(0).getpos() - res);
+                        transition.setDuration(Duration.millis(1000));
+                    }
+                    else{
+                        transition.setToX(648);
+                        transition.setDuration(Duration.millis(100));
+                    }
+                        
+                    FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), ball);
+                    fadeOut.setFromValue(1);
+                    fadeOut.setToValue(0);
+                    ParallelTransition parallelTransition = new ParallelTransition(transition, fadeOut);
+                    parallelTransition.setOnFinished(event -> Lane5Pane.getChildren().remove(ball));
+                    parallelTransition.play();
+                }
+                
+            }
+            catch(Exception e){
+                System.out.println("Duplicate kid i guess");
+            }            
+          }
+        }
     }
 
     public void titansAttack(){
@@ -615,10 +816,10 @@ public class HardGameController implements Initializable{
     public void isGameOverDisplay() throws IOException{
         System.out.println("Works");
   
-        ((Label)root.getChildrenUnmodifiable().get(1)).setText("" + battle.getScore());
-        MainParent.getChildren().add(root);
-        AnchorPane.setTopAnchor(root,240.0);
-        AnchorPane.setLeftAnchor(root,460.0);
+        ((Label)gameOverRoot.getChildrenUnmodifiable().get(1)).setText("" + battle.getScore());
+        MainParent.getChildren().add(gameOverRoot);
+        AnchorPane.setTopAnchor(gameOverRoot,240.0);
+        AnchorPane.setLeftAnchor(gameOverRoot,460.0);
 
         passTurnButton.setDisable(true);
         SettingsButton.setDisable(true);
@@ -627,6 +828,13 @@ public class HardGameController implements Initializable{
         purchaseTrapButton.setDisable(true);
         purchaseVolleyButton.setDisable(true);
         
+    }
+
+    public void showPauseMenu(ActionEvent event){
+        MainParent.getChildren().add(pauseMenuRoot);
+        AnchorPane.setTopAnchor(pauseMenuRoot,240.0);
+        AnchorPane.setLeftAnchor(pauseMenuRoot,760.0);
+
     }
 
     
