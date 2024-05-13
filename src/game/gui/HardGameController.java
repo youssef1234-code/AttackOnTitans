@@ -467,6 +467,11 @@ public class HardGameController implements Initializable{
                     }
                     success = true;
                 //chosenWeapon.attackTitans();
+                moveTitans();
+                weaponsAttackTitans();
+                titansAttack();
+                addTitansToLane();
+                updateTexts();
                 
             }
             catch(InsufficientResourcesException Exception ){
@@ -512,11 +517,7 @@ public class HardGameController implements Initializable{
         event.setDropCompleted(success);
         event.consume();
 
-        moveTitans();
-                weaponsAttackTitans();
-                titansAttack();
-                addTitansToLane();
-                updateTexts();
+              
                 if(battle.isGameOver()){
                     try{
                         isGameOverDisplay();
