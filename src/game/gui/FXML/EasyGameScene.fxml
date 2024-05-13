@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="MainParent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.EasyGameController">
+   <children>
+      <ImageView fx:id="MainBackground" fitHeight="826.0" fitWidth="1922.0" layoutX="195.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" scaleX="1.35" scaleY="1.35">
+         <image>
+            <Image url="@../assets/MainBackground.png" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="Lane2Pane" layoutX="79.0" layoutY="315.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="154.0" prefWidth="1828.0">
+         <children>
+            <ImageView fx:id="Lane2" fitHeight="150.0" fitWidth="1875.0" layoutX="-53.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/LaneHug.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="Lane3Pane" layoutX="83.0" layoutY="470.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="154.0" prefWidth="1828.0">
+         <children>
+            <ImageView fx:id="Lane3" fitHeight="150.0" fitWidth="1875.0" layoutX="-53.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/LaneHug.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="Lane4Pane" layoutX="82.0" layoutY="630.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="154.0" prefWidth="1828.0">
+         <children>
+            <ImageView fx:id="Lane4" fitHeight="150.0" fitWidth="1875.0" layoutX="-53.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/LaneHug.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <ImageView fx:id="Houses" fitHeight="770.0" fitWidth="214.0" layoutX="8.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/EasyHouses.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Wall4" fitHeight="179.0" fitWidth="94.0" layoutX="684.0" layoutY="605.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/wallLast.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Wall32" fitHeight="179.0" fitWidth="94.0" layoutX="684.0" layoutY="491.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/wallLast.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Wall31" fitHeight="179.0" fitWidth="94.0" layoutX="684.0" layoutY="377.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/wallLast.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Wall2" fitHeight="179.0" fitWidth="94.0" layoutX="684.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/wallLast.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Lane11" fitHeight="190.0" fitWidth="1876.0" layoutY="-35.0" pickOnBounds="true" preserveRatio="true" scaleX="1.05" scaleY="1.05">
+         <image>
+            <Image url="@../assets/TopViewMenu.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Lane111" fitHeight="150.0" fitWidth="1875.0" layoutX="194.0" layoutY="919.0" pickOnBounds="true" preserveRatio="true" scaleX="1.2659" scaleY="1.274">
+         <image>
+            <Image url="@../assets/ButtomViewMenu.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="purchaseSniperButton" layoutX="-10.0" layoutY="30.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="73.0" style="-fx-background-color: transparent;" stylesheets="@../application.css">
+         <graphic>
+            <ImageView fitHeight="80.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/SniperCannonBuyIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="purchasePiercingButton" layoutX="130.0" layoutY="30.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="73.0" style="-fx-background-color: transparent;" stylesheets="@../application.css">
+         <graphic>
+            <ImageView fx:id="purchasePiercingImage" fitHeight="80.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/PiercingCannonBuyIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="purchaseVolleyButton" layoutX="270.0" layoutY="30.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="73.0" style="-fx-background-color: transparent;" stylesheets="@../application.css">
+         <graphic>
+            <ImageView fitHeight="80.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/VolleySpreadCannonBuyIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="purchaseTrapButton" layoutX="410.0" layoutY="30.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="73.0" style="-fx-background-color: transparent;" stylesheets="@../application.css">
+         <graphic>
+            <ImageView fitHeight="80.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/WallTrapBuyIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="phaseAndTurnText" alignment="CENTER" layoutX="717.0" layoutY="994.0" prefHeight="41.0" prefWidth="397.0" style="-fx-text-fill: #631E1E; -fx-font-family: Oswald; -fx-font-size: 35;" stylesheets="@../application.css" text=" Early (1)" />
+      <Label fx:id="resourcesGatheredText" layoutX="671.0" layoutY="18.0" prefHeight="71.0" prefWidth="281.0" style="-fx-font-family: Oswald; -fx-text-fill: #631E1E; -fx-font-size: 40;" stylesheets="@../application.css" text="0" />
+      <Button fx:id="SettingsButton" layoutX="1800.0" layoutY="13.0" mnemonicParsing="false" onAction="#showPauseMenu" prefHeight="80.0" prefWidth="73.0" style="-fx-background-color: transparent;" stylesheets="@../application.css">
+         <graphic>
+            <ImageView fitHeight="80.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/SettingsButton.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="scoreText" layoutX="1655.0" layoutY="20.0" prefHeight="71.0" prefWidth="115.0" style="-fx-font-family: Oswald; -fx-text-fill: #631E1E; -fx-font-size: 40;" stylesheets="@../application.css" text="00" />
+      <Button fx:id="passTurnButton" layoutX="1159.0" layoutY="973.0" mnemonicParsing="false" onAction="#skipTurn" prefHeight="80.0" prefWidth="73.0" style="-fx-background-color: transparent;" stylesheets="@../application.css">
+         <graphic>
+            <ImageView fitHeight="80.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/PassTurnButton.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="lane2Danger" layoutX="95.0" layoutY="297.0" prefHeight="30.0" prefWidth="70.0" style="-fx-text-fill: #631E1E; -fx-font-family: Oswald; -fx-font-size: 22;" stylesheets="@../application.css" text="Label" />
+      <Label fx:id="lane3Danger" layoutX="95.0" layoutY="454.0" prefHeight="30.0" prefWidth="70.0" style="-fx-text-fill: #631E1E; -fx-font-family: Oswald; -fx-font-size: 22;" stylesheets="@../application.css" text="Label" />
+      <Label fx:id="lane4Danger" layoutX="95.0" layoutY="598.0" prefHeight="30.0" prefWidth="70.0" style="-fx-text-fill: #631E1E; -fx-font-family: Oswald; -fx-font-size: 22;" stylesheets="@../application.css" text="Label" />
+      <ProgressBar fx:id="wall2Bar" layoutX="165.0" layoutY="304.0" prefWidth="150.0" progress="1.0" stylesheets="@../application.css" />
+      <ProgressBar fx:id="wall3Bar" layoutX="165.0" layoutY="460.0" prefWidth="150.0" progress="1.0" stylesheets="@../application.css" />
+      <ProgressBar fx:id="wall4Bar" layoutX="165.0" layoutY="605.0" prefWidth="150.0" progress="1.0" stylesheets="@../application.css" />
+      <ImageView fx:id="errorDialogue" fitHeight="63.0" fitWidth="334.0" layoutX="1459.0" layoutY="26.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/ErrorDialogue.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="invalidLaneDialogue" fitHeight="55.0" fitWidth="327.0" layoutX="1459.0" layoutY="26.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/invalidLaneDialogue.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

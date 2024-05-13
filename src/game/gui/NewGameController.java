@@ -83,6 +83,22 @@ public class NewGameController extends BGMedia implements Initializable{
         stage.show();
 
     }
+    public void initializeEasyGame(ActionEvent event) throws IOException{
+        root = FXMLLoader.load(getClass().getResource("FXML/EasyGameScene.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        scene.getStylesheets().add(css);
+        stage.setScene(scene);
+        scene.setOnKeyPressed(ev ->{
+            if(ev.getCode() == KeyCode.F11)
+                stage.setFullScreen(!stage.isFullScreen());
+        });
+        stage.setResizable(false);
+        stage.setFullScreen(true);
+        muteNoText(event);
+        stage.show();
+
+    }
     
 
     public void showInstructions(ActionEvent event) throws IOException{

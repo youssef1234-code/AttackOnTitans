@@ -27,7 +27,7 @@
             <Font size="30.0" />
          </font>
       </Button>
-      <Button fx:id="easyButton" layoutX="734.0" layoutY="364.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="508.0" text="Easy">
+      <Button fx:id="easyButton" layoutX="734.0" layoutY="364.0" mnemonicParsing="false" onAction="#initializeEasyGame" prefHeight="87.0" prefWidth="508.0" text="Easy">
          <font>
             <Font size="48.0" />
          </font>
