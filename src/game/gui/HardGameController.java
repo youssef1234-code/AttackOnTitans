@@ -509,23 +509,27 @@ public class HardGameController implements Initializable{
                             fadeOut.play();
                         })
                 );
+                
                 timeline.play();       
-            
+            }
+            catch(NullPointerException  exception){
+                moveTitans();
+                weaponsAttackTitans();
+                titansAttack();
+                addTitansToLane();
+                updateTexts();
             }
         }
         System.out.println("Excuted");
         event.setDropCompleted(success);
         event.consume();
-
-              
-                if(battle.isGameOver()){
-                    try{
-                        isGameOverDisplay();
-                        
-                    }catch(IOException e){
-         
-                    }
-                }
+        if(battle.isGameOver()){
+            try{
+                isGameOverDisplay();
+            }
+            catch(IOException e){
+            }
+        }
     }
     public void weaponsAttackTitans(){
         //Iterates over the all the weapons Guis and performs the attack of weapons on the titans only in the GUI 
