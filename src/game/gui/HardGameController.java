@@ -749,11 +749,14 @@ public class HardGameController implements Initializable {
         }
       }
     }
-    for(int i=0;i<titanImages.size();i++){
-        for(int j=0;j<titanImages.get(i).size();j++){
+    int size = titanImages.size();
+    for(int i=0;i<size;i++){
+        int size1 = titanImages.get(i).size();
+        for(int j=0;j<size1;j++){
             TitanGUI currentTitan = titanImages.get(i).get(j);
             currentTitan.takeDamage();
             if(currentTitan.isDead()){
+                titanImages.get(i).remove(j);
                 switch(i+1){
                     case 1: Lane1Pane.getChildren().remove(currentTitan.getPane());
                     break;

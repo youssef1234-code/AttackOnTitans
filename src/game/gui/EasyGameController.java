@@ -41,7 +41,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -55,6 +57,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import javafx.scene.Node;
 
 public class EasyGameController implements Initializable {
 
@@ -162,6 +165,8 @@ public class EasyGameController implements Initializable {
   private Parent gameOverRoot;
   private Parent pauseMenuRoot;
 
+
+
   public void initialize(URL location, ResourceBundle resources) {
     try {
       String resourcePath = "assets/BattleMusic.mp3";
@@ -221,9 +226,6 @@ public class EasyGameController implements Initializable {
     lanesGui[1] = Lane3Pane;
     lanesGui[2] = Lane4Pane;
     
-
-    titanImages.add(new ArrayList < TitanGUI > ());
-    titanImages.add(new ArrayList < TitanGUI > ());
     titanImages.add(new ArrayList < TitanGUI > ());
     titanImages.add(new ArrayList < TitanGUI > ());
     titanImages.add(new ArrayList < TitanGUI > ());
@@ -331,12 +333,13 @@ public class EasyGameController implements Initializable {
     });
   }
 
-  public void onDragOver(DragEvent event) {
+ public void onDragOver(DragEvent event) {
     if (event.getGestureSource() != event.getSource() && event.getDragboard().hasString()) {
-      event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-    }
-    event.consume();
-  }
+        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+      }
+      event.consume();
+}
+
 
   public void onDragDropped(DragEvent event) {
     System.out.println("Drag is Left");
@@ -365,13 +368,13 @@ public class EasyGameController implements Initializable {
       Lane lane = null;
       int chosenLane = 0;
      if (targetPane == Lane2Pane) {
-        lane = battle.getOriginalLanes().get(1);
+        lane = battle.getOriginalLanes().get(0);
         chosenLane = 2;
       } else if (targetPane == Lane3Pane) {
-        lane = battle.getOriginalLanes().get(2);
+        lane = battle.getOriginalLanes().get(1);
         chosenLane = 3;
       } else if (targetPane == Lane4Pane) {
-        lane = battle.getOriginalLanes().get(3);
+        lane = battle.getOriginalLanes().get(2);
         chosenLane = 4;
       } 
       try {
@@ -425,6 +428,7 @@ public class EasyGameController implements Initializable {
             targetPane.setLeftAnchor(chosenWeapon.getPane(), distanceInPixels);
             chosenWeapon.setLeftAnchorDistanceInPixels(distanceInPixels);
           }
+          // More weapons should be hadled in an else{} block or so
           if (weaponCode == 3 || weaponCode == 2)
             targetPane.setTopAnchor(chosenWeapon.getPane(), 20.0);
         }
@@ -509,7 +513,7 @@ public class EasyGameController implements Initializable {
       if (currentWeapon.getweaponCode() != 4) {
         AnchorPane ball = currentWeapon.getBallPane();
         try {
-          if (titanImages.get(1).size() != 0) {
+          if (titanImages.get(0).size() != 0) {
             Lane2Pane.getChildren().add(ball);
             Lane2Pane.setLeftAnchor(ball, 125 + currentWeapon.getWidth() + 10.0);
             Lane2Pane.setTopAnchor(ball, 50.0);
@@ -518,7 +522,7 @@ public class EasyGameController implements Initializable {
             transition.setNode(ball);
             double res = 125 + currentWeapon.getWidth() + 10.0;
             if (res < 700) {
-              transition.setToX(titanImages.get(1).get(0).getpos() - res);
+              transition.setToX(titanImages.get(0).get(0).getpos() - res);
               transition.setDuration(Duration.millis(1000));
             } else {
               transition.setToX(648);
@@ -544,7 +548,7 @@ public class EasyGameController implements Initializable {
       if (currentWeapon.getweaponCode() != 4) {
         AnchorPane ball = currentWeapon.getBallPane();
         try {
-          if (titanImages.get(2).size() != 0) {
+          if (titanImages.get(1).size() != 0) {
             Lane3Pane.getChildren().add(ball);
             Lane3Pane.setLeftAnchor(ball, 125 + currentWeapon.getWidth() + 10.0);
             Lane3Pane.setTopAnchor(ball, 50.0);
@@ -553,7 +557,7 @@ public class EasyGameController implements Initializable {
             transition.setNode(ball);
             double res = 125 + currentWeapon.getWidth() + 10.0;
             if (res < 700) {
-              transition.setToX(titanImages.get(2).get(0).getpos() - res);
+              transition.setToX(titanImages.get(1).get(0).getpos() - res);
               transition.setDuration(Duration.millis(1000));
             } else {
               transition.setToX(648);
@@ -579,7 +583,7 @@ public class EasyGameController implements Initializable {
       if (currentWeapon.getweaponCode() != 4) {
         AnchorPane ball = currentWeapon.getBallPane();
         try {
-          if (titanImages.get(3).size() != 0) {
+          if (titanImages.get(2).size() != 0) {
             Lane4Pane.getChildren().add(ball);
             Lane4Pane.setLeftAnchor(ball, 125 + currentWeapon.getWidth() + 10.0);
             Lane4Pane.setTopAnchor(ball, 50.0);
@@ -588,7 +592,7 @@ public class EasyGameController implements Initializable {
             transition.setNode(ball);
             double res = 125 + currentWeapon.getWidth() + 10.0;
             if (res < 700) {
-              transition.setToX(titanImages.get(3).get(0).getpos() - res);
+              transition.setToX(titanImages.get(2).get(0).getpos() - res);
               transition.setDuration(Duration.millis(1000));
             } else {
               transition.setToX(648);
@@ -608,14 +612,15 @@ public class EasyGameController implements Initializable {
         }
       }
     }
-
-    for(int i=0;i<titanImages.size();i++){
-        for(int j=0;j<titanImages.get(i).size();j++){
+    int size = titanImages.size();
+    for(int i=0;i<size;i++){
+        int size1 = titanImages.get(i).size();
+        for(int j=0;j<size1;j++){
             TitanGUI currentTitan = titanImages.get(i).get(j);
             currentTitan.takeDamage();
             if(currentTitan.isDead()){
+                titanImages.get(i).remove(j);
                 switch(i){
-
                     case 0: Lane2Pane.getChildren().remove(currentTitan.getPane());
                     break;
 
@@ -730,7 +735,6 @@ public class EasyGameController implements Initializable {
     MainParent.getChildren().add(pauseMenuRoot);
     AnchorPane.setTopAnchor(pauseMenuRoot, 240.0);
     AnchorPane.setLeftAnchor(pauseMenuRoot, 760.0);
-
   }
 
 }
