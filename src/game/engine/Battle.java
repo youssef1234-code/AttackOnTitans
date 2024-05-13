@@ -50,8 +50,9 @@ public class Battle {
 
 	private void initializeLanes(int numOfLanes){
 
-		Wall wall = new Wall(WALL_BASE_HEALTH);
+		
 		for(int i = 0; i < numOfLanes; i++){
+			Wall wall = new Wall(WALL_BASE_HEALTH);
 			Lane lane = new Lane(wall);
 			this.lanes.add(lane);
 			this.originalLanes.add(lane);

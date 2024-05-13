@@ -53,8 +53,8 @@ public class AbnormalTitanGUI extends TitanGUI{
             transition.setDuration(Duration.millis(750)); 
             transition.play();
         }
-        else    
-            System.out.println("Beside Wall");
+        //else    
+        //    System.out.println("Beside Wall");
         
 }
     

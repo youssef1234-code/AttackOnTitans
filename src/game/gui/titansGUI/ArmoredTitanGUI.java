@@ -53,8 +53,8 @@ public class ArmoredTitanGUI extends TitanGUI{
             transition.setDuration(Duration.millis(1000)); 
             transition.play();
         }
-        else    
-            System.out.println("Beside Wall");
+        //else    
+        //    System.out.println("Beside Wall");
         
 }
 }

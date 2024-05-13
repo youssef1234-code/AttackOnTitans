@@ -279,41 +279,9 @@ public class HardGameController implements Initializable{
                     case 4: lane5Danger.setText(""+lanes.get(i).getDangerLevel());break;
                 }
 
-                switch(i){
-                    case 0: wall1Bar.setProgress((lanes.get(i).getLaneWall().getCurrentHealth() + 0.0)/lanes.get(i).getLaneWall().getBaseHealth());break;
-                    case 1: wall2Bar.setProgress((lanes.get(i).getLaneWall().getCurrentHealth()+ 0.0)/lanes.get(i).getLaneWall().getBaseHealth());break;
-                    case 2: wall3Bar.setProgress((lanes.get(i).getLaneWall().getCurrentHealth()+ 0.0)/lanes.get(i).getLaneWall().getBaseHealth());break;
-                    case 3: wall4Bar.setProgress((lanes.get(i).getLaneWall().getCurrentHealth()+ 0.0)/lanes.get(i).getLaneWall().getBaseHealth());break;
-                    case 4: wall5Bar.setProgress((lanes.get(i).getLaneWall().getCurrentHealth()+ 0.0)/lanes.get(i).getLaneWall().getBaseHealth());break;
-                }
+                
             }
-            else{
-                switch(i+1){
-                    case 1: Wall1.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                    case 2: Wall2.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                    case 3: Wall31.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                    case 4: Wall4.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                    case 5: Wall51.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                }
-
-                if(i+1 == 3)
-                    Wall32.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));
-                if(i+1 == 5){
-                    Wall52.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString())); 
-                    Wall52.setFitWidth(94.0);
-                    Wall52.setFitHeight(199.0);
-                }
-                   
-
-                switch(i+1){
-                    case 1: Lane1Pane.getChildren().removeAll();break;
-                    case 2: Lane2Pane.getChildren().removeAll();break;
-                    case 3: Lane3Pane.getChildren().removeAll();break;
-                    case 4: Lane4Pane.getChildren().removeAll();break;
-                    case 5: Lane3Pane.getChildren().removeAll();break;
-                } 
-
-            }
+            
         }
             
     }
@@ -499,9 +467,7 @@ public class HardGameController implements Initializable{
                     }
                     success = true;
                 //chosenWeapon.attackTitans();
-                moveTitans();
-                addTitansToLane();
-                updateTexts();
+                
             }
             catch(InsufficientResourcesException Exception ){
                 ///errorDialogue.setOpacity(1.0);
@@ -545,8 +511,22 @@ public class HardGameController implements Initializable{
         System.out.println("Excuted");
         event.setDropCompleted(success);
         event.consume();
+
+        moveTitans();
+                weaponsAttackTitans();
+                titansAttack();
+                addTitansToLane();
+                updateTexts();
+                if(battle.isGameOver()){
+                    try{
+                        isGameOverDisplay();
+                        
+                    }catch(IOException e){
+         
+                    }
+                }
     }
-    public void WeaponsAttackTitans(){
+    public void weaponsAttackTitans(){
         //Iterates over the all the weapons Guis and performs the attack of weapons on the titans only in the GUI 
         //Balls should move
         //Titan health bars should be edited 
@@ -554,35 +534,67 @@ public class HardGameController implements Initializable{
 
     }
 
-    public void skipTurn(ActionEvent event){
-        battle.passTurn();
-        moveTitans();
-        addTitansToLane();
-        updateTexts();
+    public void titansAttack(){
         ArrayList<Lane> currentLanes = battle.getOriginalLanes();
         for(int i=0;i<currentLanes.size();i++){
+            for(int j = 0; j < titanImages.get(i).size(); j++) 
+                if(!titanImages.get(i).isEmpty() && titanImages.get(i).get(j) != null)
+                    titanImages.get(i).get(j).attack();
+            
+            
+            System.out.println((i+1) + " " + currentLanes.get(i).getLaneWall().getCurrentHealth());
+            switch(i){
+                case 0: wall1Bar.setProgress((currentLanes.get(i).getLaneWall().getCurrentHealth()+ 0.0)/currentLanes.get(i).getLaneWall().getBaseHealth());break;
+                case 1: wall2Bar.setProgress((currentLanes.get(i).getLaneWall().getCurrentHealth()+ 0.0)/currentLanes.get(i).getLaneWall().getBaseHealth());break;
+                case 2: wall3Bar.setProgress((currentLanes.get(i).getLaneWall().getCurrentHealth()+ 0.0)/currentLanes.get(i).getLaneWall().getBaseHealth());break;
+                case 3: wall4Bar.setProgress((currentLanes.get(i).getLaneWall().getCurrentHealth()+ 0.0)/currentLanes.get(i).getLaneWall().getBaseHealth());break;
+                case 4: wall5Bar.setProgress((currentLanes.get(i).getLaneWall().getCurrentHealth()+ 0.0)/currentLanes.get(i).getLaneWall().getBaseHealth());break;
+            }
+
+            
             if(currentLanes.get(i).isLaneLost()){
-                switch(i+1){
-                    case 1: MainParent.getChildren().remove(Lane1Pane);break;
-                    case 2: MainParent.getChildren().remove(Lane2Pane);break;
-                    case 3: MainParent.getChildren().remove(Lane3Pane);break;
-                    case 4: MainParent.getChildren().remove(Lane4Pane);break;
-                    case 5: MainParent.getChildren().remove(Lane5Pane);break;
-                }
-                switch(i+1){
-                    case 1: Wall1.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                    case 2: Wall2.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                    case 3: Wall31.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                    case 4: Wall4.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                    case 5: Wall51.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
-                }
-                if(i+1 == 3)
-                    Wall32.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));
-                if(i+1 == 5)
-                    Wall52.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString())); 
+
+            switch(i+1){
+                case 1: Wall1.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                case 2: Wall2.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                case 3: Wall31.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                case 4: Wall4.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+                case 5: Wall51.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));break;
+            }
+
+            if(i+1 == 3)
+                Wall32.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString()));
+            if(i+1 == 5){
+                Wall52.setImage(new Image(getClass().getResource("assets/damagedWall.png").toString())); 
+                Wall52.setFitWidth(94.0);
+                Wall52.setFitHeight(199.0);
+            }
+               
+            switch(i+1){
+                case 1: Lane1Pane.getChildren().removeAll(Lane1Pane.getChildren());break;
+                case 2: Lane2Pane.getChildren().removeAll(Lane2Pane.getChildren());break;
+                case 3: Lane3Pane.getChildren().removeAll(Lane3Pane.getChildren());break;
+                case 4: Lane4Pane.getChildren().removeAll(Lane4Pane.getChildren());break;
+                case 5: Lane5Pane.getChildren().removeAll(Lane5Pane.getChildren());break;
+            } 
 
             }
+
         }
+    }
+
+    public void skipTurn(ActionEvent event){
+        try {
+            battle.passTurn();
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        moveTitans();
+        weaponsAttackTitans();
+        titansAttack();
+        addTitansToLane();
+        updateTexts();
+        
         if(battle.isGameOver()){
             try{
                 isGameOverDisplay();
