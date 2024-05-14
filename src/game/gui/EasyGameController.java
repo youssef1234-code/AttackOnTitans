@@ -73,19 +73,19 @@ public class EasyGameController  extends GameMedia implements Initializable {
 
   @FXML
   private AnchorPane Lane2Pane;
-  private static double availableposXLane2 = 500.0;
+  private static double availableposXLane2 = 0.0;
   private boolean Lane2hasTrap = false;
   private List < WeaponsGUI > Lane2Weapons = new ArrayList < WeaponsGUI > ();
 
   @FXML
   private AnchorPane Lane3Pane;
-  private static double availableposXLane3 = 500.0;
+  private static double availableposXLane3 = 0.0;
   private boolean Lane3hasTrap = false;
   private List < WeaponsGUI > Lane3Weapons = new ArrayList < WeaponsGUI > ();
 
   @FXML
   private AnchorPane Lane4Pane;
-  private static double availableposXLane4 = 500.0;
+  private static double availableposXLane4 = 0.0;
   private boolean Lane4hasTrap = false;
   private List < WeaponsGUI > Lane4Weapons = new ArrayList < WeaponsGUI > ();
 
@@ -175,7 +175,9 @@ public class EasyGameController  extends GameMedia implements Initializable {
 
   public void initialize(URL location, ResourceBundle resources) {
     try {
-   
+      availableposXLane2 = 500.0;
+      availableposXLane3 = 500.0;
+      availableposXLane4 = 500.0;
       battle = new Battle(1, 0, 50, 3, 250);
       gameOverRoot = FXMLLoader.load(getClass().getResource("FXML/GameOverScene.fxml"));
       gameOverRoot.getStylesheets().add(getClass().getResource("application.css").toExternalForm());

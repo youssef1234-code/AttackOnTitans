@@ -63,31 +63,31 @@ public class HardGameController extends GameMedia implements Initializable {
   //Lane Anchor Panes
   @FXML
   private AnchorPane Lane1Pane;
-  private static double availableposXLane1 = 500.0;
+  private static double availableposXLane1 = 0;
   private boolean Lane1hasTrap = false;
   private List < WeaponsGUI > Lane1Weapons = new ArrayList < WeaponsGUI > ();
 
   @FXML
   private AnchorPane Lane2Pane;
-  private static double availableposXLane2 = 500.0;
+  private static double availableposXLane2 = 0;
   private boolean Lane2hasTrap = false;
   private List < WeaponsGUI > Lane2Weapons = new ArrayList < WeaponsGUI > ();
 
   @FXML
   private AnchorPane Lane3Pane;
-  private static double availableposXLane3 = 500.0;
+  private static double availableposXLane3 = 0;
   private boolean Lane3hasTrap = false;
   private List < WeaponsGUI > Lane3Weapons = new ArrayList < WeaponsGUI > ();
 
   @FXML
   private AnchorPane Lane4Pane;
-  private static double availableposXLane4 = 500.0;
+  private static double availableposXLane4 = 0;
   private boolean Lane4hasTrap = false;
   private List < WeaponsGUI > Lane4Weapons = new ArrayList < WeaponsGUI > ();
 
   @FXML
   private AnchorPane Lane5Pane;
-  private static double availableposXLane5 = 500.0;
+  private static double availableposXLane5 = 0;
   private boolean Lane5hasTrap = false;
   private List < WeaponsGUI > Lane5Weapons = new ArrayList < WeaponsGUI > ();
 
@@ -202,6 +202,12 @@ public class HardGameController extends GameMedia implements Initializable {
 
   public void initialize(URL location, ResourceBundle resources) {
     try {
+      availableposXLane1 = 500.0;
+      availableposXLane2 = 500.0;
+      availableposXLane3 = 500.0;
+      availableposXLane4 = 500.0;
+      availableposXLane5 = 500.0;
+
       battle = new Battle(1, 0, 50, 5, 125);
       gameOverRoot = FXMLLoader.load(getClass().getResource("FXML/GameOverScene.fxml"));
       gameOverRoot.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
