@@ -3,6 +3,7 @@ package game.gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Random;
@@ -52,6 +53,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -584,7 +586,6 @@ public class HardGameController extends GameMedia implements Initializable {
     }
   }
   public void weaponsAttackTitans() {
-    updateTexts();
     //Iterates over the all the weapons Guis and performs the attack of weapons on the titans only in the GUI 
     for (int i = 0; i < Lane1Weapons.size(); i++) {
       WeaponsGUI currentWeapon = Lane1Weapons.get(i);
@@ -760,33 +761,41 @@ public class HardGameController extends GameMedia implements Initializable {
         }
       }
     }
-    int size = titanImages.size();
-    for(int i=0;i<size;i++){
-        int size1 = titanImages.get(i).size();
-        for(int j=0;j<size1;j++){
-            TitanGUI currentTitan = titanImages.get(i).get(j);
-            currentTitan.takeDamage();
-            if(currentTitan.isDead()){
-                titanImages.get(i).remove(j);
-                switch(i+1){
-                    case 1: Lane1Pane.getChildren().remove(currentTitan.getPane());
+    
+        int rows = titanImages.size();
+for (int i = 0; i < rows; i++) {
+    List<TitanGUI> titanRow = titanImages.get(i);
+    Iterator<TitanGUI> iterator = titanRow.iterator();
+    while (iterator.hasNext()) {
+        TitanGUI currentTitan = iterator.next();
+        currentTitan.takeDamage();
+        if (currentTitan.isDead()) {
+            iterator.remove();
+            Pane lanePane;
+            switch (i) {
+                case 0:
+                    lanePane = Lane1Pane;
                     break;
-
-                    case 2: Lane2Pane.getChildren().remove(currentTitan.getPane());
+                case 1:
+                    lanePane = Lane2Pane;
                     break;
-
-                    case 3: Lane3Pane.getChildren().remove(currentTitan.getPane());
+                case 2:
+                    lanePane = Lane3Pane;
                     break;
-
-                    case 4: Lane4Pane.getChildren().remove(currentTitan.getPane());
+                case 3:
+                    lanePane = Lane4Pane;    
                     break;
-
-                    case 5: Lane5Pane.getChildren().remove(currentTitan.getPane());
-                    break;
-                }
+                case 4:
+                    lanePane = Lane5Pane;    
+                    break;    
+                default:
+                    throw new IllegalStateException("Unexpected value: " + i);
             }
+            lanePane.getChildren().remove(currentTitan.getPane());
         }
     }
+}
+
   }
 
   public void titansAttack() {

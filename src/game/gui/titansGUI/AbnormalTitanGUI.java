@@ -10,7 +10,7 @@ import javafx.util.Duration;
 public class AbnormalTitanGUI extends TitanGUI{
 
     private AbnormalTitan titanObj;
-    public AnchorPane abnormalTitanView  = new AnchorPane();
+    public  AnchorPane abnormalTitanView  = new AnchorPane();
     private ProgressBar healthBar;
     private ImageView  sprite;
 

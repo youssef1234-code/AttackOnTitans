@@ -276,6 +276,24 @@ public class Battle {
 		return lanes.isEmpty();
 	}
 
-
+	public static void main(String [] args) throws Exception{
+		Battle battle = new Battle(1, 0, 120, 5, 10000);
+		Lane lane = null;
+		while(!battle.isGameOver()){
+			int i =(int)(Math.random()*5);
+			lane = battle.getOriginalLanes().get(i);
+			try{
+				if(!lane.isLaneLost()){
+					battle.purchaseWeapon(4,lane);
+				}
+			}
+			catch(InsufficientResourcesException e){
+				battle.passTurn();
+			}catch(InvalidLaneException e1){
+				battle.passTurn();
+			}
+			System.out.println(battle.numberOfTurns);
+		}
+	}
 
 }
