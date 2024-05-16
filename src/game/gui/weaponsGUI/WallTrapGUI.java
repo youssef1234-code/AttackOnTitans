@@ -52,6 +52,8 @@ public class WallTrapGUI extends WeaponsGUI{
     public double getWidth(){
         return this.weaponLeftDistance;
     }
+    @Override 
+    public void increaseCount(){}
      
 
 }

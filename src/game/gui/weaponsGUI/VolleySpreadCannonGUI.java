@@ -1,6 +1,7 @@
 package game.gui.weaponsGUI;
 import game.engine.weapons.*;
 import javafx.animation.TranslateTransition;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
@@ -14,6 +15,8 @@ public class VolleySpreadCannonGUI extends WeaponsGUI{
     private ImageView ball;
     private double weaponLeftDistance;
     private double width ; 
+    private int count;
+    private Label NumberOfWeapons;
     public VolleySpreadCannonGUI(Weapon volleySpredObject) {
         this.weaponLeftDistance = 0;
         this.volleySpredObject = volleySpredObject;
@@ -33,6 +36,15 @@ public class VolleySpreadCannonGUI extends WeaponsGUI{
         volleyCannonBallPane.getChildren().add(ball);
 
         volleySpredCannonPane.getChildren().add(volleySpreadImage);
+        count = 1;
+        NumberOfWeapons = new Label(count+""); 
+        volleySpredCannonPane.getChildren().add(NumberOfWeapons);
+        AnchorPane.setTopAnchor(NumberOfWeapons, 18.0);
+    }
+    @Override
+    public void increaseCount(){
+        this.count ++;
+        NumberOfWeapons.setText(count+"");
     }
 
     @Override

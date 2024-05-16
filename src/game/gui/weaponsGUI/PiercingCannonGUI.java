@@ -1,6 +1,7 @@
 package game.gui.weaponsGUI;
 import game.engine.weapons.*;
 import javafx.animation.TranslateTransition;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
@@ -14,6 +15,8 @@ public class PiercingCannonGUI extends WeaponsGUI{
     public AnchorPane piercingCannonBallPane = new AnchorPane();
     private ImageView ball; 
     private double weaponLeftDistance;
+    private int count;
+    private Label NumberOfWeapons;
     // private int currentLocation; to get the location of the cannon to start firing from there 
 
     public PiercingCannonGUI(Weapon piercingCannonObject) {
@@ -24,7 +27,7 @@ public class PiercingCannonGUI extends WeaponsGUI{
         piercingCannonImage = new ImageView(getClass().getResource("../assets/PiercingSpreadCannon.png").toString());
         piercingCannonImage.setFitWidth(115);
         piercingCannonImage.setFitHeight(115);
-
+       
         piercingCannonBallPane.setPrefSize(190, 25);
         ball = new ImageView(getClass().getResource("../assets/Arrow.png").toString());
         ball.setFitWidth(90);
@@ -33,6 +36,17 @@ public class PiercingCannonGUI extends WeaponsGUI{
         
         piercingCannonBallPane.getChildren().add(ball);
         piercingCannonPane.getChildren().add(piercingCannonImage);
+
+        count = 1;
+        NumberOfWeapons = new Label(count+""); 
+        piercingCannonPane.getChildren().add(NumberOfWeapons);
+        AnchorPane.setTopAnchor(NumberOfWeapons, 90.0);
+        
+
+    }
+    public void increaseCount(){
+        this.count ++;
+        NumberOfWeapons.setText(count+"");
     }
 
 

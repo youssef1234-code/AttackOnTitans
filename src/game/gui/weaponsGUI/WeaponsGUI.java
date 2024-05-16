@@ -8,5 +8,6 @@ public abstract class WeaponsGUI {
     public abstract AnchorPane getBallPane();
     public abstract void setLeftAnchorDistanceInPixels(double weaponLeftDistance);
     public abstract double getWidth();
+    public abstract void increaseCount();
 
 }

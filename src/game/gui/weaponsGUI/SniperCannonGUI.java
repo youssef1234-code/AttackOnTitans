@@ -1,6 +1,7 @@
 package game.gui.weaponsGUI;
 import game.engine.weapons.*;
 import javafx.animation.TranslateTransition;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
@@ -15,6 +16,8 @@ public class SniperCannonGUI extends WeaponsGUI{
     private ImageView ball; 
     private double weaponLeftDistance;
     private double width;
+    private int count;
+    private Label NumberOfWeapons;
     public SniperCannonGUI(Weapon sniperCannonObject) {
         
         this.weaponLeftDistance = 0;
@@ -25,7 +28,7 @@ public class SniperCannonGUI extends WeaponsGUI{
         sniperCannonImage = new ImageView(getClass().getResource("../assets/SniperCannon.png").toString());
         sniperCannonImage.setFitWidth(115);
         sniperCannonImage.setFitHeight(75);
-
+    
         sniperCannonBallPane.setPrefSize(25, 25);
         ball = new ImageView(getClass().getResource("../assets/SniperCannonBall.png").toString());
         ball.setFitWidth(25);
@@ -34,13 +37,24 @@ public class SniperCannonGUI extends WeaponsGUI{
 
     
         sniperCannonPane.getChildren().add(sniperCannonImage);
+        
+        count = 1;
+        NumberOfWeapons = new Label(count+""); 
+        sniperCannonPane.getChildren().add(NumberOfWeapons);
+        AnchorPane.setTopAnchor(NumberOfWeapons, 18.0);
     }
-
+    @Override
+    public void increaseCount(){
+        this.count ++;
+        NumberOfWeapons.setText(count+"");
+    }
+    
     @Override
     public AnchorPane getPane(){
         return this.sniperCannonPane;        
     }
 
+ 
 
     @Override
     public AnchorPane getBallPane(){
