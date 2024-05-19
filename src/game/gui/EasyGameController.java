@@ -78,18 +78,21 @@ public class EasyGameController  extends GameMedia implements Initializable {
   private static double availableposXLane2 = 0.0;
   private boolean Lane2hasTrap = false;
   private List < WeaponsGUI > Lane2Weapons = new ArrayList < WeaponsGUI > ();
+  private List < Boolean > Lane2WeaponsStatus = new ArrayList < Boolean > ();
 
   @FXML
   private AnchorPane Lane3Pane;
   private static double availableposXLane3 = 0.0;
   private boolean Lane3hasTrap = false;
   private List < WeaponsGUI > Lane3Weapons = new ArrayList < WeaponsGUI > ();
+  private List < Boolean > Lane3WeaponsStatus = new ArrayList < Boolean > ();
 
   @FXML
   private AnchorPane Lane4Pane;
   private static double availableposXLane4 = 0.0;
   private boolean Lane4hasTrap = false;
   private List < WeaponsGUI > Lane4Weapons = new ArrayList < WeaponsGUI > ();
+  private List < Boolean > Lane4WeaponsStatus = new ArrayList < Boolean > ();
 
   // Wall Image Views
 
@@ -342,180 +345,259 @@ public class EasyGameController  extends GameMedia implements Initializable {
       event.consume();
 }
 
+// New 
+public void onDragDropped(DragEvent event) {
+  System.out.println("Drag is Left");
+  updateTexts();
+  Dragboard db = event.getDragboard();
+  boolean success = false;
+  String weaponName = db.getString();
+  WeaponsGUI chosenWeapon = null;
+  AnchorPane targetPane = (AnchorPane) event.getSource();
 
-  public void onDragDropped(DragEvent event) {
-    System.out.println("Drag is Left");
-    updateTexts();
-    Dragboard db = event.getDragboard();
-    boolean success = false;
-    String weaponName = db.getString();
-    WeaponsGUI chosenWeapon = null;
-    AnchorPane targetPane = (AnchorPane) event.getSource();
-    if (db.hasString()) {
+  if (db.hasString()) {
       switch (weaponName) {
-      case "SniperCannon":
-        chosenWeapon = new SniperCannonGUI(new SniperCannon(10));
-        break;
-      case "PiercingSpreadCannon":
-        chosenWeapon = new PiercingCannonGUI(new PiercingCannon(35));
-        break;
-      case "VolleyCannon":
-        chosenWeapon = new VolleySpreadCannonGUI(new VolleySpreadCannon(5, 20, 50));
-        break;
-      case "wallTrap":
-        chosenWeapon = new WallTrapGUI(new WallTrap(100));
-        break;
+          case "SniperCannon":
+              chosenWeapon = new SniperCannonGUI(new SniperCannon(10));
+              break;
+          case "PiercingSpreadCannon":
+              chosenWeapon = new PiercingCannonGUI(new PiercingCannon(35));
+              break;
+          case "VolleyCannon":
+              chosenWeapon = new VolleySpreadCannonGUI(new VolleySpreadCannon(5, 20, 50));
+              break;
+          case "wallTrap":
+              chosenWeapon = new WallTrapGUI(new WallTrap(100));
+              break;
       }
 
       int weaponCode = chosenWeapon.getweaponCode();
       Lane lane = null;
       int chosenLane = 0;
-     if (targetPane == Lane2Pane) {
-        lane = battle.getOriginalLanes().get(0);
-        chosenLane = 2;
+       if (targetPane == Lane2Pane) {
+          lane = battle.getOriginalLanes().get(0);
+          chosenLane = 2;
       } else if (targetPane == Lane3Pane) {
-        lane = battle.getOriginalLanes().get(1);
-        chosenLane = 3;
+          lane = battle.getOriginalLanes().get(1);
+          chosenLane = 3;
       } else if (targetPane == Lane4Pane) {
-        lane = battle.getOriginalLanes().get(2);
-        chosenLane = 4;
-      } 
-      try {
-        battle.purchaseWeapon(weaponCode, lane);
-        System.out.println("Weapon is being purchased!!");
-        if (weaponCode == 4) {
-          targetPane.getChildren().add(chosenWeapon.getPane());
-          targetPane.setLeftAnchor(chosenWeapon.getPane(), 650.0);
-          targetPane.setTopAnchor(chosenWeapon.getPane(), 20.0);
-          if (chosenLane == 2) {
-            if (Lane2hasTrap)
-              targetPane.setTopAnchor(chosenWeapon.getPane(), 70.0);
-            Lane2hasTrap = !Lane2hasTrap;
-          } else if (chosenLane == 3) {
-            if (Lane3hasTrap)
-              targetPane.setTopAnchor(chosenWeapon.getPane(), 70.0);
-            Lane3hasTrap = !Lane3hasTrap;
-          } else if (chosenLane == 4) {
-            if (Lane4hasTrap)
-              targetPane.setTopAnchor(chosenWeapon.getPane(), 70.0);
-            Lane4hasTrap = !Lane4hasTrap;
-          }
-
-        } else {
-          double distanceInPixels = 0;
-          switch (chosenLane) {
-          case 2:
-            distanceInPixels = availableposXLane2;
-            break;
-          case 3:
-            distanceInPixels = availableposXLane3;
-            break;
-          case 4:
-            distanceInPixels = availableposXLane4;
-            break;
-          }
-          switch (chosenLane) {
-          case 2:
-            availableposXLane2 -= 125;
-            break;
-          case 3:
-            availableposXLane3 -= 125;
-            break;
-          case 4:
-            availableposXLane4 -= 125;
-            break;
-          }
-          //Scrollable pane in here 
-          if (distanceInPixels >= 0) {
-            targetPane.getChildren().add(chosenWeapon.getPane());
-            targetPane.setLeftAnchor(chosenWeapon.getPane(), distanceInPixels);
-            chosenWeapon.setLeftAnchorDistanceInPixels(distanceInPixels);
-          }
-          // More weapons should be hadled in an else{} block or so
-          if (weaponCode == 3 || weaponCode == 2)
-            targetPane.setTopAnchor(chosenWeapon.getPane(), 20.0);
-        }
-        success = true;
-        if (!lane.isLaneLost()) {
-          switch (chosenLane) {
-          case 2:
-            Lane2Weapons.add(chosenWeapon);
-            break;
-          case 3:
-            Lane3Weapons.add(chosenWeapon);
-            break;
-          case 4:
-            Lane4Weapons.add(chosenWeapon);
-            break;
-          }
-        }
-        moveTitans();
-        weaponsAttackTitans();
-        titansAttack();
-        addTitansToLane();
-        updateTexts();
-
-      } catch (InsufficientResourcesException Exception) {
-        ///errorDialogue.setOpacity(1.0);
-        FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), errorDialogue);
-        fadeIn.setFromValue(0);
-        fadeIn.setToValue(1);
-        FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), errorDialogue);
-        fadeOut.setFromValue(1);
-        fadeOut.setToValue(0);
-        Timeline timeline = new Timeline(
-          new KeyFrame(Duration.ZERO, e -> {
-            fadeIn.play();
-          }),
-          new KeyFrame(Duration.seconds(2), e -> {
-            fadeOut.play();
-          })
-        );
-        timeline.play();
-      } catch (InvalidLaneException Exception) {
-        //Lane1Pane Dialogue box
-        System.out.println("Lane is NULL??? " + lane == null);
-        FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), invalidLaneDialogue);
-        fadeIn.setFromValue(0);
-        fadeIn.setToValue(1);
-        FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), invalidLaneDialogue);
-        fadeOut.setFromValue(1);
-        fadeOut.setToValue(0);
-        Timeline timeline = new Timeline(
-          new KeyFrame(Duration.ZERO, e -> {
-            fadeIn.play();
-          }),
-          new KeyFrame(Duration.seconds(2), e -> {
-            fadeOut.play();
-          })
-        );
-
-        timeline.play();
-      } catch (NullPointerException exception) {
-        moveTitans();
-        weaponsAttackTitans();
-        titansAttack();
-        addTitansToLane();
-        updateTexts();
+          lane = battle.getOriginalLanes().get(2);
+          chosenLane = 4;
       }
-    }
-    System.out.println("Excuted");
-    event.setDropCompleted(success);
-    event.consume();
-    if (battle.isGameOver()) {
-      try {
-        isGameOverDisplay();
-        Lane2Weapons = new ArrayList < WeaponsGUI > ();
-        Lane3Weapons = new ArrayList < WeaponsGUI > ();
-        Lane4Weapons = new ArrayList < WeaponsGUI > ();
-      } catch (IOException e) {}
-    }
+
+      List<WeaponsGUI> laneWeapons = getLaneWeapons(chosenLane);
+      WeaponsGUI existingWeapon = findWeaponInLane(laneWeapons, weaponCode);
+
+      if (existingWeapon != null && weaponCode!=4) {
+        try{
+          battle.purchaseWeapon(weaponCode, lane);
+          existingWeapon.increaseCount();
+          //Lane1WeaponsStatus
+          switch(chosenLane){
+            case 2: Lane2Weapons.add(chosenWeapon) ;break;
+            case 3: Lane3Weapons.add(chosenWeapon) ;break;
+            case 4: Lane4Weapons.add(chosenWeapon) ;break;
+          }
+          switch(chosenLane){
+            case 2: Lane2WeaponsStatus.add(false) ;break;
+            case 3: Lane3WeaponsStatus.add(false) ;break;
+            case 4: Lane4WeaponsStatus.add(false) ;break;
+          }
+          success = true;
+          moveTitans();
+          weaponsAttackTitans();
+          titansAttack();
+          addTitansToLane();
+          updateTexts();
+        }
+        catch (InsufficientResourcesException e) {
+          handleInsufficientResourcesException();
+      } catch (InvalidLaneException e) {
+          handleInvalidLaneException(lane);
+      } catch (NullPointerException e) {
+          handleNullPointerException();
+      }    
+    } else {
+          try {
+              battle.purchaseWeapon(weaponCode, lane);
+              System.out.println("Weapon is being purchased!!");
+              placeWeaponInLane(targetPane, chosenWeapon, chosenLane, weaponCode);
+              switch(chosenLane){
+                case 2: Lane2WeaponsStatus.add(true) ;break;
+                case 3: Lane3WeaponsStatus.add(true) ;break;
+                case 4: Lane4WeaponsStatus.add(true) ;break;
+              }
+              success = true;
+              if (!lane.isLaneLost()) {
+                  laneWeapons.add(chosenWeapon);
+              }
+              moveTitans();
+              weaponsAttackTitans();
+              titansAttack();
+              addTitansToLane();
+              updateTexts();
+          } catch (InsufficientResourcesException e) {
+              handleInsufficientResourcesException();
+          } catch (InvalidLaneException e) {
+              handleInvalidLaneException(lane);
+          } catch (NullPointerException e) {
+              handleNullPointerException();
+          }
+      }
   }
+  System.out.println("Executed");
+  event.setDropCompleted(success);
+  event.consume();
+  if (battle.isGameOver()) {
+      handleGameOver();
+  }
+}
+
+private List<WeaponsGUI> getLaneWeapons(int chosenLane) {
+  switch (chosenLane) {
+      case 2:
+          return Lane2Weapons;
+      case 3:
+          return Lane3Weapons;
+      case 4:
+          return Lane4Weapons;
+      default:
+          return new ArrayList<>();
+  }
+}
+
+private WeaponsGUI findWeaponInLane(List<WeaponsGUI> laneWeapons, int weaponCode) {
+  for (WeaponsGUI weapon : laneWeapons) {
+      if (weapon.getweaponCode() == weaponCode) {
+          return weapon;
+      }
+  }
+  return null;
+}
+
+private void placeWeaponInLane(AnchorPane targetPane, WeaponsGUI chosenWeapon, int chosenLane, int weaponCode) {
+  if (weaponCode == 4) {
+      targetPane.getChildren().add(chosenWeapon.getPane());
+      targetPane.setLeftAnchor(chosenWeapon.getPane(), 650.0);
+      targetPane.setTopAnchor(chosenWeapon.getPane(), 20.0);
+      handleTrapPlacement(targetPane, chosenLane,chosenWeapon );
+  } else {
+      double distanceInPixels = getDistanceInPixels(chosenLane);
+      updateAvailablePosition(chosenLane);
+      if (distanceInPixels >= 0) {
+          targetPane.getChildren().add(chosenWeapon.getPane());
+          targetPane.setLeftAnchor(chosenWeapon.getPane(), distanceInPixels);
+          chosenWeapon.setLeftAnchorDistanceInPixels(distanceInPixels);
+      }
+      if (weaponCode == 3 || weaponCode == 2)
+          targetPane.setTopAnchor(chosenWeapon.getPane(), 20.0);
+  }
+}
+
+private double getDistanceInPixels(int chosenLane) {
+  switch (chosenLane) {
+      case 2:
+          return availableposXLane2;
+      case 3:
+          return availableposXLane3;
+      case 4:
+          return availableposXLane4;
+      default:
+          return 0;
+  }
+}
+
+private void updateAvailablePosition(int chosenLane) {
+  switch (chosenLane) {
+      case 2:
+          availableposXLane2 -= 125;
+          break;
+      case 3:
+          availableposXLane3 -= 125;
+          break;
+      case 4:
+          availableposXLane4 -= 125;
+          break;
+  }
+}
+
+private void handleTrapPlacement(AnchorPane targetPane, int chosenLane, WeaponsGUI chosenWeapon ) {
+  switch (chosenLane) {
+      case 2:
+          if (Lane2hasTrap)
+              targetPane.setTopAnchor(chosenWeapon.getPane(), 70.0);
+          Lane2hasTrap = !Lane2hasTrap;
+          break;
+      case 3:
+          if (Lane3hasTrap)
+              targetPane.setTopAnchor(chosenWeapon.getPane(), 70.0);
+          Lane3hasTrap = !Lane3hasTrap;
+          break;
+      case 4:
+          if (Lane4hasTrap)
+              targetPane.setTopAnchor(chosenWeapon.getPane(), 70.0);
+          Lane4hasTrap = !Lane4hasTrap;
+          break;
+  }
+}
+
+private void handleInsufficientResourcesException() {
+  FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), errorDialogue);
+  fadeIn.setFromValue(0);
+  fadeIn.setToValue(1);
+  FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), errorDialogue);
+  fadeOut.setFromValue(1);
+  fadeOut.setToValue(0);
+  Timeline timeline = new Timeline(
+      new KeyFrame(Duration.ZERO, e -> fadeIn.play()),
+      new KeyFrame(Duration.seconds(2), e -> fadeOut.play())
+  );
+  timeline.play();
+}
+
+private void handleInvalidLaneException(Lane lane) {
+  System.out.println("Lane is NULL??? " + lane == null);
+  FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), invalidLaneDialogue);
+  fadeIn.setFromValue(0);
+  fadeIn.setToValue(1);
+  FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), invalidLaneDialogue);
+  fadeOut.setFromValue(1);
+  fadeOut.setToValue(0);
+  Timeline timeline = new Timeline(
+      new KeyFrame(Duration.ZERO, e -> fadeIn.play()),
+      new KeyFrame(Duration.seconds(2), e -> fadeOut.play())
+  );
+  timeline.play();
+}
+
+// Try removiig that handle
+private void handleNullPointerException() {
+  moveTitans();
+  weaponsAttackTitans();
+  titansAttack();
+  addTitansToLane();
+  updateTexts();
+}
+
+private void handleGameOver() {
+  try {
+      isGameOverDisplay();
+      Lane2Weapons = new ArrayList<>();
+      Lane3Weapons = new ArrayList<>();
+      Lane4Weapons = new ArrayList<>();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+
+
+
+
   public void weaponsAttackTitans() {
     //Iterates over the all the weapons Guis and performs the attack of weapons on the titans only in the GUI 
     for (int i = 0; i < Lane2Weapons.size(); i++) {
       WeaponsGUI currentWeapon = Lane2Weapons.get(i);
-      if (currentWeapon.getweaponCode() != 4) {
+      if (currentWeapon.getweaponCode() != 4 && Lane2WeaponsStatus.get(i)) {
         AnchorPane ball = currentWeapon.getBallPane();
         try {
           if (titanImages.get(0).size() != 0) {
@@ -550,7 +632,7 @@ public class EasyGameController  extends GameMedia implements Initializable {
 
     for (int i = 0; i < Lane3Weapons.size(); i++) {
       WeaponsGUI currentWeapon = Lane3Weapons.get(i);
-      if (currentWeapon.getweaponCode() != 4) {
+      if (currentWeapon.getweaponCode() != 4  && Lane3WeaponsStatus.get(i)) {
         AnchorPane ball = currentWeapon.getBallPane();
         try {
           if (titanImages.get(1).size() != 0) {
@@ -585,7 +667,7 @@ public class EasyGameController  extends GameMedia implements Initializable {
 
     for (int i = 0; i < Lane4Weapons.size(); i++) {
       WeaponsGUI currentWeapon = Lane4Weapons.get(i);
-      if (currentWeapon.getweaponCode() != 4) {
+      if (currentWeapon.getweaponCode() != 4 && Lane4WeaponsStatus.get(i)) {
         AnchorPane ball = currentWeapon.getBallPane();
         try {
           if (titanImages.get(2).size() != 0) {
