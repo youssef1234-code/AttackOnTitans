@@ -38,8 +38,10 @@ public class VolleySpreadCannonGUI extends WeaponsGUI{
         volleySpredCannonPane.getChildren().add(volleySpreadImage);
         count = 1;
         NumberOfWeapons = new Label(count+""); 
+        NumberOfWeapons.setStyle("-fx-text-fill: #631E1E; -fx-font-family: Oswald; -fx-font-size: 20;");
         volleySpredCannonPane.getChildren().add(NumberOfWeapons);
-        AnchorPane.setTopAnchor(NumberOfWeapons, 18.0);
+        AnchorPane.setTopAnchor(NumberOfWeapons, 65.0);
+        AnchorPane.setLeftAnchor(NumberOfWeapons, 50.0);
     }
     @Override
     public void increaseCount(){

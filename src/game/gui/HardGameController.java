@@ -455,9 +455,8 @@ public class HardGameController extends GameMedia implements Initializable {
           handleInvalidLaneException(lane);
       } catch (NullPointerException e) {
           handleNullPointerException();
-      }
-          
-      } else {
+      }    
+    } else {
           try {
               battle.purchaseWeapon(weaponCode, lane);
               System.out.println("Weapon is being purchased!!");

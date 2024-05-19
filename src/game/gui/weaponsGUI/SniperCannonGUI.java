@@ -40,8 +40,10 @@ public class SniperCannonGUI extends WeaponsGUI{
         
         count = 1;
         NumberOfWeapons = new Label(count+""); 
+        NumberOfWeapons.setStyle("-fx-text-fill: #631E1E; -fx-font-family: Oswald; -fx-font-size: 20;");
         sniperCannonPane.getChildren().add(NumberOfWeapons);
-        AnchorPane.setTopAnchor(NumberOfWeapons, 18.0);
+        AnchorPane.setTopAnchor(NumberOfWeapons, 60.0);
+        AnchorPane.setLeftAnchor(NumberOfWeapons, 30.0);
     }
     @Override
     public void increaseCount(){
