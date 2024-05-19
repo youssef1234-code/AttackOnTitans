@@ -68,30 +68,38 @@ public class HardGameController extends GameMedia implements Initializable {
   private static double availableposXLane1 = 0;
   private boolean Lane1hasTrap = false;
   private List < WeaponsGUI > Lane1Weapons = new ArrayList < WeaponsGUI > ();
+  private List < Boolean > Lane1WeaponsStatus = new ArrayList< Boolean > ();
 
   @FXML
   private AnchorPane Lane2Pane;
   private static double availableposXLane2 = 0;
   private boolean Lane2hasTrap = false;
   private List < WeaponsGUI > Lane2Weapons = new ArrayList < WeaponsGUI > ();
+  private List < Boolean > Lane2WeaponsStatus = new ArrayList< Boolean > ();
+
 
   @FXML
   private AnchorPane Lane3Pane;
   private static double availableposXLane3 = 0;
   private boolean Lane3hasTrap = false;
   private List < WeaponsGUI > Lane3Weapons = new ArrayList < WeaponsGUI > ();
+  private List < Boolean > Lane3WeaponsStatus = new ArrayList< Boolean > ();
+
 
   @FXML
   private AnchorPane Lane4Pane;
   private static double availableposXLane4 = 0;
   private boolean Lane4hasTrap = false;
   private List < WeaponsGUI > Lane4Weapons = new ArrayList < WeaponsGUI > ();
+  private List < Boolean > Lane4WeaponsStatus = new ArrayList< Boolean > ();
+
 
   @FXML
   private AnchorPane Lane5Pane;
   private static double availableposXLane5 = 0;
   private boolean Lane5hasTrap = false;
   private List < WeaponsGUI > Lane5Weapons = new ArrayList < WeaponsGUI > ();
+  private List < Boolean > Lane5WeaponsStatus = new ArrayList< Boolean > ();
 
   // Wall Image Views
   @FXML
@@ -435,12 +443,20 @@ public class HardGameController extends GameMedia implements Initializable {
         try{
           battle.purchaseWeapon(weaponCode, lane);
           existingWeapon.increaseCount();
+          //Lane1WeaponsStatus
           switch(chosenLane){
             case 1: Lane1Weapons.add(chosenWeapon) ;break;
             case 2: Lane2Weapons.add(chosenWeapon) ;break;
             case 3: Lane3Weapons.add(chosenWeapon) ;break;
             case 4: Lane4Weapons.add(chosenWeapon) ;break;
             case 5: Lane5Weapons.add(chosenWeapon) ;break;
+          }
+          switch(chosenLane){
+            case 1: Lane1WeaponsStatus.add(false) ;break;
+            case 2: Lane2WeaponsStatus.add(false) ;break;
+            case 3: Lane3WeaponsStatus.add(false) ;break;
+            case 4: Lane4WeaponsStatus.add(false) ;break;
+            case 5: Lane5WeaponsStatus.add(false) ;break;
           }
           success = true;
           moveTitans();
@@ -461,6 +477,13 @@ public class HardGameController extends GameMedia implements Initializable {
               battle.purchaseWeapon(weaponCode, lane);
               System.out.println("Weapon is being purchased!!");
               placeWeaponInLane(targetPane, chosenWeapon, chosenLane, weaponCode);
+              switch(chosenLane){
+                case 1: Lane1WeaponsStatus.add(true) ;break;
+                case 2: Lane2WeaponsStatus.add(true) ;break;
+                case 3: Lane3WeaponsStatus.add(true) ;break;
+                case 4: Lane4WeaponsStatus.add(true) ;break;
+                case 5: Lane5WeaponsStatus.add(true) ;break;
+              }
               success = true;
               if (!lane.isLaneLost()) {
                   laneWeapons.add(chosenWeapon);
@@ -628,6 +651,7 @@ private void handleInvalidLaneException(Lane lane) {
   timeline.play();
 }
 
+// Try removiig that handle
 private void handleNullPointerException() {
   moveTitans();
   weaponsAttackTitans();
@@ -654,7 +678,7 @@ private void handleGameOver() {
     //Iterates over the all the weapons Guis and performs the attack of weapons on the titans only in the GUI 
     for (int i = 0; i < Lane1Weapons.size(); i++) {
       WeaponsGUI currentWeapon = Lane1Weapons.get(i);
-      if (currentWeapon.getweaponCode() != 4) {
+      if (currentWeapon.getweaponCode() != 4 && Lane1WeaponsStatus.get(i) ) {
         AnchorPane ball = currentWeapon.getBallPane();
         try {
           if (titanImages.get(0).size() != 0) {
@@ -689,7 +713,7 @@ private void handleGameOver() {
 
     for (int i = 0; i < Lane2Weapons.size(); i++) {
       WeaponsGUI currentWeapon = Lane2Weapons.get(i);
-      if (currentWeapon.getweaponCode() != 4) {
+      if (currentWeapon.getweaponCode() != 4  && Lane2WeaponsStatus.get(i)) {
         AnchorPane ball = currentWeapon.getBallPane();
         try {
           if (titanImages.get(1).size() != 0) {
@@ -724,7 +748,7 @@ private void handleGameOver() {
 
     for (int i = 0; i < Lane3Weapons.size(); i++) {
       WeaponsGUI currentWeapon = Lane3Weapons.get(i);
-      if (currentWeapon.getweaponCode() != 4) {
+      if (currentWeapon.getweaponCode() != 4 && Lane3WeaponsStatus.get(i)) {
         AnchorPane ball = currentWeapon.getBallPane();
         try {
           if (titanImages.get(2).size() != 0) {
@@ -759,7 +783,7 @@ private void handleGameOver() {
 
     for (int i = 0; i < Lane4Weapons.size(); i++) {
       WeaponsGUI currentWeapon = Lane4Weapons.get(i);
-      if (currentWeapon.getweaponCode() != 4) {
+      if (currentWeapon.getweaponCode() != 4 && Lane4WeaponsStatus.get(i)) {
         AnchorPane ball = currentWeapon.getBallPane();
         try {
           if (titanImages.get(3).size() != 0) {
@@ -794,7 +818,7 @@ private void handleGameOver() {
 
     for (int i = 0; i < Lane5Weapons.size(); i++) {
       WeaponsGUI currentWeapon = Lane5Weapons.get(i);
-      if (currentWeapon.getweaponCode() != 4) {
+      if (currentWeapon.getweaponCode() != 4 && Lane5WeaponsStatus.get(i)) {
         AnchorPane ball = currentWeapon.getBallPane();
         try {
           if (titanImages.get(4).size() != 0) {
