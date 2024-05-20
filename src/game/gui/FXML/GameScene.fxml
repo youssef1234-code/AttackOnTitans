@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="MainParent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.HardGameController">
+<AnchorPane fx:id="MainParent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.HardGameController">
    <children>
       <ImageView fx:id="MainBackground" fitHeight="826.0" fitWidth="1922.0" layoutX="195.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" scaleX="1.35" scaleY="1.35">
          <image>
@@ -186,5 +186,14 @@
             <Image url="@../assets/invalidLaneDialogue.png" />
          </image>
       </ImageView>
+      <Button fx:id="automateTurn" layoutX="594.0" layoutY="973.0" mnemonicParsing="false" onAction="#automate" prefHeight="80.0" prefWidth="73.0" style="-fx-background-color: transparent;" stylesheets="@../application.css">
+         <graphic>
+            <ImageView fitHeight="80.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/PassTurnButton.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

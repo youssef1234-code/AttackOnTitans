@@ -3,6 +3,7 @@ package game.gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -672,6 +673,120 @@ private void handleGameOver() {
       e.printStackTrace();
   }
 }
+
+  public void automate(ActionEvent event ){
+      ArrayList<Integer> allLanesDanger =  getHighestDanger();
+      int maxDanger = allLanesDanger.indexOf(Collections.max(allLanesDanger));
+      WeaponsGUI chosenWeapon = null;
+      int weaponCode = 0;
+      int chosenLane = maxDanger +1;
+      Lane lane = battle.getOriginalLanes().get(maxDanger);
+      AnchorPane targetPane= null;
+
+      if (maxDanger == 0) {
+        targetPane = Lane1Pane;
+      } else if (maxDanger == 1) {
+      targetPane = Lane2Pane;
+      } else if (maxDanger == 2) {
+        targetPane = Lane3Pane;
+      } else if (maxDanger == 3) {
+        targetPane = Lane4Pane;
+      } else if (maxDanger == 4) {
+        targetPane = Lane5Pane;
+      }
+
+      if(battle.getResourcesGathered() >=25){
+        if(battle.getResourcesGathered()>=75){
+          chosenWeapon = new WallTrapGUI(new WallTrap(100));
+          weaponCode = 4;
+        }
+        else {
+          chosenWeapon = new PiercingCannonGUI(new PiercingCannon(35));
+          weaponCode = 1;
+        }
+        List<WeaponsGUI> laneWeapons = getLaneWeapons(chosenLane);
+        WeaponsGUI existingWeapon = findWeaponInLane(laneWeapons, weaponCode);
+  
+        if (existingWeapon != null && weaponCode!=4) {
+          try{
+            battle.purchaseWeapon(weaponCode, lane);
+            existingWeapon.increaseCount();
+            //Lane1WeaponsStatus
+            switch(chosenLane){
+              case 1: Lane1Weapons.add(chosenWeapon) ;break;
+              case 2: Lane2Weapons.add(chosenWeapon) ;break;
+              case 3: Lane3Weapons.add(chosenWeapon) ;break;
+              case 4: Lane4Weapons.add(chosenWeapon) ;break;
+              case 5: Lane5Weapons.add(chosenWeapon) ;break;
+            }
+            switch(chosenLane){
+              case 1: Lane1WeaponsStatus.add(false) ;break;
+              case 2: Lane2WeaponsStatus.add(false) ;break;
+              case 3: Lane3WeaponsStatus.add(false) ;break;
+              case 4: Lane4WeaponsStatus.add(false) ;break;
+              case 5: Lane5WeaponsStatus.add(false) ;break;
+            }
+            moveTitans();
+            weaponsAttackTitans();
+            titansAttack();
+            addTitansToLane();
+            updateTexts();
+          }
+          catch (InsufficientResourcesException e) {
+            handleInsufficientResourcesException();
+        } catch (InvalidLaneException e) {
+            handleInvalidLaneException(lane);
+        } catch (NullPointerException e) {
+            handleNullPointerException();
+        }    
+      } else {
+            try {
+                battle.purchaseWeapon(weaponCode, lane);
+                System.out.println("Weapon is being purchased!!");
+                placeWeaponInLane(targetPane, chosenWeapon, chosenLane, weaponCode);
+                switch(chosenLane){
+                  case 1: Lane1WeaponsStatus.add(true) ;break;
+                  case 2: Lane2WeaponsStatus.add(true) ;break;
+                  case 3: Lane3WeaponsStatus.add(true) ;break;
+                  case 4: Lane4WeaponsStatus.add(true) ;break;
+                  case 5: Lane5WeaponsStatus.add(true) ;break;
+                }
+                if (!lane.isLaneLost()) {
+                    laneWeapons.add(chosenWeapon);
+                }
+                moveTitans();
+                weaponsAttackTitans();
+                titansAttack();
+                addTitansToLane();
+                updateTexts();
+            } catch (InsufficientResourcesException e) {
+                handleInsufficientResourcesException();
+            } catch (InvalidLaneException e) {
+                handleInvalidLaneException(lane);
+            } catch (NullPointerException e) {
+                handleNullPointerException();
+            }
+        }
+        if (battle.isGameOver()) {
+          handleGameOver();
+        }
+      }
+      else{
+        skipTurn(event);
+      }   
+  }
+
+  public ArrayList<Integer> getHighestDanger(){
+    ArrayList<Integer> danger = new ArrayList<Integer>();
+      for(Lane lane : battle.getOriginalLanes()){
+        if(!lane.isLaneLost())
+          danger.add(lane.getDangerLevel());
+        else
+          danger.add(-1);
+      }
+
+      return danger;
+  }
 
 
   public void weaponsAttackTitans() {
