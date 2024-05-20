@@ -149,7 +149,7 @@
             <Image url="@../assets/invalidLaneDialogue.png" />
          </image>
       </ImageView>
-      <Button fx:id="automateButton" layoutX="569.0" layoutY="973.0" mnemonicParsing="false" onAction="#automate" prefHeight="80.0" prefWidth="73.0" style="-fx-background-color: transparent;" stylesheets="@../application.css">
+      <Button fx:id="automateTurn" layoutX="569.0" layoutY="973.0" mnemonicParsing="false" onAction="#automate" prefHeight="80.0" prefWidth="73.0" style="-fx-background-color: transparent;" stylesheets="@../application.css">
          <graphic>
             <ImageView fitHeight="80.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
                <image>

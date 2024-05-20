@@ -198,6 +198,9 @@ public class HardGameController extends GameMedia implements Initializable {
   @FXML
   private ImageView invalidLaneDialogue;
 
+  @FXML
+  private Button automateTurn;
+
   private static Battle battle;
   private AnchorPane[] lanesGui = new AnchorPane[5];
   private ArrayList < ArrayList < TitanGUI >> titanImages = new ArrayList < ArrayList < TitanGUI >> ();
@@ -767,12 +770,37 @@ public void automate(ActionEvent event ){
                 handleNullPointerException();
             }
         }
-        if (battle.isGameOver()) {
+      if (battle.isGameOver()) {
           handleGameOver();
-        }
+
+      }
+      else{
+        automateTurn.setDisable(true);
+        //passTurnButton.setOpacity(1);
+        new java.util.Timer().schedule( 
+          new java.util.TimerTask() {
+            @Override
+              public void run() {
+                // Enable the button
+                automateTurn.setDisable(false);
+              }
+          }, 
+        1000);  
+      }
       }
       else{
         skipTurn(event);
+        automateTurn.setDisable(true);
+        //passTurnButton.setOpacity(1);
+        new java.util.Timer().schedule( 
+          new java.util.TimerTask() {
+            @Override
+              public void run() {
+                // Enable the button
+                automateTurn.setDisable(false);
+              }
+          }, 
+        1000); 
       }   
   }
 
