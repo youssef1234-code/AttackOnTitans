@@ -34,6 +34,7 @@ import game.gui.weaponsGUI.WeaponsGUI;
 import game.gui.titansGUI.AbnormalTitanGUI;
 import game.gui.titansGUI.ArmoredTitanGUI;
 import game.gui.titansGUI.ColossalTitanGUI;
+import game.gui.titansGUI.MultiColossalTitanGUI;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.ParallelTransition;
@@ -280,7 +281,7 @@ public class EasyGameController  extends GameMedia implements Initializable {
         laneTitans.add(temp.poll());
       }
 
-      if (!battle.getOriginalLanes().get(j).isLaneLost())
+      if (!battle.getOriginalLanes().get(j).isLaneLost() && battle.getNumberOfTurns() <= 35){
         for (int i = 0; i < titanArray.size(); i++) {
           if (titanArray.get(i).getDistance() == 50) {
             Random random = new Random();
@@ -315,12 +316,29 @@ public class EasyGameController  extends GameMedia implements Initializable {
               lanesGui[j].getChildren().add(colossalTitan.colossalTitanView);
               titanImages.get(j).add(colossalTitan);
               AnchorPane.setRightAnchor(colossalTitan.colossalTitanView, 0.0);
-              AnchorPane.setTopAnchor(colossalTitan.colossalTitanView, offset + 0.0);
+              AnchorPane.setTopAnchor(colossalTitan.colossalTitanView, (offset-30 < 0)? offset+0.0 : offset - 30 + 0.0);
               break;
             }
 
           }
         }
+      } else if (!battle.getOriginalLanes().get(j).isLaneLost()){
+        ArrayList <ColossalTitan> newTitans = new ArrayList<ColossalTitan>();
+        Random random = new Random();
+        int offset = random.nextInt(10);
+        for (int i = 0; i < titanArray.size(); i++) {
+          if (titanArray.get(i).getDistance() == 50) {
+           newTitans.add((ColossalTitan)titanArray.get(i));
+          }
+        }
+        if(!newTitans.isEmpty()){
+        MultiColossalTitanGUI megaTitan = new MultiColossalTitanGUI(newTitans);
+        lanesGui[j].getChildren().add(megaTitan.colossalTitanView);
+        titanImages.get(j).add(megaTitan);
+        AnchorPane.setRightAnchor(megaTitan.colossalTitanView, 0.0);
+        AnchorPane.setTopAnchor(megaTitan.colossalTitanView, offset + 0.0);
+      }
+      }
     }
   }
 

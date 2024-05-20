@@ -27,9 +27,9 @@ public class PureTitanGUI extends TitanGUI{
         
         
         sprite = new ImageView(getClass().getResource("../assets/Titan1.png").toString());
-        sprite.setFitWidth(80);
-        sprite.setFitHeight(90);
-        sprite.setRotate(90.0);
+        sprite.setFitWidth(70);
+        sprite.setFitHeight(80);
+        //sprite.setRotate(90.0);
 
         pureTitanView.getChildren().addAll(sprite, healthBar);
 

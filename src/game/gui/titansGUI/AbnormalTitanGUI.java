@@ -28,8 +28,8 @@ public class AbnormalTitanGUI extends TitanGUI{
         
         
         sprite = new ImageView(getClass().getResource("../assets/Titan2.png").toString());
-        sprite.setFitWidth(60);
-        sprite.setFitHeight(70);
+        sprite.setFitWidth(50);
+        sprite.setFitHeight(60);
         //sprite.setRotate(90.0);
 
         abnormalTitanView.getChildren().addAll(sprite, healthBar);

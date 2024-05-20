@@ -27,9 +27,9 @@ public class ColossalTitanGUI extends TitanGUI {
         
         
         sprite = new ImageView(getClass().getResource("../assets/Titan4.png").toString());
-        sprite.setFitWidth(80);
-        sprite.setFitHeight(90);
-        //sprite.setRotate(90.0);
+        sprite.setFitWidth(110);
+        sprite.setFitHeight(140);
+        sprite.setRotate(90.0);
 
         colossalTitanView.getChildren().addAll(sprite, healthBar);
 
@@ -47,7 +47,7 @@ public class ColossalTitanGUI extends TitanGUI {
         if(colossalTitanView.getLayoutX() + colossalTitanView.getTranslateX() > 700){
             TranslateTransition transition = new TranslateTransition();
             transition.setNode(colossalTitanView);
-            transition.setToX(colossalTitanView.getTranslateX() - titanObj.getSpeed()*14);
+            transition.setToX(colossalTitanView.getTranslateX() - titanObj.getSpeed()*16.8);
             transition.setDuration(Duration.millis(1000)); 
             transition.play();
         }
@@ -66,5 +66,9 @@ public class ColossalTitanGUI extends TitanGUI {
     @Override 
     public boolean isDead(){
         return this.titanObj.isDefeated();
+    }
+    
+    public ProgressBar getBar(){
+        return healthBar;
     }
 }
