@@ -674,7 +674,7 @@ private void handleGameOver() {
   }
 }
 
-  public void automate(ActionEvent event ){
+public void automate(ActionEvent event ){
       ArrayList<Integer> allLanesDanger =  getHighestDanger();
       int maxDanger = allLanesDanger.indexOf(Collections.max(allLanesDanger));
       WeaponsGUI chosenWeapon = null;
