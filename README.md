@@ -1,7 +1,7 @@
 # Attack on Titan: Utopia
 
 ## Overview
-Attack on Titan: Utopia is a java-based game developed as part of a Computer Programming Lab course at the German University in Cairo. The game involves strategic deployment of weapons and titans in different lanes to protect a base from being overrun by titans.
+Attack on Titan: Utopia is a java-based game developed as part of a Computer Programming Lab course at the German University in Cairo. The game involves strategic deployment of weapons and titans in different lanes to protect a base from being overrun by titans. This implemetation of the game recieved the award of "The best best game implementation " at the German University in Cairo CS401 course Spring 2024 .
 
 ## Features
 - **Titans**: Multiple types of titans, each with unique abilities.
